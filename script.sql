@@ -8,8 +8,8 @@ create table product (
     primary key (id));
 create table item (
 	id varchar(10),
-    `name` varchar(20),
-    `brand` varchar(20),
+    `name` varchar(100),
+    `brand` varchar(100),
     `imageurl` varchar(100),
     primary key (id),
     foreign key (id) references product (id));
@@ -23,7 +23,7 @@ create table pet (
 	id varchar(10),
     `name` varchar(50),
     `imageurl` varchar(100),
-    `breed` varchar(20),
+    `breed` varchar(100),
     primary key (id),
     foreign key (id) references product (id));
 create table customer (
@@ -47,6 +47,9 @@ create table blog (
 	id varchar(10),
 	content text,
     primary key (id));
+    
+    -------------------------------------------------------------------------
+    -- price 0 mean out of stocks
 insert into product (`id`, `type`, `quantity`, `price`) values ('P1', 'P', 1, 17000000);
 insert into pet (`id`, `name`, `breed`) values ('P1', 'Alaska Nâu Đỏ Béo Ú', 'Chó Alaska Malamute');
 insert into product (`id`, `type`, `quantity`, `price`) values ('P2', 'P', 1, 9500000);
@@ -469,3 +472,85 @@ insert into product (`id`, `type`, `quantity`, `price`) values ('P210', 'P', 1, 
 insert into pet (`id`, `name`, `breed`) values ('P210', 'Samoyed siêu siêu xinh', 'Chó Samoyed');
 insert into product (`id`, `type`, `quantity`, `price`) values ('P211', 'P', 1, 9500000);
 insert into pet (`id`, `name`, `breed`) values ('P211', 'Pug sieu yêu siêu cưng', 'Chó Pug');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I1', 'I', 32, 30000);
+insert into item (`id`, `name`, `brand`) values ('I1', 'Cat food Me-o 350g', 'Me-o (Thailand)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I2', 'I', 35, 20000);
+insert into item (`id`, `name`, `brand`) values ('I2', 'Me-o Delite wet food with tuna flavor and shredded chicken 70gr', 'Me-o (Thailand)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I3', 'I', 23, 20000);
+insert into item (`id`, `name`, `brand`) values ('I3', 'Me-o Delite wet food with tuna and melon striped tuna 70gr', 'Me-o (Thailand)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I4', 'I', 54, 399000);
+insert into item (`id`, `name`, `brand`) values ('I4', 'Catsrang seed food for cats of all ages 5kg', 'Catsrang (Korea)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I5', 'I', 26, 215000);
+insert into item (`id`, `name`, `brand`) values ('I5', 'Catsrang seed food for cats of all ages 2kg', 'Catsrang (Korea)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I6', 'I', 34, 195000);
+insert into item (`id`, `name`, `brand`) values ('I6', 'Catsrang Adult Cat food 1.5kg', 'Catsrang (Korea)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I7', 'I', 26, 0);
+insert into item (`id`, `name`, `brand`) values ('I7', 'Farmina N&D PRIME kitten food with chicken and pomegranate recipe 300gr', 'Farmina (Italy)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I8', 'I', 55, 20000);
+insert into item (`id`, `name`, `brand`) values ('I8', 'Me-o Delite wet food with tuna flavor and crab stick 70gr', 'Me-o (Thailand)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I9', 'I', 88, 10000);
+insert into item (`id`, `name`, `brand`) values ('I9', 'Ciao reward soup tuna flavor supplemented with collagen for cats (14g * 4) retail bar', 'Ciao (Japan)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I10', 'I', 73, 0);
+insert into item (`id`, `name`, `brand`) values ('I10', 'Sportmix- Cat Food Original Recipe 6.8kg', 'Sportmix (USA)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I11', 'I', 67, 1050000);
+insert into item (`id`, `name`, `brand`) values ('I11', 'Farmina adult cat food - N&D ANCESTRAL GRAIN chicken, spelled, oats, pomegranate 5kg', 'Farmina (Italy)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I12', 'I', 50, 500000);
+insert into item (`id`, `name`, `brand`) values ('I12', 'Iskhan dry food for adult cats in a 2.5kg bag', 'Iskhan (Korea)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I13', 'I', 82, 225000);
+insert into item (`id`, `name`, `brand`) values ('I13', 'Food for Kitten Catsrang Kitten 1.5kg', 'Catsrang (Korea)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I14', 'I', 20, 0);
+insert into item (`id`, `name`, `brand`) values ('I14', 'Earthborn Holistic Wild Sea Catch Cat Food 2.27kg (all stages)', 'Earthborn Holistic (USA)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I15', 'I', 44, 1050000);
+insert into item (`id`, `name`, `brand`) values ('I15', 'Farmina N&D OCEAN adult cat food, cod, spelled, oatmeal and orange recipe 5kg', 'Farmina (Italy)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I16', 'I', 70, 145000);
+insert into item (`id`, `name`, `brand`) values ('I16', 'Farmina N&D ANCESTRAL GRAIN adult cat food chicken, spelled, oats, pomegranate 300gr', 'Farmina (Italy)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I17', 'I', 72, 65000);
+insert into item (`id`, `name`, `brand`) values ('I17', 'Food for kitten Catsrang Kitten 400gr', 'Catsrang (Korea)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I18', 'I', 20, 20000);
+insert into item (`id`, `name`, `brand`) values ('I18', 'Me-o Delite wet food with tuna flavor 70gr', 'Me-o (Thailand)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I19', 'I', 88, 89000);
+insert into item (`id`, `name`, `brand`) values ('I19', 'Royal canin Fit 32 (400g) - Cat food', 'Royal Canin (France)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I20', 'I', 59, 0);
+insert into item (`id`, `name`, `brand`) values ('I20', 'Earthborn Holistic Primitive Feline 2.27kg (all stages) cat food', 'Earthborn Holistic (USA)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I21', 'I', 48, 0);
+insert into item (`id`, `name`, `brand`) values ('I21', 'name', 'brand');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I22', 'I', 78, 276000);
+insert into item (`id`, `name`, `brand`) values ('I22', 'Calcium Phosphorus - support treatment for pets', 'PetAg');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I23', 'I', 95, 57000);
+insert into item (`id`, `name`, `brand`) values ('I23', 'Mon Ami Enzo - Large iron brush (for dogs)', 'Mon ami');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I24', 'I', 33, 50000);
+insert into item (`id`, `name`, `brand`) values ('I24', 'Bayer - Disinfectant for cats (tablets)', 'Bayer');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I25', 'I', 78, 190000);
+insert into item (`id`, `name`, `brand`) values ('I25', 'Revolution - Lice drops for dogs and cats 2.6 - 7.5kg', 'null');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I26', 'I', 76, 180000);
+insert into item (`id`, `name`, `brand`) values ('I26', 'Revolution - Lice drops for dogs and cats under 2.5kg', 'null');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I27', 'I', 33, 10000);
+insert into item (`id`, `name`, `brand`) values ('I27', 'Bio - Bio-Scour specializes in treating vomiting and diarrhea for dogs and cats', 'Bio-Pharmachemie');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I28', 'I', 23, 10000);
+insert into item (`id`, `name`, `brand`) values ('I28', 'Bio - Bio Plus nutritional supplement', 'Bio-Pharmachemie');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I29', 'I', 32, 165000);
+insert into item (`id`, `name`, `brand`) values ('I29', 'Frontline Plus- Small nape tick remedy for cats', 'Frontline Plus');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I30', 'I', 51, 160000);
+insert into item (`id`, `name`, `brand`) values ('I30', 'Fungikür spray for dogs and cats - Fungikür Spray 50ml', 'null');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I31', 'I', 77, 85000);
+insert into item (`id`, `name`, `brand`) values ('I31', 'Calcium Sleeky 140g', 'Sleeky (Thailand)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I32', 'I', 86, 275000);
+insert into item (`id`, `name`, `brand`) values ('I32', 'Bayer Drontal Oral Suspension- Dog worm bleach (liquid)', 'Bayer');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I33', 'I', 24, 10000);
+insert into item (`id`, `name`, `brand`) values ('I33', 'Bio - Bio-Gentadrop eye drops', 'Bio-Pharmachemie');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I34', 'I', 98, 652000);
+insert into item (`id`, `name`, `brand`) values ('I34', 'Furminator comb for long-haired little dogs', 'Furminator (USA)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I35', 'I', 63, 150000);
+insert into item (`id`, `name`, `brand`) values ('I35', 'Fleadom dog and cat flea collar', 'Virbac');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I36', 'I', 93, 120000);
+insert into item (`id`, `name`, `brand`) values ('I36', 'Bioline - Hair plucking powder 30g', 'PetCity');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I37', 'I', 86, 435000);
+insert into item (`id`, `name`, `brand`) values ('I37', 'Davis - EarMed Powder 450g', 'Davis');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I38', 'I', 27, 0);
+insert into item (`id`, `name`, `brand`) values ('I38', 'Mon Ami Enzo - A comb (for cats)', 'Mon ami');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I39', 'I', 89, 25000);
+insert into item (`id`, `name`, `brand`) values ('I39', 'Bio - Drops for external ear infections Bio-Gentazol for dogs', 'Bio-Pharmachemie');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I40', 'I', 73, 652000);
+insert into item (`id`, `name`, `brand`) values ('I40', 'Furminator comb for long haired cats', 'Furminator (USA)');
+insert into product (`id`, `type`, `quantity`, `price`) values ('I41', 'I', 41, 0);
+insert into item (`id`, `name`, `brand`) values ('I41', 'Bio - Yeast supports the digestion of Biotic for dogs and cats', 'Bio-Pharmachemie');
