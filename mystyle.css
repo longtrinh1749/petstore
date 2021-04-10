@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
 *{
     box-sizing: border-box;
 }
 body, html{
     font-size: 16px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Quicksand', sans-serif;
     height: 100%;
     color: #fff;
     line-height: 1.6;
@@ -117,7 +119,7 @@ input[type=text]{
     top: 50%;
     transform: translateY(-50%); */
     font-size: 60px;
-    font-family: monospace;
+    font-family: 'Quicksand', sans-serif;
     background-color: black;
     opacity: 70%;
     font: white;
@@ -127,16 +129,18 @@ input[type=text]{
     width: 100%;
 }
 
-/* content */
+/* **********************general content************************ */
+
 .section-container{
     opacity: 100%;
     width: 100%;
-    padding: 60 60 60 60;
+    padding: 60 240;
     font-size: 20px;
     display: block;
 }
-.row-2-flex{
+.flex-container{
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
 }
 .section-container.section-odd{
@@ -148,29 +152,38 @@ input[type=text]{
     color: black;
 }
 .section-container .section-content{
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Quicksand', sans-serif;
     font-weight:100;
     text-align: center;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 15%;
+    padding-right: 15%;
     margin-bottom: 80px;
 }
+.section-container .section-content.left-align{
+    text-align: left;
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .section-container .section-content h3
 {
-    font-family: monospace;
+    font-family: 'Quicksand', sans-serif;
     font-size: 36px;
 }
 
-.items-container{
-    width: 100%;
-    display: flex;
+/* ***************************services styling************************** */
+
+/* .items-container{
+} */
+.items-container > div{
+    padding: 20px;
+    flex: 25%;
 }
 .items-container .item-wrapper{
     background-color: white;
     transition: transform .3s, box-shadow .3s;
     border-radius: 5px;
     box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.2);
-
 }
 .items-container .item-wrapper:hover{
     -ms-transform: scale(1.07); 
@@ -178,7 +191,6 @@ input[type=text]{
     transform: scale(1.07);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.55), 0 8px 20px 10px rgba(0, 0, 0, 0.1);
 }
-
 .items-container a img{
     width: 100%;
     border-radius: 5px 5px 0 0;
@@ -188,7 +200,7 @@ input[type=text]{
     padding: 20px;
     text-align: left;
     font-size: 16px;
-    font-family: monospace;
+    font-family: 'Quicksand', sans-serif;
 }
 .item-content span:first-child{
     font-weight:700;
@@ -203,8 +215,19 @@ input[type=text]{
     font-weight:900;
     color: orangered;
 }
+/* ******************************feedback****************************** */
+.section-container .custommer-rating{
+    flex: 0 0 50%;
+}
+.section-container .custommer-feedback{
+    flex: 0 0 50%;
+}
+.custommer-rating .flex-container > div{
+    flex: 0 0 33%;
+    color: green;
+}
 
-
+/* ******************************gallery**************************** */
 .gallery-container table{
     border-collapse: separate;
     border-spacing: 4px;
@@ -239,55 +262,35 @@ input[type=text]{
     background-color: black;
     opacity: 40%;
 }
-.product-container{
-    display: block!important;
-    position: relative;
-    height: auto;
-    width: 100%;
-}
-.product-container button{
-    background-color: white;
-    box-shadow: 0 0 10px 0 rgb(0,0,0,0.2);
-    display: flex;
-    position: absolute;
-    top:50%;
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-    font-size: 36px;
-    color: darkgrey;
-    border-color: white;
-    border: 0px;
-}
-.product-container button:first-child{
-    right: 0px;
-}
-.product-container button:nth-child(2){
-    left: 0px;
-}
-.product-list{
-    width:400%;
-    display: flex;
-    flex-direction: row;
-}
-.product-list .product-wrapper{
-    flex: 0 0 5%;
-    padding: 10px;
-}
-.product-list .product-wrapper img{
-    width: 100%;
-    height: auto;
-    display: block;
+
+
+/* tablet */
+@media only screen and (max-width: 1600px) { 
+    .section-container{
+        padding: 60 60
+    }
 }
 
-  
-@media only screen and (max-width: 800px) {
-    .background-wallpaper{
-      background-attachment: scroll;
-      height: 400px;
+
+@media only screen and (max-width: 1200px) {
+    .section-container{
+        padding: 60 120
     }
+    .items-container > div{
+        flex: 0 0 50%;
+    }
+
+}
+
+/* phone */
+@media only screen and (max-width: 700px) {
+    .section-container{
+        padding: 60 10
+    }
+    .items-container > div{
+        flex: 0 0 100%;
+    }
+
 }
 
 .modal {
