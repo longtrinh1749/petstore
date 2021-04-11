@@ -29,11 +29,14 @@ create table pet (
 create table customer (
 	phonenumber varchar(11),
     name varchar(50),
+    email varchar(50),
+    address varchar(500),
     primary key (phonenumber));
 create table `order` (
-	id varchar(10),
+    id varchar(10),
     price int,
-    userphonenumber varchar(11),
+    customerphonenumber varchar(12),
+    timestamp DATE, -- INSERT INTO t1 VALUES ("2010-01-12"), ("2011-2-28"), ('120314'),('13*04*21');
     primary key (id),
     foreign key (userphonenumber) references customer (phonenumber));
 create table productorder (

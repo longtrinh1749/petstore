@@ -1,0 +1,3 @@
+database:
+for item pet spa: crawl data onlien
+for user info: faker to auto generate
