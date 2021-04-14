@@ -206,6 +206,10 @@ select option {
     transition: all 0.4s ease 0s;
 }
 
+.product-image img:hover {
+    filter: brightness(75%);
+}
+
 .product-discount-label {
     color         : #fff;
     background    : #98cb46;
@@ -248,6 +252,24 @@ select option {
     transition : all 0.4s ease-in-out;
     font-family: 'Changa', sans-serif;
     line-height: 1;
+}
+
+.product-grid .add-to-cart {
+    margin-top      : 1rem;
+    font-weight     : bold;
+    font-size       : 1rem;
+    background-color: #98cb46;
+    padding         : 0.5rem 1rem;
+    cursor          : pointer;
+    transition      : all 0.4s ease;
+    border          : 3px solid transparent;
+}
+
+.product-grid .add-to-cart:hover {
+    color           : #98cb46;
+    background-color: #eeffee;
+    border          : 3px solid #98cb46;
+    border-radius   : 5px;
 }
 
 .product-grid .price span {
