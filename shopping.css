@@ -265,6 +265,10 @@ select option {
     border          : 3px solid transparent;
 }
 
+.product-grid .add-to-cart i{
+    padding: 0 5px;
+}
+
 .product-grid .add-to-cart:hover {
     color           : #98cb46;
     background-color: #eeffee;
@@ -321,4 +325,10 @@ select option {
 .n-pag.disabled {
     opacity       : 0.5;
     pointer-events: none;
+}
+
+@media only screen and (max-width: 425px) {
+    .container{
+        padding : 0 3rem;
+    }
 }
