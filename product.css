@@ -7,12 +7,12 @@
 
 body,
 html {
-    font-size  : 16px;
-    font-family: 'Quicksand', sans-serif;
-    height     : 100%;
+    font-size     : 16px;
+    font-family   : 'Quicksand', sans-serif;
+    height        : 100%;
     /* color      : #fff; */
-    line-height: 1.6;
-    margin     : 0px;
+    line-height   : 1.6;
+    margin        : 0px;
 }
 
 a,
@@ -316,10 +316,15 @@ input[type='radio'] {
     font-weight: bold;
 }
 
-.product-quantity label {
-    color        : #313a53;
-    font-weight  : bold;
-    padding-right: 1rem;
+.product-quantity {
+    display        : flex;
+    justify-content: space-between;
+    color          : #313a53;
+    font-weight    : bold;
+}
+
+.product-quantity input {
+    margin-left: 1rem;
 }
 
 input[type='number'] {
@@ -338,22 +343,22 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .add-to-cart {
-    color          : #FFF;
-    background     : #98cb46;
-    font-weight    : 700;
-    text-transform : uppercase;
-    padding        : 0.5rem 1.9rem;
-    margin-left    : 2rem;
-    font-size      : 1.125rem;
-    justify-content: center;
-    display        : inline-flex;
-    outline        : none;
-    border         : none;
-    cursor         : pointer;
-    overflow       : hidden;
-    z-index        : 2;
-    align-items    : center;
-    position       : relative;
-    box-shadow     : 0px 4px 13px 0px rgb(152 203 70 / 50%);
-    border-radius  : 3px;
+    color             : #FFF;
+    background        : #98cb46;
+    font-weight       : 700;
+    text-transform    : uppercase;
+    padding           : 0.5rem 1.9rem;
+    /* margin-left    : 2rem; */
+    font-size         : 1.125rem;
+    justify-content   : center;
+    display           : inline-flex;
+    outline           : none;
+    border            : none;
+    cursor            : pointer;
+    overflow          : hidden;
+    z-index           : 2;
+    align-items       : center;
+    position          : relative;
+    box-shadow        : 0px 4px 13px 0px rgb(152 203 70 / 50%);
+    border-radius     : 3px;
 }
