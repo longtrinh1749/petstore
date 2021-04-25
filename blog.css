@@ -106,7 +106,8 @@ select option {
 
 .breadcrumbs-page {
     background         : #27304b;
-    background-image   : url(ImgSource/blog/adorable-animal-cat-1440387.jpg);
+    /* background-image   : url(ImgSource/blog/adorable-animal-cat-1440387.jpg); */
+    background-image   : url(ImgSource/blog/blog_modern_large.jpg);
     background-repeat  : no-repeat;
     padding            : 10rem 0;
     background-position: center center !important;

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="blog2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <!-- begin of html -->
+    <div class="m-navigator-bar" id="top-nav">
+        <div class="navbar-margin-left"></div>
+        <a class="btm" href="#">About us</a>
+        <a class="btn" href="./tryit/newpage">Community</a>
+        <a class="btn selected" href="#shop">FAQs</a>
+        <a class="btn" href="#menu">Something</a>
+    </div>
+
+    <main id="body-content">
+        <section>
+            
+        </section>
+    </main>
+</body>
+
+<script>
+    "use strict";
+    window.onscroll = function () { adjustTopNav(); };
+
+    var topNav = document.getElementById("top-nav");
+    function adjustTopNav() {
+        if (document.body.scrollTop > window.innerHeight / 3 || document.documentElement.scrollTop > window.innerHeight / 3) {
+            topNav.className = "m-navigator-bar scrolled";
+        }
+        else topNav.className = topNav.className.replace("scrolled", "");
+    }
+</script>
+
+</html>
