@@ -1,559 +1,86 @@
-create database petstore;
-use petstore;
-create table product (
-	id varchar(10),
-    type varchar(1), #I neu la item, S neu la spa, P neu la pet
-    quantity int,
-    price int,
-    primary key (id));
-create table item (
-	id varchar(10),
-    `name` varchar(100),
-    `brand` varchar(100),
-    `imageurl` varchar(100),
-    primary key (id),
-    foreign key (id) references product (id));
-create table spa (
-	id varchar(10),
-    `name` varchar(20),
-    `imageurl` varchar(100),
-    primary key (id),
-    foreign key (id) references product (id));
+﻿create database petstoredb;
+use petstoredb;
+
 create table pet (
-	id varchar(10),
-    `name` varchar(50),
-    `imageurl` varchar(100),
-    `breed` varchar(100),
-    primary key (id),
-    foreign key (id) references product (id));
-create table customer (
-	phonenumber varchar(11),
+    id varchar(10) primary key,
     name varchar(50),
-    email varchar(50),
-    address varchar(500),
-    primary key (phonenumber));
-create table `order` (
-    id varchar(10),
+    breed varchar(20),
     price int,
-    customerphonenumber varchar(12),
-    timestamp DATE, -- INSERT INTO t1 VALUES ("2010-01-12"), ("2011-2-28"), ('120314'),('13*04*21');
-    primary key (id),
-    foreign key (userphonenumber) references customer (phonenumber));
-create table productorder (
-	orderid varchar(10),
-	productid varchar(10),
+    imageurl varchar(200)
+);
+create table item (
+    id varchar(10) PRIMARY KEY,
+    name varchar(50),
+    category varchar(50),
+    brand varchar(50),
+    price int,
+    imageurl varchar(200)
+);
+create table spa (
+    id varchar(10) PRIMARY KEY,
+    name varchar(50),
+    price int,
+    imageurl varchar(200)
+);
+create table customer (
+    id varchar(10) PRIMARY key,
+    phoneno varchar(12), 
+    email varchar(100),
+    address varchar(200)
+);
+create table petorder (
+    id varchar(10) PRIMARY KEY,
+    total int,
+    customerid varchar(10),
+    `timestamp` date,
+    FOREIGN KEY (`customerid`) REFERENCES customer (id)
+);
+create table itemorder (
+    id varchar(10) PRIMARY KEY,
+    total int,
+    customerid varchar(10),
+    `timestamp` date,
+    FOREIGN KEY (`customerid`) REFERENCES customer (id)
+);
+create table spaorder (
+    id varchar(10) PRIMARY KEY,
+    total int, 
+    customerid varchar(10),
+    `timestamp` date,
+    FOREIGN KEY (`customerid`) REFERENCES customer (id)
+);
+create table orderpet (
+    petid varchar(10),
+    orderid varchar(10),
     quantity int,
-    primary key (orderid, productid),
-    foreign key (orderid) references `order` (id),
-    foreign key (productid) references product (id));
-create table blog (
-	id varchar(10),
-	content text,
-    primary key (id));
-    
-    -------------------------------------------------------------------------
-    -- price 0 mean out of stocks
-insert into product (`id`, `type`, `quantity`, `price`) values ('P1', 'P', 1, 17000000);
-insert into pet (`id`, `name`, `breed`) values ('P1', 'Alaska Nâu Đỏ Béo Ú', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P2', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P2', 'Bé Golden múp mụp', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P3', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P3', '2 bé Poodle Tiny trắng đáng yêu quá trời', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P4', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P4', 'Aalaska Béo ú béo u', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P5', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P5', 'corgi siêu đáng yêu', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P6', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P6', '2 anh Poodle Tiny da nâu cực yêu', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P7', 'P', 1, 9000000);
-insert into pet (`id`, `name`, `breed`) values ('P7', 'Poodle trắng', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P8', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P8', 'Beagle – chó săn thỏ', 'Chó Beagle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P9', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P9', 'Bé Corgi xinh xắn', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P10', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P10', 'Alaska Đực hàng Khủng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P11', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P11', 'Alaska Nâu đỏ béo nhợn mặt siêu đại ca', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P12', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P12', 'Đàn Samoyed trắng xinh', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P13', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P13', 'Golden đực ú', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P14', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P14', 'Bé Pug mặt thộn ^^', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P15', 'P', 1, 17000000);
-insert into pet (`id`, `name`, `breed`) values ('P15', 'Sóc bông vàng', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P16', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P16', 'Alaska hồng phấn xinh lung linh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P17', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P17', 'Bé Samoyed mặt tươi', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P18', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P18', 'alaska xám kháu khỉnh cute xỉu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P19', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P19', '2 bé Poodle Xinh xinh', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P20', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P20', 'alas đực màu hồng phấn siêu cưng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P21', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P21', 'Bé Samoyed xinh', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P22', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P22', 'Samoyed siêu cute', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P23', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P23', 'Alaska hồng phấn siêu cute', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P24', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P24', 'Alaska đen trắng mặt ngầu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P25', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P25', 'Đàn Alaska Đen- Trắng Xám', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P26', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P26', 'corgi', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P27', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P27', 'Alas nâu đỏ siêu phẩm', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P28', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P28', 'Phốc sóc siêu cưng', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P29', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P29', 'Bé Alaska nâu đỏ mập ú', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P30', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P30', 'husky đại ngáo', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P31', 'P', 1, 11000000);
-insert into pet (`id`, `name`, `breed`) values ('P31', 'Husky nâu đỏ', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P32', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P32', 'Alaska siêu cưng siêu béo', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P33', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P33', 'Bé Pug béo tròn xinh', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P34', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P34', 'Corgi chân ngắn mông to', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P35', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P35', 'Bé Poodle bông gòn', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P36', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P36', 'phốc sóc béo ú', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P37', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P37', 'phốc sóc siêu cute', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P38', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P38', 'Bé Alas nâu đỏ ú nu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P39', 'P', 1, 14000000);
-insert into pet (`id`, `name`, `breed`) values ('P39', 'Đàn 5 bé alaska siêu ngầu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P40', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P40', 'Golden cưng siêu cấp', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P41', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P41', 'Alaska siêu xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P42', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P42', 'Alaska nâu dễ thương', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P43', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P43', 'Các bé Beagle xinh xinh', 'Chó Beagle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P44', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P44', 'Alaska nâu đỏ ú nụ', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P45', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P45', 'Bé Pug ú nu', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P46', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P46', '2 bé Samoyed béo như heo', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P47', 'P', 1, 19000000);
-insert into pet (`id`, `name`, `breed`) values ('P47', 'Bé Alaska hồng phấn xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P48', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P48', 'alaska hồng phấn siêu cưng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P49', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P49', 'Bé Poodle socola', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P50', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P50', 'Poodle tròn xoe mặt cưng', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P51', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P51', 'alaska béo ú', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P52', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P52', 'poodle trắng lông xù', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P53', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P53', 'samoyed siêu yêu', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P54', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P54', 'poodle vàng mơ', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P55', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P55', 'Bé Samoyed siêu phẩm', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P56', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P56', 'Em gái Golden mặt cực chất ngầu', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P57', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P57', 'Bé Poodle vàng mơ xinh xắn', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P58', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P58', 'Các bé Pug xinh ^^', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P59', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P59', 'Bé Alaska phấn siêu xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P60', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P60', 'husky siêu cute', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P61', 'P', 1, 17000000);
-insert into pet (`id`, `name`, `breed`) values ('P61', 'Gấu Alaska hàng siêu khủng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P62', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P62', 'Bé phốc sóc bông gòn', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P63', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P63', 'Samoyed gấu bông', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P64', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P64', 'Đàn Golden Retriever', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P65', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P65', 'Poodle trắng xinh', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P66', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P66', 'Bé Poodle nâu đỏ đậm', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P67', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P67', 'Bé Pom vàng mũm mĩm', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P68', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P68', 'Alaska tròn ú', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P69', 'P', 1, 30000000);
-insert into pet (`id`, `name`, `breed`) values ('P69', 'Em Corgi lông dài siêu cute', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P70', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P70', 'Husky ngáo ngơ', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P71', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P71', 'Bé Alaska nâu đỏ xinh xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P72', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P72', 'Bé Golden dễ thương', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P73', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P73', 'Đàn alaska siêu siêu cưng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P74', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P74', 'Bé Poodle vàng mơ tròn như cục bông', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P75', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P75', 'Corgi ú nu siêu xinh', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P76', 'P', 1, 14000000);
-insert into pet (`id`, `name`, `breed`) values ('P76', 'Bé Alas nâu đỏ bánh bao', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P77', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P77', 'Alaska màu phấn', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P78', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P78', 'Bé Poodle vàng mơ xinh như bông gòn', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P79', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P79', 'phốc sóc bé cưng', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P80', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P80', 'Samoyed cute', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P81', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P81', 'Alaska đen trắng xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P82', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P82', 'Bé Pom bé xinh', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P83', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P83', 'Bé Pom xinh không tì vết', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P84', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P84', 'alaska xám ú u', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P85', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P85', 'Bé Alas nâu đỏ lanh lợi', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P86', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P86', 'Alaska hồng phấn siêu cưng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P87', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P87', 'Phốc sóc cute', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P88', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P88', 'Đàn 3 bé Samoyed xinh xinh ^^', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P89', 'P', 1, 4500000);
-insert into pet (`id`, `name`, `breed`) values ('P89', 'bắc kinh lai nhật', 'Chó Bắc Kinh');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P90', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P90', 'husky Kháu khỉnh', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P91', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P91', 'Poodle vàng mơ xinh xắn', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P92', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P92', 'husky hồng phấn mắt 2 màu', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P93', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P93', 'Đàn Corgi Tricolor', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P94', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P94', 'Đàn Beagle yêu yêu', 'Chó Beagle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P95', 'P', 1, 23000000);
-insert into pet (`id`, `name`, `breed`) values ('P95', 'bull pháp trắng siêu cưng', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P96', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P96', 'Bé Alas xám trắng ú nu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P97', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P97', 'Golden béo ú', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P98', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P98', 'Bé Pom xinh xắn', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P99', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P99', 'Bé Pug xinh xắn', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P100', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P100', 'Bé Golden gấu nhợn', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P101', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P101', 'Bé Poodle lông xoăn tít', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P102', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P102', 'Alaska xám trắng khủng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P103', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P103', 'Bé Golden thân thiện', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P104', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P104', 'corgi siêu xinh', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P105', 'P', 1, 21000000);
-insert into pet (`id`, `name`, `breed`) values ('P105', 'Đàn Corgi siêu cute', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P106', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P106', 'Bé chó săn thỏ Beagle', 'Chó Beagle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P107', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P107', 'Bé Alaska đen trắng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P108', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P108', 'Bé Golden xinh xắn', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P109', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P109', 'Sóc bông trắng', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P110', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P110', 'Bé Pom trắng bông', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P111', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P111', 'Corgi đực siêu siêu cute', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P112', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P112', 'Sam ú nu', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P113', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P113', 'Bé Phốc Sóc bông gòn', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P114', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P114', 'Alaska đen trắng hàng khủng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P115', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P115', 'Bé Alas tròn quay', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P116', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P116', 'Bé Samoyed trắng xinh', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P117', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P117', 'Husky xám trắng ^^', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P118', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P118', 'Beagle đực siêu xinh', 'Chó Beagle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P119', 'P', 1, 22000000);
-insert into pet (`id`, `name`, `breed`) values ('P119', 'Bé Corgi mặt ngầu', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P120', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P120', 'Bé Samoyed siêu yêu', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P121', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P121', 'Bé Alaska má bánh bao', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P122', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P122', 'Samoyed xinh xinh', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P123', 'P', 1, 17000000);
-insert into pet (`id`, `name`, `breed`) values ('P123', 'Alaska nâu đỏ cái', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P124', 'P', 1, 11000000);
-insert into pet (`id`, `name`, `breed`) values ('P124', 'Bé Samoyed siêu xinh', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P125', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P125', 'Alaska nâu đỏ xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P126', 'P', 1, 30000000);
-insert into pet (`id`, `name`, `breed`) values ('P126', 'Corgi lông dài siêu cưng', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P127', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P127', 'alaksa siêu cute', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P128', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P128', 'Husky xám trắng yêu yêu', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P129', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P129', 'Husky xám siêu ngầu', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P130', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P130', '2 bé Phốc sóc bé xíu xiu', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P131', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P131', 'husky mắt 2 màu', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P132', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P132', 'Alaska đỏ đực xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P133', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P133', 'Alaska hồng phấn đực đẹp trai', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P134', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P134', 'Bé Phốc Sóc hiếm có khó tìm', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P135', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P135', 'Husky mặt ngầu', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P136', 'P', 1, 14000000);
-insert into pet (`id`, `name`, `breed`) values ('P136', 'Bé Alas nâu đỏ kháu khỉnh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P137', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P137', 'Alas hồng phấn siêu ú nu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P138', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P138', 'Poodle vàng mơ siêu xinh', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P139', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P139', 'phốc sóc trắng', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P140', 'P', 1, 14000000);
-insert into pet (`id`, `name`, `breed`) values ('P140', 'Bé Alas nâu đỏ xinh yêu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P141', 'P', 1, 17000000);
-insert into pet (`id`, `name`, `breed`) values ('P141', 'Alaska nâu đỏ siêu cưng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P142', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P142', 'Sam sam xinh xinh', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P143', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P143', 'Bé Pom trắng mặt ngu yêu quá', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P144', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P144', 'Alaska nâu đực đẹp trai siêu cấp', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P145', 'P', 1, 5000000);
-insert into pet (`id`, `name`, `breed`) values ('P145', 'Đàn Bắc Kinh Nhật xinh xắn', 'Chó Bắc Kinh');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P146', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P146', 'Bé Poodle trắng xinh', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P147', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P147', 'Alaska Nâu đỏ mặt đầu gấu siêu yêu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P148', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P148', 'Corgi quấn tai siêu xinh', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P149', 'P', 1, 22000000);
-insert into pet (`id`, `name`, `breed`) values ('P149', 'Bé Corgi siêu xinh', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P150', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P150', 'Alaska hàng khủng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P151', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P151', 'Golden béo ú nu', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P152', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P152', 'Bé Samoyed bông gòn', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P153', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P153', 'husky đen trắng siêu cute', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P154', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P154', 'Bé Corgi siêu phẩm', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P155', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P155', 'Bé Alaska Mập Ú Nú', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P156', 'P', 1, 17000000);
-insert into pet (`id`, `name`, `breed`) values ('P156', 'Alaska nâu đỏ mập ú', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P157', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P157', 'Corgi', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P158', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P158', 'Bé Sam trắng bông', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P159', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P159', 'pug mặt thộn siêu cưng', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P160', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P160', 'Bé gấu Alaska đen trắng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P161', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P161', 'Alaska béo cưng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P162', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P162', 'Bé Pug núng nính', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P163', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P163', 'Alaska phấn mặt trái tim', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P164', 'P', 1, 14000000);
-insert into pet (`id`, `name`, `breed`) values ('P164', 'Bé Alaska đen trắng khủng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P165', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P165', 'Alaska siêu ngầu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P166', 'P', 1, 14000000);
-insert into pet (`id`, `name`, `breed`) values ('P166', 'Alaska ú đỏ xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P167', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P167', 'Bé Golden siêu yêu', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P168', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P168', 'Bé Alas hồng phấn siêu xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P169', 'P', 1, 14000000);
-insert into pet (`id`, `name`, `breed`) values ('P169', 'Đàn Alaska đen và nâu đỏ', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P170', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P170', 'Alaska nâu đỏ ú', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P171', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P171', 'Golden siêu ú', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P172', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P172', 'Pug mặt nhăn bụng phệ ^^', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P173', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P173', 'Husky đại ngáo ú nu', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P174', 'P', 1, 12000000);
-insert into pet (`id`, `name`, `breed`) values ('P174', 'phốc sóc bé xíu', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P175', 'P', 1, 14000000);
-insert into pet (`id`, `name`, `breed`) values ('P175', 'Bé Alaska nâu đỏ mặt ngầu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P176', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P176', 'Bé Poodle trắng xinh hết nấc', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P177', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P177', 'Alaska xiu cưng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P178', 'P', 1, 19000000);
-insert into pet (`id`, `name`, `breed`) values ('P178', 'Bé Alas đực khủng', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P179', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P179', 'husky đen trắng', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P180', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P180', 'Bé Alaska nâu đỏ ú nú', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P181', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P181', 'Alaska nâu đỏ', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P182', 'P', 1, 25000000);
-insert into pet (`id`, `name`, `breed`) values ('P182', 'Bé corgi đực', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P183', 'P', 1, 22000000);
-insert into pet (`id`, `name`, `breed`) values ('P183', 'Đàn Corgi siêu xinh', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P184', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P184', 'Đàn Samoyed béo ú nu', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P185', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P185', 'Phốc sóc vàng nâu ^^', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P186', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P186', 'Bé Alaska Hồng Phấn Siêu Ú', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P187', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P187', 'Bé Alaska mặt tươi', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P188', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P188', 'Husky nâu đỏ', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P189', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P189', 'Em Pug béo ú nu', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P190', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P190', 'husky đen', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P191', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P191', 'Alaska hồng phấn', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P192', 'P', 1, 20000000);
-insert into pet (`id`, `name`, `breed`) values ('P192', 'phốc sóc siêu cute', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P193', 'P', 1, 16000000);
-insert into pet (`id`, `name`, `breed`) values ('P193', 'Alaska nâu đỏ mặt ngầu', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P194', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P194', 'Bé Pom mặt hớn', 'Chó Phốc Sóc - Pomeranian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P195', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P195', 'Husky nâu đỏ mặt ngầu', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P196', 'P', 1, 18000000);
-insert into pet (`id`, `name`, `breed`) values ('P196', 'bé alaska ngầu lòi', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P197', 'P', 1, 22000000);
-insert into pet (`id`, `name`, `breed`) values ('P197', '2 bé Corgi max cute', 'Chó Corgi');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P198', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P198', 'Bé Samoyed trắng bông', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P199', 'P', 1, 11000000);
-insert into pet (`id`, `name`, `breed`) values ('P199', 'husky hồng phấn', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P200', 'P', 1, 55000000);
-insert into pet (`id`, `name`, `breed`) values ('P200', 'Alaska xám trắng siêu cute', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P201', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P201', 'Husky nâu đỏ mặt siêu ngầu', 'Chó Husky Siberian');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P202', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P202', 'Bé Pug đực mặt xinh', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P203', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P203', 'Samoyed trắng xinh', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P204', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P204', 'Bé Golden hoa hậu thân thiện', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P205', 'P', 1, 11000000);
-insert into pet (`id`, `name`, `breed`) values ('P205', 'Golden siêu đáng yêu', 'Chó Golden Retriever');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P206', 'P', 1, 10000000);
-insert into pet (`id`, `name`, `breed`) values ('P206', 'Bé Samoyed xinh như cục bông', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P207', 'P', 1, 5000000);
-insert into pet (`id`, `name`, `breed`) values ('P207', 'Bé cún Bắc Kinh', 'Chó Bắc Kinh');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P208', 'P', 1, 15000000);
-insert into pet (`id`, `name`, `breed`) values ('P208', 'Alaska đen ú nu siêu xinh', 'Chó Alaska Malamute');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P209', 'P', 1, 8500000);
-insert into pet (`id`, `name`, `breed`) values ('P209', 'Bé Poodle tiny trắng', 'Chó Poodle');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P210', 'P', 1, 13000000);
-insert into pet (`id`, `name`, `breed`) values ('P210', 'Samoyed siêu siêu xinh', 'Chó Samoyed');
-insert into product (`id`, `type`, `quantity`, `price`) values ('P211', 'P', 1, 9500000);
-insert into pet (`id`, `name`, `breed`) values ('P211', 'Pug sieu yêu siêu cưng', 'Chó Pug');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I1', 'I', 32, 30000);
-insert into item (`id`, `name`, `brand`) values ('I1', 'Cat food Me-o 350g', 'Me-o (Thailand)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I2', 'I', 35, 20000);
-insert into item (`id`, `name`, `brand`) values ('I2', 'Me-o Delite wet food with tuna flavor and shredded chicken 70gr', 'Me-o (Thailand)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I3', 'I', 23, 20000);
-insert into item (`id`, `name`, `brand`) values ('I3', 'Me-o Delite wet food with tuna and melon striped tuna 70gr', 'Me-o (Thailand)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I4', 'I', 54, 399000);
-insert into item (`id`, `name`, `brand`) values ('I4', 'Catsrang seed food for cats of all ages 5kg', 'Catsrang (Korea)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I5', 'I', 26, 215000);
-insert into item (`id`, `name`, `brand`) values ('I5', 'Catsrang seed food for cats of all ages 2kg', 'Catsrang (Korea)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I6', 'I', 34, 195000);
-insert into item (`id`, `name`, `brand`) values ('I6', 'Catsrang Adult Cat food 1.5kg', 'Catsrang (Korea)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I7', 'I', 26, 0);
-insert into item (`id`, `name`, `brand`) values ('I7', 'Farmina N&D PRIME kitten food with chicken and pomegranate recipe 300gr', 'Farmina (Italy)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I8', 'I', 55, 20000);
-insert into item (`id`, `name`, `brand`) values ('I8', 'Me-o Delite wet food with tuna flavor and crab stick 70gr', 'Me-o (Thailand)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I9', 'I', 88, 10000);
-insert into item (`id`, `name`, `brand`) values ('I9', 'Ciao reward soup tuna flavor supplemented with collagen for cats (14g * 4) retail bar', 'Ciao (Japan)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I10', 'I', 73, 0);
-insert into item (`id`, `name`, `brand`) values ('I10', 'Sportmix- Cat Food Original Recipe 6.8kg', 'Sportmix (USA)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I11', 'I', 67, 1050000);
-insert into item (`id`, `name`, `brand`) values ('I11', 'Farmina adult cat food - N&D ANCESTRAL GRAIN chicken, spelled, oats, pomegranate 5kg', 'Farmina (Italy)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I12', 'I', 50, 500000);
-insert into item (`id`, `name`, `brand`) values ('I12', 'Iskhan dry food for adult cats in a 2.5kg bag', 'Iskhan (Korea)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I13', 'I', 82, 225000);
-insert into item (`id`, `name`, `brand`) values ('I13', 'Food for Kitten Catsrang Kitten 1.5kg', 'Catsrang (Korea)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I14', 'I', 20, 0);
-insert into item (`id`, `name`, `brand`) values ('I14', 'Earthborn Holistic Wild Sea Catch Cat Food 2.27kg (all stages)', 'Earthborn Holistic (USA)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I15', 'I', 44, 1050000);
-insert into item (`id`, `name`, `brand`) values ('I15', 'Farmina N&D OCEAN adult cat food, cod, spelled, oatmeal and orange recipe 5kg', 'Farmina (Italy)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I16', 'I', 70, 145000);
-insert into item (`id`, `name`, `brand`) values ('I16', 'Farmina N&D ANCESTRAL GRAIN adult cat food chicken, spelled, oats, pomegranate 300gr', 'Farmina (Italy)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I17', 'I', 72, 65000);
-insert into item (`id`, `name`, `brand`) values ('I17', 'Food for kitten Catsrang Kitten 400gr', 'Catsrang (Korea)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I18', 'I', 20, 20000);
-insert into item (`id`, `name`, `brand`) values ('I18', 'Me-o Delite wet food with tuna flavor 70gr', 'Me-o (Thailand)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I19', 'I', 88, 89000);
-insert into item (`id`, `name`, `brand`) values ('I19', 'Royal canin Fit 32 (400g) - Cat food', 'Royal Canin (France)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I20', 'I', 59, 0);
-insert into item (`id`, `name`, `brand`) values ('I20', 'Earthborn Holistic Primitive Feline 2.27kg (all stages) cat food', 'Earthborn Holistic (USA)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I21', 'I', 48, 0);
-insert into item (`id`, `name`, `brand`) values ('I21', 'name', 'brand');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I22', 'I', 78, 276000);
-insert into item (`id`, `name`, `brand`) values ('I22', 'Calcium Phosphorus - support treatment for pets', 'PetAg');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I23', 'I', 95, 57000);
-insert into item (`id`, `name`, `brand`) values ('I23', 'Mon Ami Enzo - Large iron brush (for dogs)', 'Mon ami');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I24', 'I', 33, 50000);
-insert into item (`id`, `name`, `brand`) values ('I24', 'Bayer - Disinfectant for cats (tablets)', 'Bayer');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I25', 'I', 78, 190000);
-insert into item (`id`, `name`, `brand`) values ('I25', 'Revolution - Lice drops for dogs and cats 2.6 - 7.5kg', 'null');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I26', 'I', 76, 180000);
-insert into item (`id`, `name`, `brand`) values ('I26', 'Revolution - Lice drops for dogs and cats under 2.5kg', 'null');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I27', 'I', 33, 10000);
-insert into item (`id`, `name`, `brand`) values ('I27', 'Bio - Bio-Scour specializes in treating vomiting and diarrhea for dogs and cats', 'Bio-Pharmachemie');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I28', 'I', 23, 10000);
-insert into item (`id`, `name`, `brand`) values ('I28', 'Bio - Bio Plus nutritional supplement', 'Bio-Pharmachemie');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I29', 'I', 32, 165000);
-insert into item (`id`, `name`, `brand`) values ('I29', 'Frontline Plus- Small nape tick remedy for cats', 'Frontline Plus');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I30', 'I', 51, 160000);
-insert into item (`id`, `name`, `brand`) values ('I30', 'Fungikür spray for dogs and cats - Fungikür Spray 50ml', 'null');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I31', 'I', 77, 85000);
-insert into item (`id`, `name`, `brand`) values ('I31', 'Calcium Sleeky 140g', 'Sleeky (Thailand)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I32', 'I', 86, 275000);
-insert into item (`id`, `name`, `brand`) values ('I32', 'Bayer Drontal Oral Suspension- Dog worm bleach (liquid)', 'Bayer');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I33', 'I', 24, 10000);
-insert into item (`id`, `name`, `brand`) values ('I33', 'Bio - Bio-Gentadrop eye drops', 'Bio-Pharmachemie');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I34', 'I', 98, 652000);
-insert into item (`id`, `name`, `brand`) values ('I34', 'Furminator comb for long-haired little dogs', 'Furminator (USA)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I35', 'I', 63, 150000);
-insert into item (`id`, `name`, `brand`) values ('I35', 'Fleadom dog and cat flea collar', 'Virbac');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I36', 'I', 93, 120000);
-insert into item (`id`, `name`, `brand`) values ('I36', 'Bioline - Hair plucking powder 30g', 'PetCity');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I37', 'I', 86, 435000);
-insert into item (`id`, `name`, `brand`) values ('I37', 'Davis - EarMed Powder 450g', 'Davis');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I38', 'I', 27, 0);
-insert into item (`id`, `name`, `brand`) values ('I38', 'Mon Ami Enzo - A comb (for cats)', 'Mon ami');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I39', 'I', 89, 25000);
-insert into item (`id`, `name`, `brand`) values ('I39', 'Bio - Drops for external ear infections Bio-Gentazol for dogs', 'Bio-Pharmachemie');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I40', 'I', 73, 652000);
-insert into item (`id`, `name`, `brand`) values ('I40', 'Furminator comb for long haired cats', 'Furminator (USA)');
-insert into product (`id`, `type`, `quantity`, `price`) values ('I41', 'I', 41, 0);
-insert into item (`id`, `name`, `brand`) values ('I41', 'Bio - Yeast supports the digestion of Biotic for dogs and cats', 'Bio-Pharmachemie');
+    FOREIGN KEY (`petid`) REFERENCES pet (id),
+    FOREIGN KEY (`orderid`) REFERENCES petorder (id),
+	PRIMARY KEY (petid, orderid)
+);
+create table orderitem (
+    itemid varchar(10) REFERENCES item(id),
+    orderid varchar(10) REFERENCES itemorder (id),
+    quantity int,
+    PRIMARY KEY (itemid, orderid)
+);
+create table orderspa (
+    spaid varchar(10) REFERENCES spa(id),
+    orderid varchar(10) REFERENCES spaorder(id),
+    quantity int, 
+    PRIMARY KEY (spaid, orderid)
+);
+create table blod (
+    id varchar(10) PRIMARY KEY,
+    content text, 
+    author varchar(100),
+    `timestamp` date
+);
+create table blogimages(
+    blogid varchar(10), 
+    imageurl varchar(200),
+    PRIMARY KEY (blogid, imageurl)
+);
+create table admin (
+    id varchar(100) PRIMARY KEY,
+    pw varchar(100)
+);	
