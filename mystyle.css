@@ -45,7 +45,7 @@ input[type=text]{
     z-index: 20;
     color:black;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: bolder;
+    font-weight:600;
 }
 .m-navigator-bar.scrolled{
     background-color: rgba(255, 255, 255, 1);
@@ -61,11 +61,21 @@ input[type=text]{
     clear: left;
     height: 100px;
 } */
-.m-navigator-bar .navbar-margin-left{
+.m-navigator-bar .navbar-margin-right{
     display: block;
     float: right;
     width: 5%;
     height: inherit;
+}
+.m-navigator-bar .navbar-margin-left{
+    display: block;
+    float: left;
+    width: 5%;
+    height: inherit;
+}
+.m-navigator-bar img{
+    height: inherit;
+    size: auto;
 }
 .m-navigator-bar a{
     display: block;
@@ -76,7 +86,6 @@ input[type=text]{
     padding-right: 15px;
     padding-top: 14px;
     padding-bottom: 11px;
-    font-weight: 600;
 }
 
 .m-navigator-bar a:hover{
@@ -120,6 +129,7 @@ input[type=text]{
     top: 50%;
     transform: translateY(-50%); */
     font-size: 60px;
+    font-weight:900;
     font-family: 'Quicksand', sans-serif;
     background-color: black;
     opacity: 70%;
@@ -245,13 +255,17 @@ input[type=text]{
     width: 49%;
     display: inline-block;
 }
-.custommer-feedback .test-feedback-wrapper div{
+.custommer-feedback .test-feedback-wrapper>div{
     width: 100%;
+    display: flex;
+}
+.custommer-feedback .test-feedback-wrapper>div>div{
+    width: 70%;
     /* height: 100%; */
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 1px 1px 0 rgb(10 16 34 / 20%);
     color: black;
-    display: flex;
+    display: inline-block;
     
 }
 .custommer-feedback .test-feedback-wrapper div img{
@@ -323,14 +337,9 @@ input[type=text]{
     width: 100%;
     height: 350px;
     display: flex;
-}
-
-.help-container .shadow-overlay{
-    width: 100%;
-    height: 350px;
-    display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     background-color: rgba(0, 0, 0, 0.3);
     color: wheat;
     transition: background-color .3s;
@@ -352,14 +361,18 @@ input[type=text]{
     padding: 0px 20px;
 }
 .footer .footer-logo{
-    flex: 0 0 50%;
-    height: 200px;
+    flex: 0 0 60%;
+    height: 100px;
     text-align: left;
 }
+.footer .footer-logo img{
+    height: inherit;
+}
 .footer .footer-social{
-    flex: 0 0 50%;
-    height: 200px;
-    text-align: right;
+    flex: 0 0 40%;
+    height: 100px;
+    display: flex;
+    align-items: center;
 }
 .footer .footer-about{
     flex: 0 0 30%;
@@ -382,6 +395,14 @@ input[type=text]{
     flex: 0 0 100%;
     text-align: center;
 }
+.footer a{
+    display: inline-block;
+    transition: transform .5s, color .5s;
+}
+.footer a:hover{
+    transform: translate(10px, 0px);
+    color:khaki
+}
 
 /* ******************************responsive**************************** */
 
@@ -395,7 +416,7 @@ input[type=text]{
 
 @media only screen and (max-width: 1200px) {
     .section-container{
-        padding: 60 120
+        padding: 60 20
     }
     .items-container > div{
         flex: 0 0 50%;
@@ -407,7 +428,7 @@ input[type=text]{
 }
 
 /* phone */
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 755px) {
     .section-container{
         padding: 60 10
     }
@@ -416,6 +437,31 @@ input[type=text]{
     }
     .custommer-feedback .test-feedback-wrapper div{
         flex-direction: column;
+    }
+
+
+    .help-container{
+        flex: 0 0 100%;
+        margin-bottom: 30px;
+    }
+
+    .footer .footer-logo{
+        flex: 0 0 100%;
+    }
+    .footer .footer-social{
+        flex: 0 0 100%;
+    }
+    .footer .footer-about{
+        flex: 0 0 50%;
+    }
+    .footer .footer-explore{
+        flex: 0 0 50%;
+    }
+    .footer .footer-link{
+        flex: 0 0 50%;
+    }
+    .footer .footer-workinghour{
+        flex: 0 0 50%;
     }
 
 }
