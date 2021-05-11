@@ -42,7 +42,7 @@ input[type=text]{
     height: 55px;
     background-color: rgba(255, 255, 255, 0.2);
     position: fixed;
-    z-index: 20;
+    z-index: 1;
     color:black;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight:600;
@@ -373,6 +373,21 @@ input[type=text]{
     height: 100px;
     display: flex;
     align-items: center;
+}
+.footer-social div{
+    height: 35px; 
+    align-items: center;
+    border-radius: 20px;
+    border-width: 2px;
+    border-color: black;
+    border-style: dotted;
+}
+.footer .footer-social div a img{
+    width: 20px;
+    height: 20px;
+}
+.footer .footer-social div a:hover{
+    transform: none;
 }
 .footer .footer-about{
     flex: 0 0 30%;
