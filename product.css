@@ -204,7 +204,15 @@ img {
     background-color: #bbb;
     border-radius   : 50%;
     display         : inline-block;
-    transition      : background-color 0.6s ease;
+    transition      : background-color 0.5s ease;
+}
+
+.dot.active {
+    background-color: #98cb46;
+}
+
+.dot:hover {
+    background-color: #717171;
 }
 
 .fade {
@@ -229,11 +237,6 @@ img {
     .text {
         font-size: 11px
     }
-}
-
-.active,
-.dot:hover {
-    background-color: #717171;
 }
 
 .product-description {
