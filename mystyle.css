@@ -42,7 +42,7 @@ input[type=text]{
     height: 55px;
     background-color: rgba(255, 255, 255, 0.2);
     position: fixed;
-    z-index: 20;
+    z-index: 1;
     color:black;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight:600;
@@ -374,6 +374,21 @@ input[type=text]{
     display: flex;
     align-items: center;
 }
+.footer-social div{
+    height: 35px; 
+    align-items: center;
+    border-radius: 20px;
+    border-width: 2px;
+    border-color: black;
+    border-style: dotted;
+}
+.footer .footer-social div a img{
+    width: 20px;
+    height: 20px;
+}
+.footer .footer-social div a:hover{
+    transform: none;
+}
 .footer .footer-about{
     flex: 0 0 30%;
     background-image: url(./ImgSource/utility/worldmap.png);
@@ -416,14 +431,14 @@ input[type=text]{
 
 @media only screen and (max-width: 1200px) {
     .section-container{
-        padding: 60 20
+        padding: 60 10
     }
     .items-container > div{
         flex: 0 0 50%;
     }
     .section-container .custommer-rating, .section-container .custommer-feedback{
         flex: 0 0 100%;
-        
+        padding-left: 60;
     }
 }
 
@@ -439,6 +454,9 @@ input[type=text]{
         flex-direction: column;
     }
 
+    .section-container .custommer-rating, .section-container .custommer-feedback{
+        padding-left: 10;
+    }
 
     .help-container{
         flex: 0 0 100%;
