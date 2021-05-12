@@ -137,6 +137,10 @@ select option {
     transform: scale(0.75);
 }
 
+#body-content {
+    padding: 100px 0;
+}
+
 .container {
     width    : 100%;
     max-width: 1300px;
@@ -341,7 +345,7 @@ select option {
     }
 
     .product-count>* {
-        width: 100%;
+        width        : 100%;
         margin-bottom: 0.5rem;
     }
 }

@@ -133,6 +133,10 @@ a:focus {
     transform: scale(0.75);
 }
 
+#body-content {
+    padding: 100px 0;
+}
+
 .container {
     width    : 100%;
     max-width: 1300px;
