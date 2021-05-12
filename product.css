@@ -105,7 +105,7 @@ a:focus {
     background-image   : url(ImgSource/breadcrumbs_bg.jpg);
     background-repeat  : no-repeat;
     padding            : 10rem 0;
-    background-position: center center !important;
+    background-position: top center !important;
     max-width          : 1300px;
     margin             : 0 auto;
     z-index            : 2;

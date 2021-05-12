@@ -109,7 +109,7 @@ select option {
     background-image   : url(ImgSource/breadcrumbs_bg.jpg);
     background-repeat  : no-repeat;
     padding            : 10rem 0;
-    background-position: center center !important;
+    background-position: top center !important;
     max-width          : 1300px;
     margin             : 0 auto;
     z-index            : 2;
@@ -145,10 +145,14 @@ select option {
 }
 
 .product-count {
-    background   : #f4f4f6;
-    padding      : 0.8rem 1.5rem;
-    border-radius: 10px;
-    margin-bottom: 3rem;
+    background     : #f4f4f6;
+    padding        : 0.8rem 1.5rem;
+    border-radius  : 10px;
+    margin-bottom  : 3rem;
+    display        : flex;
+    flex-direction : row;
+    justify-content: space-between;
+    align-items    : center;
 }
 
 .product-count strong {
@@ -178,7 +182,7 @@ select option {
 
 .product-list {
     display              : grid;
-    gap                  : 30px;
+    gap                  : 2rem;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     margin-bottom        : 3rem;
 }
@@ -265,7 +269,7 @@ select option {
     border          : 3px solid transparent;
 }
 
-.product-grid .add-to-cart i{
+.product-grid .add-to-cart i {
     padding: 0 5px;
 }
 
@@ -327,8 +331,23 @@ select option {
     pointer-events: none;
 }
 
+@media only screen and (max-width: 768px) {
+    .breadcrumbs-page {
+        padding: 8rem 0;
+    }
+
+    .product-count {
+        flex-direction: column;
+    }
+
+    .product-count>* {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
 @media only screen and (max-width: 425px) {
-    .container{
-        padding : 0 3rem;
+    .container {
+        padding: 0 2rem;
     }
 }
