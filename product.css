@@ -148,17 +148,16 @@ a:focus {
 }
 
 .product-gallery {
-    /* flex: 0 0 50%;
-    max-width: 50%; */
     width           : 50%;
+    height          : fit-content;
     border-radius   : 10px;
     background-color: rgb(244, 244, 246);
-    padding         : 1.5rem;
+    padding         : 1rem;
 }
 
 .slides {
     position     : relative;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .slide {
@@ -198,8 +197,8 @@ img {
 
 .dot {
     cursor          : pointer;
-    height          : 1rem;
-    width           : 1rem;
+    height          : 0.8rem;
+    width           : 0.8rem;
     margin          : 0 3px;
     background-color: #bbb;
     border-radius   : 50%;
@@ -227,15 +226,6 @@ img {
 
     to {
         opacity: 1
-    }
-}
-
-@media only screen and (max-width: 300px) {
-
-    .prev,
-    .next,
-    .text {
-        font-size: 11px
     }
 }
 
@@ -327,7 +317,7 @@ input[type='radio'] {
 }
 
 .product-quantity input {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
 }
 
 input[type='number'] {
@@ -346,22 +336,52 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .add-to-cart {
-    color             : #FFF;
-    background        : #98cb46;
-    font-weight       : 700;
-    text-transform    : uppercase;
-    padding           : 0.5rem 1.9rem;
-    /* margin-left    : 2rem; */
-    font-size         : 1.125rem;
-    justify-content   : center;
-    display           : inline-flex;
-    outline           : none;
-    border            : none;
-    cursor            : pointer;
-    overflow          : hidden;
-    z-index           : 2;
-    align-items       : center;
-    position          : relative;
-    box-shadow        : 0px 4px 13px 0px rgb(152 203 70 / 50%);
-    border-radius     : 3px;
+    color          : #FFF;
+    background     : #98cb46;
+    font-weight    : 700;
+    text-transform : uppercase;
+    padding        : 0.5rem 1.9rem;
+    font-size      : 1.125rem;
+    justify-content: center;
+    display        : inline-flex;
+    outline        : none;
+    border         : none;
+    cursor         : pointer;
+    overflow       : hidden;
+    z-index        : 2;
+    align-items    : center;
+    position       : relative;
+    box-shadow     : 0px 4px 13px 0px rgb(152 203 70 / 50%);
+    border-radius  : 3px;
+}
+
+@media only screen and (max-width: 768px) {
+    .product-container {
+        flex-direction: column-reverse;
+    }
+
+    .product-description {
+        width        : 100%;
+        margin-bottom: 2rem;
+        padding      : 0
+    }
+
+    .product-gallery {
+        width : 100%;
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .product-gallery {
+        width: 100%;
+    }
+
+    .product-quantity {
+        flex-direction: column;
+    }
+
+    .product-quantity>* {
+        margin-bottom: 1rem;
+    }
 }
