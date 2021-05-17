@@ -2,63 +2,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="mystyle.css">
-<link rel="stylesheet" href="./service-stylesheet.css" media="screen,projection">
+<link rel="stylesheet" href="./adoption-stylesheet.css" media="screen,projection">
 
 <body>
-    <!-- form display-->
-    <div id="form-area" class="form-area" onclick="displayform(0)">
-    </div>
-
-    <div id="form1" class="form1">
-        <table>
-            <form method='post' target="#">
-                <tr>
-                    <td colspan="1" style="width: 100%; text-align: center;">
-                        SERVICE FORM
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1" style="width: 100%;">
-                        Name:
-                        <br>
-                        <input type="text" name="name" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1" style="width: 100%;">
-                        Email:
-                        <br>
-                        <input type="text" name="name" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1" style="width: 100%;">
-                        Phone-number:
-                        <br>
-                        <input type="text" name="name" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1" style="width: 100%;">
-                        Services:
-                        <br>
-                        <input type="text" name="name" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1" style="width: 100%; text-align: center;">
-                        <input type="submit" name="submit">
-                    </td>
-                </tr>
-            </form>
-        </table>
-
-    </div>
-
-
-
-
-
     <!-- begin of html -->
     <div class="m-navigator-bar" id="top-nav">
         <div class="navbar-margin-left"></div>
@@ -66,7 +12,7 @@
             <img src="./ImgSource/logo/logo-black.png">
         </a>
         <div class="navbar-margin-right"></div>
-        <a class="btm" href="#">About us</a>
+        <a class="btn" href="#">About us</a>
         <a class="btn" href="./tryit/newpage">Community</a>
         <a class="btn selected" href="#shop">FAQs</a>
         <a class="btn" href="#menu">Login</a>
@@ -76,8 +22,9 @@
         </div> -->
     </div>
 
-    <div class="service-wallpaper" style="background-image:url('./ImgSource/background/service_wallpaper.jpg');">
-        <div class="flex-container service-container">
+    <div id="main-cover" class="adoption-wallpaper"
+        style="background-image:url('./ImgSource/background/service_wallpaper.jpg');">
+        <div class="flex-container adoption-container">
             <div class="content">
                 <h3>Loving Your Cat</h3>
                 <span>
@@ -85,34 +32,44 @@
                     animi,sunt?
                 </span>
             </div>
-            <div class="flex-container item-container">
-                <div>
-                    <img src="./ImgSource/service/medical-service.png">
-                    <span>Nothing is more important than taking care of your pet</span>
-                    <h4>
-                        Medical help!
-                    </h4>
-                </div>
-            </div>
-            <div class="flex-container item-container" onclick="displayform(1)">
-                <div>
-                    <img src="./ImgSource/service/spa-service.png">
-                    <span>Nothing is more important than taking care of your pet</span>
-                    <h4>
-                        Spa service!
-                    </h4>
-                </div>
-            </div>
-            <div class="flex-container item-container">
-                <div>
-                    <img src="./ImgSource/service/petsister-service.png">
-                    <span>Nothing is more important than taking care of your pet</span>
-                    <h4>
-                        Hire a petsister!
-                    </h4>
+        </div>
+    </div>
+
+    <div class="section-container section-even">
+        <div class="search-container">
+            <form action="/action_page.php">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="flex-container" id="petlist-container">
+            <div class="pet-container" onclick="showdetailed(1)">
+                <div class="flex-container">
+                    <div class="flex-container pet-overview">
+                        <img src="./ImgSource/gallery/gallery-tmp.jpg">
+                        <div class="pet-info">
+                            <div class="flex-container">
+                                <div class="petname">Petname</div>
+                                <div class="petgender">Petgender<br><span>gender</span></div>
+                                <div class="petorigin">Petorigin<br><span>origin</span></div>
+                                <div class="petage">Petage<br><span>age</span></div>
+                                <div class="petweight">Petweight<br><span>weight</span></div>
+                            </div>
+                        </div>
+                        <div class="pet-description">
+                            <h4>Description:</h4>
+                            a<br>a<br>a<br>a<br>a<br>
+                        </div>
+                    </div>
+                    <div class="flex-container adoption-form">
+                        b
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
     </div>
 
     <div class="section-container footer">
@@ -183,32 +140,30 @@
 
 <script>
     "use strict";
-    window.onscroll = function () { adjustTopNav();};
-    //----------------------topnav----------------------------
+    window.onscroll = function () { adjustTopNav(); adjustCoverOpacity(); };
+    // ********top navigator**********
     var topNav = document.getElementById("top-nav");
     function adjustTopNav() {
         if (document.body.scrollTop > window.innerHeight / 3 || document.documentElement.scrollTop > window.innerHeight / 3) {
             topNav.className = "m-navigator-bar scrolled";
+            console.log("a");
         }
         else topNav.className = topNav.className.replace(" scrolled", "");
     }
-    
-    //----------------------formhandler----------------------------
-    function displayform(code) {
-        var region = document.getElementById('form-area');
-        var form = document.getElementById('form1');
-        switch (code) {
-            case 0:
-                region.style.display = 'none';
-                form.style.display = 'none';
-                break;
-            case 1:
-                region.style.display = 'flex';
-                form.style.display = 'flex';
-            default:
-                break;
+
+    // ********cover opacity**********
+    function adjustCoverOpacity() {
+
+        var i = (window.innerHeight - document.body.scrollTop) / window.innerHeight * 100;
+        console.log(i + "%");
+        if (i >= 0) {
+            document.getElementById("main-cover").style.opacity = i + '%';
         }
     }
+</script>
+
+<script>
+    dis
 </script>
 
 </html>
