@@ -1,0 +1,4 @@
+cmd chay docker-compose up
+vao mysql workbench chay script trong db/script.txt
+cd app
+node app.js

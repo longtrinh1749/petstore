@@ -1,0 +1,12 @@
+#Logs
+*.log
+logs
+*.out
+*.dat
+
+#node_modules
+node_modules
+
+#ide
+.idea
+
