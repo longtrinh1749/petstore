@@ -7,8 +7,8 @@ use petstoredb;
 #CREATE QUERY
 create table pet (
     id varchar(10) primary key,
-    name varchar(50),
-    breed varchar(20),
+    name varchar(100),
+    breed varchar(100),
     female bool,
     origin varchar(50),
     age int,
@@ -75,11 +75,11 @@ create table itemorderlist (
     PRIMARY KEY (itemid, orderid)
 );
 create table serviceorderlist (
-    spaid varchar(10) REFERENCES spa(id),
-    orderid varchar(10) REFERENCES spaorder(id),
-    FOREIGN KEY (`spaid`) REFERENCES spa (id),
-    FOREIGN KEY (`orderid`) REFERENCES spaorder (id),
-    PRIMARY KEY (spaid, orderid)
+    serviceid varchar(10) REFERENCES service(id),
+    orderid varchar(10) REFERENCES serviceorder(id),
+    FOREIGN KEY (`serviceid`) REFERENCES service (id),
+    FOREIGN KEY (`orderid`) REFERENCES serviceorder (id),
+    PRIMARY KEY (serviceid, orderid)
 );
 create table blog (
     id varchar(10) PRIMARY KEY,

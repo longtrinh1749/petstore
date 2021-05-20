@@ -2,3 +2,25 @@ cmd chay docker-compose up
 vao mysql workbench chay script trong db/script.txt
 cd app
 node app.js
+
+docker ps : lay mysql container id
+cd db
+docker cp script.txt a89413937bb3:/script.sql (a89 la id vua lay dc)
+docker exec -it a89413937bb3 /bin/bash
+mysql -u root -p
+use petstoredb; (db name)
+
+source script.sql (file vua copy)
+
+
+
+
+
+
+## co the check database 
+show databases;
+## check tables 
+use [database_name];
+show tables;
+#chay script
+source script.sql

@@ -17,7 +17,7 @@ Pet.getAll = result => {
     sql.query("select * from pet", (err, res) => {
         if(err) {
             console.log('Error: ',err);
-            result(null, err);
+            result(err, null);
             return;
         }
         console.log('pets: ', res);
