@@ -15,8 +15,6 @@ source script.sql (file vua copy)
 
 
 
-
-
 ## co the check database 
 show databases;
 ## check tables 
