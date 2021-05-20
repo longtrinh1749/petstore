@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <div class="section-container section-even">
+    <div class="section-container section-even" id='place'>
         <div class="search-container">
             <form action="/action_page.php">
                 <input type="text" placeholder="Search.." name="search">
@@ -43,7 +43,7 @@
             </form>
         </div>
         <div class="flex-container" id="petlist-container">
-            <div class="pet-container" onclick="showdetailed(1)">
+            <div class="pet-container" onclick="showdetailed(1)" id='pet'>
                 <div class="flex-container">
                     <div class="flex-container pet-overview">
                         <img src="./ImgSource/gallery/gallery-tmp.jpg">
@@ -68,8 +68,9 @@
             </div>
         </div>
 
-
-
+    </div>
+    <div class="section-container">
+        <div id="test"></div>
     </div>
 
     <div class="section-container footer">
@@ -163,7 +164,36 @@
 </script>
 
 <script>
-    dis
+    var petList;
+    var pet = document.getElementById('pet');
+    var petContainer = document.getElementById('petlist-container');
+    function getAllPet() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // document.getElementById("test").innerHTML = this.response;
+                petList = JSON.parse(this.response);
+                for (var x in petList) {
+                    // console.log(petList[x]['id']);
+                    place.appendChild(petContainer);
+                }
+
+            }
+        };
+        xhttp.open("GET", "http://localhost:3000/pets", true);
+        xhttp.send();
+    }
+
+    getAllPet();
+    console.log("here");
+
+    function clonePetItem(petToClone) {
+        var clone = petToClone.cloneNode(true);
+        clone.removeAttribute('id');
+        console.log(clone.firstElementChild.firstElementChild.firstElementChild);
+        console.log(clone.firstElementChild.firstElementChild.nthElementChild(2));
+    }
+    clonePetItem(pet);
 </script>
 
 </html>
