@@ -27,3 +27,59 @@ exports.findByDescription = (req, res) => {
         }
     })
 };
+
+exports.createPet = (req, res) => {
+    let data;
+    if (req.params) data = req.params;
+    else if(req.body) data = req.body;
+    else res.status(400).send({message: "Request content cannot be empty."});
+
+    const pet = new Pet({
+        id: data.id,
+        name: data.name,
+        breed: data.breed,
+        female: data.female,
+        origin: data.origin,
+        age: data.age,
+        weight: data.weight,
+        description: data.description,
+        price: data.price,
+        imageurl: data.imageurl
+    });
+
+    Pet.create(pet, (err, data) => {
+        if(err) {
+            res.status(500).send({message: err.message || "Errors occurred inserting Pet to database."})
+        } else {
+            res.send(data);
+        }
+    })
+}
+
+exports.updatePet = (req, res) => {
+    let data;
+    if (req.params) data = req.params;
+    else if(req.body) data = req.body;
+    else res.status(400).send({message: "Request content cannot be empty."});
+
+    const pet = new Pet({
+        id: data.id,
+        name: data.name,
+        breed: data.breed,
+        female: data.female,
+        origin: data.origin,
+        age: data.age,
+        weight: data.weight,
+        description: data.description,
+        price: data.price,
+        imageurl: data.imageurl
+    });
+
+    Pet.update(pet, (err, data) => {
+        if(err) {
+            res.status(500).send({message: err.message || "Errors occurred updating Pet from database."})
+        } else {
+            res.send(data);
+        }
+    })
+}

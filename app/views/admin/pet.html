@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Create two equal columns that floats next to each other */
+        .column {
+            text-align: center;
+            float: left;
+            width: 8%;
+        }
+
+        .desColumn {
+            text-align: center;
+            float: left;
+            width: 12%;
+        }
+        .row {
+            border-style: solid;
+            border-width: thin;
+            border-color: black;
+        }
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<a href="/admin">Return to Home</a>
+<div class="row">
+    <div class="column" >
+        ID
+    </div>
+    <div class="column" >
+        Name
+    </div>
+    <div class="column" >
+        Breed
+    </div>
+    <div class="column" >
+        Female
+    </div>
+    <div class="column" >
+        Origin
+    </div>
+    <div class="column" >
+        Age
+    </div>
+    <div class="column" >
+        Weight
+    </div>
+    <div class="column" >
+        Price
+    </div>
+    <div class="column" >
+        Image
+    </div>
+    <div class="desColumn" >
+        Description
+    </div>
+</div>
+<div class="row">
+    <div class="column" >
+        <input type="text">
+    </div>
+    <div class="column" >
+        <input type="text">
+    </div>
+    <div class="column" >
+        <input type="text">
+    </div>
+    <div class="column" >
+        <input type="text">
+    </div>
+    <div class="column" >
+        <input type="text">
+    </div>
+    <div class="column" >
+        <input type="text">
+    </div>
+    <div class="column" >
+        <input type="text">
+    </div>
+    <div class="column" >
+        <input type="text">
+    </div>
+    <div class="column" >
+        <input type="text">
+    </div>
+    <div class="desColumn" >
+        <input type="text">
+    </div>
+    <div class="desColumn" >
+        <input type="submit" value="Search">
+        <input type="submit" value="Create">
+    </div>
+</div>
+<!--dung jquery ajax how to submit form without redirect-->
+<!--https://stackoverflow.com/questions/25983603/how-to-submit-an-html-form-without-redirection-->
+<div class="row" id="items">
+
+</div>
+<script>
+    function getXMLHttpRequest() {
+        var req, err;
+        try {
+            req = new XMLHttpRequest();
+        } catch(err) {
+            try {
+                req = new ActiveXObject("MSXML2.XMLHttp.6.0");
+            } catch (err) {
+                try {
+                    req = new ActiveXObject("MSXML2.XMLHttp.3.0");
+                } catch (err) {
+                    req = false;
+                }
+            }
+        }
+        return req;
+    }
+
+    var ajaxRequest = getXMLHttpRequest();
+
+    function getAllPetRequest() {
+        if(ajaxRequest) {
+            ajaxRequest.onreadystatechange = getPetResponse;
+            ajaxRequest.open("GET", "/pets/all");
+            ajaxRequest.send(null);
+        }
+    }
+
+    function getPetResponse() {
+        if(ajaxRequest.readyState != 4) return;
+        else {
+            if(ajaxRequest.status == 200) {
+                var jsonRes = JSON.parse(ajaxRequest.responseText);
+                var tmpHtml = "";
+                for (var i = 0; i < jsonRes.length; i++) {
+                    tmpHtml += '<div class="row">';
+                    tmpHtml += '<div class="column" >' + jsonRes[i].id + '</div>';
+                    tmpHtml += '<div class="column" >' + jsonRes[i].name + '</div>';
+                    tmpHtml += '<div class="column" >' + jsonRes[i].breed + '</div>';
+                    tmpHtml += '<div class="column" >' + jsonRes[i].female + '</div>';
+                    tmpHtml += '<div class="column" >' + jsonRes[i].origin + '</div>';
+                    tmpHtml += '<div class="column" >' + jsonRes[i].age + '</div>';
+                    tmpHtml += '<div class="column" >' + jsonRes[i].weight + '</div>';
+                    tmpHtml += '<div class="column" >' + jsonRes[i].price + '</div>';
+                    tmpHtml += '<div class="column" >' + "Image" + '</div>';
+                    tmpHtml += '<div class="column" >' + jsonRes[i].description + '</div>';
+                    tmpHtml += '</div>';
+                }
+                document.getElementById("items").innerHTML = tmpHtml;
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+    }
+
+    getAllPetRequest();
+</script>
+
+
+</body>
+</html>
