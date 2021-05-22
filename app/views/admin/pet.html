@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
 
         * {
@@ -13,108 +14,131 @@
         .column {
             text-align: center;
             float: left;
-            width: 8%;
+            width: 100px;
         }
 
         .desColumn {
             text-align: center;
             float: left;
+            width: 160px;
+        }
+
+        .actionColumn {
+            text-align: center;
+            float: right;
             width: 12%;
         }
+
         .row {
-            border-style: solid;
-            border-width: thin;
-            border-color: black;
+            /*border-style: solid;*/
+            /*border-width: thin;*/
+            /*border-color: black;*/
         }
+
         /* Clear floats after the columns */
         .row:after {
             content: "";
             display: table;
             clear: both;
         }
+
+        .ta {
+            width: 99px;
+            height: 40px
+        }
+
+        .taDes {
+            width: 159px;
+            height: 40px;
+        }
     </style>
 </head>
 <body>
 <a href="/admin">Return to Home</a>
 <div class="row">
-    <div class="column" >
+    <div class="column">
         ID
     </div>
-    <div class="column" >
+    <div class="column">
         Name
     </div>
-    <div class="column" >
+    <div class="column">
         Breed
     </div>
-    <div class="column" >
+    <div class="column">
         Female
     </div>
-    <div class="column" >
+    <div class="column">
         Origin
     </div>
-    <div class="column" >
+    <div class="column">
         Age
     </div>
-    <div class="column" >
+    <div class="column">
         Weight
     </div>
-    <div class="column" >
+    <div class="column">
         Price
     </div>
-    <div class="column" >
+    <div class="column">
         Image
     </div>
-    <div class="desColumn" >
+    <div class="desColumn">
         Description
     </div>
 </div>
-<div class="row">
-    <div class="column" >
-        <input type="text">
+<form id="searchForm">
+    <div class="row">
+        <div class="column">
+            <input class="ta" type="text" id="searchId" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchName" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchBreed" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchFemale" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchOrigin" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchAge" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchWeight" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchPrice" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchImage" value="">
+        </div>
+        <div class="desColumn">
+            <input class="taDes" type="text" id="searchDescription" value="">
+        </div>
+        <div class="actionColumn">
+            <button id="searchAllButton" type="button" value="Search" onclick="getAllPetRequest()">Search All</button>
+            <button id="searchButton" type="button" value="Search" onclick="searchPet()">Search</button>
+            <button class="createButton" id="createButton" type="button" value="Create">Create</button>
+        </div>
     </div>
-    <div class="column" >
-        <input type="text">
-    </div>
-    <div class="column" >
-        <input type="text">
-    </div>
-    <div class="column" >
-        <input type="text">
-    </div>
-    <div class="column" >
-        <input type="text">
-    </div>
-    <div class="column" >
-        <input type="text">
-    </div>
-    <div class="column" >
-        <input type="text">
-    </div>
-    <div class="column" >
-        <input type="text">
-    </div>
-    <div class="column" >
-        <input type="text">
-    </div>
-    <div class="desColumn" >
-        <input type="text">
-    </div>
-    <div class="desColumn" >
-        <input type="submit" value="Search">
-        <input type="submit" value="Create">
-    </div>
-</div>
+</form>
+<div>Your items:</div>
 <!--dung jquery ajax how to submit form without redirect-->
 <!--https://stackoverflow.com/questions/25983603/how-to-submit-an-html-form-without-redirection-->
 <div class="row" id="items">
 
 </div>
 <script>
+
     function getXMLHttpRequest() {
         var req, err;
         try {
             req = new XMLHttpRequest();
-        } catch(err) {
+        } catch (err) {
             try {
                 req = new ActiveXObject("MSXML2.XMLHttp.6.0");
             } catch (err) {
@@ -131,43 +155,216 @@
     var ajaxRequest = getXMLHttpRequest();
 
     function getAllPetRequest() {
-        if(ajaxRequest) {
+        if (ajaxRequest) {
             ajaxRequest.onreadystatechange = getPetResponse;
             ajaxRequest.open("GET", "/pets/all");
             ajaxRequest.send(null);
         }
     }
 
+    function searchPet() {
+        if (ajaxRequest) {
+            // let data = new FormData(document.querySelector("#searchForm"));
+            // console.log("Form datass: ", data);
+            ajaxRequest.onreadystatechange = getPetResponse;
+            ajaxRequest.open("POST", "/pets/get", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            let id = document.getElementById("searchId").value;
+            let name = document.getElementById("searchName").value;
+            let breed = document.getElementById("searchBreed").value;
+            let female = document.getElementById("searchFemale").value;
+            let origin = document.getElementById("searchOrigin").value;
+            let age = document.getElementById("searchAge").value;
+            let weight = document.getElementById("searchWeight").value;
+            let price = document.getElementById("searchPrice").value;
+            let image = document.getElementById("searchImage").value;
+            let description = document.getElementById("searchDescription").value;
+            datas += '&id=' + id + '&name=' + name + '&breed=' + breed + '&female=' + female + '&origin=' + origin +
+                '&age=' + age + '&weight=' + weight + '&price=' + price + '&image=' + image +
+                '&description=' + description;
+            ajaxRequest.send(datas);
+            // ajaxRequest.send('id=10');
+        }
+    }
+
+    function createPet() {
+        if (ajaxRequest) {
+            // let data = new FormData(document.querySelector("#searchForm"));
+            // console.log("Form datass: ", data);
+            ajaxRequest.onreadystatechange = getPetCreateResponse;
+            ajaxRequest.open("POST", "/admin/pets/create", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            let id = document.getElementById("searchId").value;
+            let name = document.getElementById("searchName").value;
+            let breed = document.getElementById("searchBreed").value;
+            let female = document.getElementById("searchFemale").value;
+            let origin = document.getElementById("searchOrigin").value;
+            let age = document.getElementById("searchAge").value;
+            let weight = document.getElementById("searchWeight").value;
+            let price = document.getElementById("searchPrice").value;
+            let image = document.getElementById("searchImage").value;
+            let description = document.getElementById("searchDescription").value;
+            datas += '&id=' + id + '&name=' + name + '&breed=' + breed + '&female=' + female + '&origin=' + origin +
+                '&age=' + age + '&weight=' + weight + '&price=' + price + '&imageurl=' + image +
+                '&description=' + description;
+            ajaxRequest.send(datas);
+            // ajaxRequest.send('id=10');
+        }
+    }
+
+    function updatePet(pet) {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getPetUpdateResponse;
+            ajaxRequest.open("POST", "/admin/pets/update", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            datas += '&id=' + pet.id + '&name=' + pet.name + '&breed=' + pet.breed + '&female=' + pet.female + '&origin=' + pet.origin +
+                '&age=' + pet.age + '&weight=' + pet.weight + '&price=' + pet.price + '&image=' + pet.image +
+                '&description=' + pet.description;
+            ajaxRequest.send(datas);
+        }
+    }
+
+    function deletePet(pet) {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getPetDeleteResponse;
+            ajaxRequest.open("POST", "/admin/pets/delete", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            datas += '&id=' + pet.id;
+            ajaxRequest.send(datas);
+        }
+    }
+
+    function restartJQuery() {
+        jQuery("button").click(function () {
+            var id = jQuery(this).parent().parent().get(0).id;
+            var buttonName = jQuery(this).attr("class");
+            var buttonId = jQuery(this).attr("id");
+            console.log(buttonName);
+            if(buttonName === "updateButton") {
+                if (document.getElementById(buttonId).innerHTML === "Update") {
+                    document.getElementById(id).getElementsByClassName("ta")[1].removeAttribute("readonly");
+                    document.getElementById(id).getElementsByClassName("ta")[2].removeAttribute("readonly");
+                    document.getElementById(id).getElementsByClassName("ta")[3].removeAttribute("readonly");
+                    document.getElementById(id).getElementsByClassName("ta")[4].removeAttribute("readonly");
+                    document.getElementById(id).getElementsByClassName("ta")[5].removeAttribute("readonly");
+                    document.getElementById(id).getElementsByClassName("ta")[6].removeAttribute("readonly");
+                    document.getElementById(id).getElementsByClassName("ta")[7].removeAttribute("readonly");
+                    document.getElementById(id).getElementsByClassName("taDes")[0].removeAttribute("readonly");
+                    document.getElementById(buttonId).innerHTML = "Confirm";
+                } else {
+                    var pet = {};
+                    // console.log(document.getElementById(id).getElementsByClassName("ta")[9].value);
+                    pet.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+                    pet.name = document.getElementById(id).getElementsByClassName("ta")[1].value;
+                    pet.breed = document.getElementById(id).getElementsByClassName("ta")[2].value;
+                    pet.female = document.getElementById(id).getElementsByClassName("ta")[3].value;
+                    pet.origin = document.getElementById(id).getElementsByClassName("ta")[4].value;
+                    pet.age = document.getElementById(id).getElementsByClassName("ta")[5].value;
+                    pet.weight = document.getElementById(id).getElementsByClassName("ta")[6].value;
+                    pet.price = document.getElementById(id).getElementsByClassName("ta")[7].value;
+                    pet.description = document.getElementById(id).getElementsByClassName("taDes")[0].value;
+                    document.getElementById(id).getElementsByClassName("ta")[1].readOnly = true;
+                    document.getElementById(id).getElementsByClassName("ta")[2].readOnly = true;
+                    document.getElementById(id).getElementsByClassName("ta")[3].readOnly = true;
+                    document.getElementById(id).getElementsByClassName("ta")[4].readOnly = true;
+                    document.getElementById(id).getElementsByClassName("ta")[5].readOnly = true;
+                    document.getElementById(id).getElementsByClassName("ta")[6].readOnly = true;
+                    document.getElementById(id).getElementsByClassName("ta")[7].readOnly = true;
+                    document.getElementById(id).getElementsByClassName("taDes")[0].readOnly = true;
+                    document.getElementById(buttonId).innerHTML = "Update";
+                    updatePet(pet);
+                }
+            } else if (buttonName === "deleteButton") {
+                var pet = {};
+                pet.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+                deletePet(pet);
+            } else if (buttonName === "createButton") {
+                console.log("Creating");
+                createPet();
+            }
+        });
+    }
+
     function getPetResponse() {
-        if(ajaxRequest.readyState != 4) return;
+        if (ajaxRequest.readyState != 4) return;
         else {
-            if(ajaxRequest.status == 200) {
+            if (ajaxRequest.status == 200) {
                 var jsonRes = JSON.parse(ajaxRequest.responseText);
                 var tmpHtml = "";
                 for (var i = 0; i < jsonRes.length; i++) {
-                    tmpHtml += '<div class="row">';
-                    tmpHtml += '<div class="column" >' + jsonRes[i].id + '</div>';
-                    tmpHtml += '<div class="column" >' + jsonRes[i].name + '</div>';
-                    tmpHtml += '<div class="column" >' + jsonRes[i].breed + '</div>';
-                    tmpHtml += '<div class="column" >' + jsonRes[i].female + '</div>';
-                    tmpHtml += '<div class="column" >' + jsonRes[i].origin + '</div>';
-                    tmpHtml += '<div class="column" >' + jsonRes[i].age + '</div>';
-                    tmpHtml += '<div class="column" >' + jsonRes[i].weight + '</div>';
-                    tmpHtml += '<div class="column" >' + jsonRes[i].price + '</div>';
-                    tmpHtml += '<div class="column" >' + "Image" + '</div>';
-                    tmpHtml += '<div class="column" >' + jsonRes[i].description + '</div>';
+                    tmpHtml += '<div class="row" id="' + i + '">';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexId' + i + '" readonly="readonly">' + jsonRes[i].id + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexName' + i + '" readonly="readonly">' + jsonRes[i].name + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexBreed' + i + '" readonly="readonly">' + jsonRes[i].breed + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexFemale' + i + '" readonly="readonly">' + jsonRes[i].female + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexOrigin' + i + '" readonly="readonly">' + jsonRes[i].origin + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexAge' + i + '" readonly="readonly">' + jsonRes[i].age + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexWeight' + i + '" readonly="readonly">' + jsonRes[i].weight + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPrice' + i + '" readonly="readonly">' + jsonRes[i].price + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexImage' + i + '" readonly="readonly">Image</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="taDes" id="indexDescription' + i + '" readonly="readonly">' + jsonRes[i].description + '</textarea></div>';
+                    tmpHtml += '<div class="actionColumn" >\n' +
+                        '        <button type="button" class="updateButton" id="updateButton' + i + '" value="Update">Update</button>' +
+                        '        <button type="button" class="deleteButton" id="deleteButton' + i + '" value="Delete">Delete</button>' +
+                        '    </div>';
                     tmpHtml += '</div>';
                 }
+                // console.log(tmpHtml);
                 document.getElementById("items").innerHTML = tmpHtml;
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
         }
+        restartJQuery();
+    }
+
+    function getPetCreateResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                console.log("Create success");
+                searchPet();
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+        restartJQuery();
+    }
+    function getPetDeleteResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                console.log("Delete success");
+                searchPet();
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+        restartJQuery();
+    }
+
+    function getPetUpdateResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                console.log("Update success");
+                searchPet();
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+        restartJQuery();
     }
 
     getAllPetRequest();
 </script>
-
-
 </body>
 </html>

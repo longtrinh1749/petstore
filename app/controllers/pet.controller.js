@@ -13,10 +13,11 @@ exports.findAll = (req, res) => {
 exports.findByDescription = (req, res) => {
     Pet.getFromDescription(req.params.petDescription, (err, data) => {
         if(err) {
-            if (err.kind === "not found") {
-                res.status(404).send({
-                    message: "Not found pet with description."
-                });
+            if (err.kind === "not_found") {
+                // res.status(404).send({
+                //     message: "Not found pet with description."
+                // });
+                res.send({});
             } else {
                 res.status(500).send({
                     message: err.message || "Some error occurred while get pet with description."
@@ -27,6 +28,24 @@ exports.findByDescription = (req, res) => {
         }
     })
 };
+
+exports.find = (req, res) => {
+    pet = req.body;
+    console.log(pet.id);
+    Pet.get(pet, (err, data) => {
+        if(err) {
+            if (err.kind === "not_found") {
+                res.send({});
+            } else {
+                res.status(500).send({
+                    message: err.message || "Some error occurred while get pet info."
+                });
+            }
+        } else {
+            res.send(data);
+        }
+    })
+}
 
 exports.createPet = (req, res) => {
     let data;
