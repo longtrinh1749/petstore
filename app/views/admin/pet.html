@@ -122,7 +122,8 @@
         <div class="actionColumn">
             <button id="searchAllButton" type="button" value="Search" onclick="getAllPetRequest()">Search All</button>
             <button id="searchButton" type="button" value="Search" onclick="searchPet()">Search</button>
-            <button class="createButton" id="createButton" type="button" value="Create">Create</button>
+            <button class="createButton" id="createButton" type="button" value="Create" onclick="createPet()">Create</button>
+            <input type="reset">
         </div>
     </div>
 </form>
@@ -164,8 +165,6 @@
 
     function searchPet() {
         if (ajaxRequest) {
-            // let data = new FormData(document.querySelector("#searchForm"));
-            // console.log("Form datass: ", data);
             ajaxRequest.onreadystatechange = getPetResponse;
             ajaxRequest.open("POST", "/pets/get", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -185,18 +184,14 @@
                 '&age=' + age + '&weight=' + weight + '&price=' + price + '&image=' + image +
                 '&description=' + description;
             ajaxRequest.send(datas);
-            // ajaxRequest.send('id=10');
         }
     }
 
     function createPet() {
         if (ajaxRequest) {
-            // let data = new FormData(document.querySelector("#searchForm"));
-            // console.log("Form datass: ", data);
             ajaxRequest.onreadystatechange = getPetCreateResponse;
             ajaxRequest.open("POST", "/admin/pets/create", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
             let id = document.getElementById("searchId").value;
             let name = document.getElementById("searchName").value;
@@ -208,11 +203,11 @@
             let price = document.getElementById("searchPrice").value;
             let image = document.getElementById("searchImage").value;
             let description = document.getElementById("searchDescription").value;
-            datas += '&id=' + id + '&name=' + name + '&breed=' + breed + '&female=' + female + '&origin=' + origin +
+            datas += 'id=' + id + '&name=' + name + '&breed=' + breed + '&female=' + female + '&origin=' + origin +
                 '&age=' + age + '&weight=' + weight + '&price=' + price + '&imageurl=' + image +
                 '&description=' + description;
             ajaxRequest.send(datas);
-            // ajaxRequest.send('id=10');
+            // ajaxRequest.send('&id=' + id);
         }
     }
 
@@ -286,9 +281,9 @@
                 var pet = {};
                 pet.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
                 deletePet(pet);
-            } else if (buttonName === "createButton") {
-                console.log("Creating");
-                createPet();
+            // } else if (buttonName === "createButton") {
+            //     console.log("Creating");
+            //     createPet();
             }
         });
     }

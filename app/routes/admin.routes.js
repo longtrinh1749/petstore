@@ -16,14 +16,15 @@ routes.get('/',(req,res) => {
     }
     else {
         console.log(req.session.admin);
-        res.redirect("/admin/login");
+        res.redirect(req.baseUrl + "/login");
     }
 });
 
 routes.get('/login',(req,res) => {
     let sess = req.session;
     if(sess.admin) {
-        return res.redirect('/admin');
+        // return res.redirect('/admin');
+        return res.redirect(req.baseUrl);
     } else res.sendFile(path.views + '/admin/login.html');
 });
 
@@ -35,11 +36,11 @@ routes.post('/login', (req, res) => {
         } else {
             if (err) {
                 console.log("Err");
-                res.redirect('/admin/login');
+                res.redirect(req.baseUrl + '/login');
             } else {
                 console.log("Success");
                 req.session.admin = req.body.username;
-                res.redirect("/admin")
+                res.redirect(req.baseUrl)
             }
         }
     });
@@ -48,10 +49,10 @@ routes.post('/login', (req, res) => {
 routes.get('/logout',(req,res) => {
     req.session.destroy((err) => {
         if(err) {
-            res.redirect('/admin')
+            res.redirect(req.baseUrl)
             return console.log(err);
         }
-        res.redirect('/admin');
+        res.redirect(req.baseUrl);
     });
 });
 
