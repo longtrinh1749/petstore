@@ -5,10 +5,11 @@
 <link rel="stylesheet" href="./adoption-stylesheet.css" media="screen,projection">
 
 <body>
+    <iframe name="hiddenFrame" class="hide"></iframe>
     <!-- begin of html -->
     <div class="m-navigator-bar" id="top-nav">
         <div class="navbar-margin-left"></div>
-        <a href=# style="padding: 0; display: block; float: left;">
+        <a href=./ style="padding: 0; display: block; float: left;">
             <img src="./ImgSource/logo/logo-black.png">
         </a>
         <div class="navbar-margin-right"></div>
@@ -23,13 +24,15 @@
     </div>
 
     <div id="main-cover" class="adoption-wallpaper"
-        style="background-image:url('./ImgSource/background/service_wallpaper.jpg');">
+        style="background-image:url('./ImgSource/background/adoption_wallpaper.jpg');">
         <div class="flex-container adoption-container">
-            <div class="content">
-                <h3>Loving Your Cat</h3>
-                <span>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates deserunt facere placeat est
-                    animi,sunt?
+            <div class="content flex-container" style="justify-content: center;">
+                <h3 style="text-align:center; flex: 0 0 100%;">want to adopt your best friend?</h3><br>
+                <span style="font-size: 44px; text-align: center; flex: 0 0 100%;">
+                    Unconditional love is as close as your nearest Shelter.
+                </span><br>
+                <span id="getapet" onclick="getAPet()">
+                    GET A PET NOW
                 </span>
             </div>
         </div>
@@ -37,19 +40,17 @@
 
     <div class="section-container section-even" id='place'>
         <div class="search-container">
-            <form action="/action_page.php">
-                <input type="text" placeholder="Search.." name="search">
-                <button type="submit">Search</button>
-            </form>
+            <input type="text" id="petToSearch" placeholder="Search.." name="search">
+            <button onclick="searchPet()">Search</button>
         </div>
         <div class="flex-container" id="petlist-container">
-            <div class="pet-container" onclick="showdetailed(1)" id='pet'>
+            <div class="pet-container" onclick="showDetailed(1)" id="1">
                 <div class="flex-container">
                     <div class="flex-container pet-overview">
-                        <img src="./ImgSource/gallery/gallery-tmp.jpg">
+                        <img src="">
                         <div class="pet-info">
                             <div class="flex-container">
-                                <div class="petname">Petname</div>
+                                <div class="petname">name</div>
                                 <div class="petgender">Petgender<br><span>gender</span></div>
                                 <div class="petorigin">Petorigin<br><span>origin</span></div>
                                 <div class="petage">Petage<br><span>age</span></div>
@@ -58,11 +59,55 @@
                         </div>
                         <div class="pet-description">
                             <h4>Description:</h4>
-                            a<br>a<br>a<br>a<br>a<br>
+                            <br>a<br>v<br>v<br><br>v<br>v<br>v<br>
                         </div>
                     </div>
                     <div class="flex-container adoption-form">
-                        b
+                        <div id="form1" class="form1">
+                            <table>
+                                <form method='post' action="http://localhost:3000/adoption">
+                                    <tr>
+                                        <td colspan="1" style="width: 100%; text-align: center; font-weight: bold;">
+                                            ADOPTION FORM
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" style="width: 100%;">
+                                            Name:
+                                            <br>
+                                            <input type="text" name="name" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" style="width: 100%;">
+                                            Email:
+                                            <br>
+                                            <input type="text" name="email" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" style="width: 100%;">
+                                            Phone-number:
+                                            <br>
+                                            <input type="text" name="phonenumber" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" style="width: 100%;">
+                                            Pet ID:
+                                            <br>
+                                            <input type="text" name="petid" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" style="width: 100%; text-align: center;">
+                                            <input type="submit" name="submit">
+                                        </td>
+                                    </tr>
+                                </form>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,6 +184,7 @@
     </div>
 </body>
 
+<!-- -------------------nav bar effect------------------- -->
 <script>
     "use strict";
     window.onscroll = function () { adjustTopNav(); adjustCoverOpacity(); };
@@ -161,21 +207,98 @@
             document.getElementById("main-cover").style.opacity = i + '%';
         }
     }
+
+    function getAPet() {
+        console.log("scroll");
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    }
 </script>
 
+<!-- -------------------generate content------------------- -->
 <script>
-    var petList;
-    var pet = document.getElementById('pet');
     var petContainer = document.getElementById('petlist-container');
+
+    function clonePetItem(petToClone) {
+        var tmp = "";
+        return tmp +
+            "<div class=\"pet-container\" onclick=\"showDetailed(\'" + petToClone['id'] + "\')\" id=\"" + petToClone['id'] + "\">" +
+            "<div class=\"flex-container\">" +
+            "<div class=\"flex-container pet-overview\">" +
+            "<img src=\"" + petToClone['imageurl'] + "\">" +
+            "<div class=\"pet-info\">" +
+            "<div class=\"flex-container\">" +
+            "<div class=\"petname\">" + petToClone['name'] + "</div>" +
+            "<div class=\"petgender\">Pet gender<br><span>" + (petToClone['female'] == 0 ? "male" : "female") + "</span></div>" +
+            "<div class=\"petorigin\">Pet origin<br><span>" + petToClone['origin'] + "</span></div>" +
+            "<div class=\"petage\">Pet age<br><span>" + petToClone['age'] + "</span></div>" +
+            "<div class=\"petweight\">Pet weight<br><span>" + petToClone['weight'] + "</span></div>" +
+            "</div>" +
+            "</div>" +
+            "<div class=\"pet-description\">" +
+            "<h4>Description:</h4>" +
+            petToClone['description'] +
+            "</div>" +
+            "</div>" +
+            "<div class=\"flex-container adoption-form\">" +
+            "<div id=\"form1\" class=\"form1\">" +
+
+            "<form method='post' onsubmit=\"onSubmit()\" target=\"hiddenFrame\" action=\"http://localhost:3000/pets/form\">" +
+            "<table>" + "<tr>" +
+            "<td colspan=\"1\" style=\"width: 100%; text-align: center; font-weight: bold;\">" +
+            "ADOPTION FORM" +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td colspan=\"1\" style=\"width: 100%;\">" +
+            "Name:" +
+            "<br>" +
+            "<input type=\"text\" name=\"name\" required placeholder=\"your name\">" +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td colspan=\"1\" style=\"width: 100%;\">" +
+            "Email:" +
+            "<br>" +
+            "<input type=\"email\" name=\"email\" required placeholder=\"i.e. xyz@gmail.com\">" +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td colspan=\"1\" style=\"width: 100%;\">" +
+            "Phone-number:" +
+            "<br>" +
+            "<input type=\"tel\" name=\"phonenumber\" pattern=\"[0-9]{10}\" placeholder=\"i.e. 0123456789\" required>" +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td colspan=\"1\" style=\"width: 100%;\">" +
+            "Pet ID:" +
+            "<br>" +
+            "<input type=\"text\" name=\"petid\" value=\"" + petToClone['id'] + "\" readonly>" +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td colspan=\"1\" style=\"width: 100%; text-align: center;\">" +
+            "<input type=\"submit\" name=\"submit\" value=\"Adopt now!\">" +
+            "</td>" +
+            "</tr>" + "</table>" +
+            "</form>" +
+
+
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
+    }
+
     function getAllPet() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                // document.getElementById("test").innerHTML = this.response;
                 petList = JSON.parse(this.response);
+                petContainer.innerHTML = "";
                 for (var x in petList) {
-                    // console.log(petList[x]['id']);
-                    place.appendChild(petContainer);
+                    petContainer.innerHTML += clonePetItem(petList[x]);
+                    // console.log(clonePetItem(petList[x]));
                 }
 
             }
@@ -184,16 +307,103 @@
         xhttp.send();
     }
 
-    getAllPet();
-    console.log("here");
+    function searchPet() {
+        var key = document.getElementById("petToSearch").value;
+        console.log("seraching");
+        if (key == "") {
+            console.log("Empty");
+            getAllPet();
+        }
+        else {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    petList = JSON.parse(this.response);
+                    petContainer.innerHTML = "";
+                    for (var x in petList) {
+                        petContainer.innerHTML += clonePetItem(petList[x]);
+                        // console.log(clonePetItem(petList[x]));
+                    }
 
-    function clonePetItem(petToClone) {
-        var clone = petToClone.cloneNode(true);
-        clone.removeAttribute('id');
-        console.log(clone.firstElementChild.firstElementChild.firstElementChild);
-        console.log(clone.firstElementChild.firstElementChild.nthElementChild(2));
+                }
+            };
+            xhttp.open("GET", "http://localhost:3000/pets?petDescription=" + key, true);
+            xhttp.send();
+        }
     }
-    clonePetItem(pet);
+
+    getAllPet();
 </script>
+
+<!-- -------------------handle interactive with item------------------- -->
+<script>
+    var currentid;
+
+    function showDetailed(id) {
+        console.log(id);
+        var container = document.getElementById(id);
+
+
+
+        container.style.transition = "all .3s";
+
+        if (window.innerWidth > 1000) {
+            container.style.flex = "0 0 98%";
+            container.style.margin = "0";
+            container.querySelector(".pet-overview").style.flex = "0 0 48%";
+            container.querySelector(".pet-overview").style.padding = "60 20 20 40";
+            container.querySelector(".pet-description").style.display = "block";
+            container.querySelector(".adoption-form").style.display = "block";
+        }
+        else {
+            container.style.flex = "0 0 98%";
+            container.style.margin = "0";
+            container.querySelector(".pet-overview").style.flex = "0 0 98%";
+            container.querySelector(".pet-overview").style.padding = "60 20 20 40";
+            container.querySelector(".pet-description").style.display = "block";
+            container.querySelector(".adoption-form").style.display = "block";
+        }
+
+
+
+        if (currentid != null && currentid != id)
+            minimize(currentid);
+        currentid = id;
+        console.log(currentid);
+
+    }
+
+    function minimize(id) {
+        console.log("minimize" + id);
+
+        var container = document.getElementById(id);
+
+        if (window.innerWidth > 1000) {
+            container.style.flex = "0 0 48%";
+            container.style.margin = "10 10 10 10";
+            container.querySelector(".pet-overview").style.flex = "0 0 100%";
+            container.querySelector(".pet-overview").style.padding = "20 20 20 20";
+            container.querySelector(".pet-description").style.display = "none";
+            container.querySelector(".adoption-form").style.display = "none";
+        } else { 
+            container.style.flex = "0 0 98%";
+            container.style.margin = "10 10 10 10";
+            container.querySelector(".pet-overview").style.flex = "0 0 100%";
+            container.querySelector(".pet-overview").style.padding = "20 20 20 20";
+            container.querySelector(".pet-description").style.display = "none";
+            container.querySelector(".adoption-form").style.display = "none";
+        }
+    }
+</script>
+
+<script>
+    function onSubmit() {
+        window.scrollTo({ top: 0, style: "smooth" });
+        alert("Your form has been submitted successfully!");
+        getAllPet();
+    }
+</script>
+
+
 
 </html>
