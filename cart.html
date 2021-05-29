@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <!-- begin of html -->
+    <div class="m-navigator-bar" id="top-nav">
+        <div class="navbar-margin-left"></div>
+        <a class="btm" href="#">About us</a>
+        <a class="btn" href="./tryit/newpage">Community</a>
+        <a class="btn selected" href="#shop">FAQs</a>
+        <a class="btn" href="#menu">Something</a>
+    </div>
+
+    <section class="breadcrumbs-page-wrap">
+        <div class="breadcrumbs-page">
+            <!-- <img class="ptt-png" src="ImgSource/Dot-Shape.png" alt="png"> -->
+            <div class="container">
+                <h1>Shopping Cart</h1>
+            </div>
+        </div>
+    </section>
+
+    <main id="body-content">
+        <section>
+            <div class="container">
+                <div class="table-wrapper">
+                    <table class="cart-table">
+                        <thead class="cart-headings">
+                            <th>
+                                <span>
+                                    &nbsp;
+                                </span>
+                            </th>
+                            <th>
+                                <span>
+                                    Product
+                                </span>
+                            </th>
+                            <th>
+                                <span>
+                                    Price
+                                </span>
+                            </th>
+                            <th>
+                                <span>
+                                    Quantity
+                                </span>
+                            </th>
+                            <th>
+                                <span>
+                                    Total
+                                </span>
+                            </th>
+                        </thead>
+                        <tbody class="cart-body">
+                            <tr>
+                                <th class="item-remove">
+                                    <a href="#" class="link-orange">
+                                        <i class="fas fa-minus-square"></i>
+                                    </a>
+                                </th>
+                                <td>
+                                    <div class="item-product">
+                                        <span class="img-wrap">
+                                            <img src="ImgSource/item-1.jpg" alt="">
+                                        </span>
+                                        <span>Rubber Dumbell</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong class="item-price">$75.00</strong>
+                                </td>
+                                <td>
+                                    <input type="number" name="quantity" min="1" value="1">
+                                </td>
+                                <td>
+                                    <strong class="item-total">$75.00</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="item-remove">
+                                    <a href="#" class="link-orange">
+                                        <i class="fas fa-minus-square"></i>
+                                    </a>
+                                </th>
+                                <td>
+                                    <div class="item-product">
+                                        <span class="img-wrap">
+                                            <img src="ImgSource/item-2.jpg" alt="">
+                                        </span>
+                                        <span>Mouse Cat Toy 10cm</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong class="item-price">$75.00</strong>
+                                </td>
+                                <td>
+                                    <input type="number" name="quantity" min="1" value="1">
+                                </td>
+                                <td>
+                                    <strong class="item-total">$75.00</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="item-remove">
+                                    <a href="#" class="link-orange">
+                                        <i class="fas fa-minus-square"></i>
+                                    </a>
+                                </th>
+                                <td>
+                                    <div class="item-product">
+                                        <span class="img-wrap">
+                                            <img src="ImgSource/item-3.jpg" alt="">
+                                        </span>
+                                        <span>Cat Scratch Apple Toy</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong class="item-price">$75.00</strong>
+                                </td>
+                                <td>
+                                    <input type="number" name="quantity" min="1" value="1">
+                                </td>
+                                <td>
+                                    <strong class="item-total">$75.00</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="item-remove">
+                                    <a href="#" class="link-orange">
+                                        <i class="fas fa-minus-square"></i>
+                                    </a>
+                                </th>
+                                <td>
+                                    <div class="item-product">
+                                        <span class="img-wrap">
+                                            <img src="ImgSource/item-4.jpg" alt="">
+                                        </span>
+                                        <span>Collapsible Dog Bowl</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong class="item-price">$75.00</strong>
+                                </td>
+                                <td>
+                                    <input type="number" name="quantity" min="1" value="1">
+                                </td>
+                                <td>
+                                    <strong class="item-total">$75.00</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cart-update-wrapper">
+                    <button id="cart-update-btn">
+                        Update Cart
+                    </button>
+                </div>
+                <div class="cart-total-wrapper">
+                    <div class="cart-total">
+                        <div class="order-head">
+                            <span>Cart Totals</span>
+                        </div>
+                        <div class="order-list">
+                            <ul>
+                                <li>
+                                    <span style="color: #707070;">Subtotal</span>
+                                    <span style="color: #98cb46;">$300.00</span>
+                                </li>
+                                <li>
+                                    <span style="color: #707070;">Total</span>
+                                    <span style="color: #98cb46;">$300.00</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button id="checkout-btn">Proceed to checkout</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+<script>
+    "use strict";
+    window.onscroll = function () { adjustTopNav(); };
+
+    var topNav = document.getElementById("top-nav");
+    function adjustTopNav() {
+        if (document.body.scrollTop > window.innerHeight / 3 || document.documentElement.scrollTop > window.innerHeight / 3) {
+            topNav.className = "m-navigator-bar scrolled";
+        }
+        else topNav.className = topNav.className.replace("scrolled", "");
+    }
+</script>
+
+</html>
