@@ -39,297 +39,34 @@
             <div class="container">
                 <div class="product-count">
                     <div>
-                        <strong>Showing 1-12 of 23 results</strong>
+                        <strong>
+                            Showing <span id="count-start">1</span>-<span id="count-end">12</span> 
+                            of 
+                            <span id="quantity"></span> results</strong>
                     </div>
-                    <!-- <div> -->
-                    <select name="orderby" class="form-control form-light">
-                        <option value="1" selected>Sort by name</option>
-                        <option value="2">Sort by popularity</option>
-                        <option value="3">Sort by price: low to high</option>
-                        <option value="4">Sort by price: high to low</option>
+                    <select onchange="sortProductList()" name="orderby" class="form-control form-light"
+                        id="sort-product">
+                        <option value="0" selected>Sort by</option>
+                        <option value="1">Name</option>
+                        <option value="2">Discount</option>
+                        <option value="3">Price: low to high</option>
+                        <option value="4">Price: high to low</option>
                     </select>
-                    <!-- </div> -->
                 </div>
-                <div class="product-list">
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrapper">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                    <img src="ImgSource/shop_img_1.jpg">
-                                </a>
-                                <span class="product-discount-label">-33%</span>
-                            </div>
-                            <div class="product-content">
-                                <h3 class="title">
-                                    <a href="#">Collapsible Dog Bowl</a>
-                                </h3>
-                                <div class="price">
-                                    <span>$45.00</span> $15.00
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                Add To Cart
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="product-list"></div>
                 <div class="theme-pagination">
                     <nav class="pagination">
-                        <a href="#" class="p-pag disabled"><i class="fas fa-arrow-left"></i></a>
-                        <div class="m-pag">
-                            <a href="#" class="active">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                        </div>
-                        <a href="#" class="n-pag"><i class="fas fa-arrow-right"></i></a>
+                        <a class="p-pag disabled" onclick="prevPage()"><i class="fas fa-arrow-left"></i></a>
+                        <div class="m-pag-list"></div>
+                        <a class="n-pag" onclick="nextPage()"><i class="fas fa-arrow-right"></i></a>
                     </nav>
                 </div>
             </div>
         </section>
     </main>
+
+    <script src="shopping.js"></script>
+    <script src="utils.js"></script>
 </body>
 
 <script>
