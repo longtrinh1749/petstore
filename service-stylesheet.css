@@ -140,7 +140,6 @@ input[type=submit]:hover
         display: flex;
         justify-content: center;
         text-align: left;
-        
     }
     .item-container div h4{
         display: inline;
@@ -154,7 +153,6 @@ input[type=submit]:hover
         left: calc((100% - 400px) / 2);
         top: calc((100% - 533.33px) / 2);
     }
-
 }
 
 @media only screen and (max-width: 600px){

@@ -1,0 +1,82 @@
+.adoption-wallpaper{
+    width: 100%;
+    /* min-width: 400px; */
+    height: 100%;
+    /* max-height: 300px; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0 120 60 120;
+}
+
+.adoption-container{
+    justify-content: center; 
+    align-items: center;
+    height: 100%;
+
+}
+
+.search-container{
+    height: 55px;
+}
+
+.search-container button{
+    height: 33px;
+    margin-left: 10px;
+}
+
+.search-container input[type=text]{
+    border: 2px solid rgba(0, 0, 0, .5);
+    border-radius: 15px;
+}
+
+/*******************pet list*******************/
+.pet-container{
+    flex: 0 0 100%;
+    border: 1px solid rgba(0, 0, 0, .5);
+}
+
+.pet-container .pet-overview{
+    padding: 20 20 20 20;
+    flex: 0 0 50%;
+    /* height: 250px; */
+}
+
+.pet-container .pet-overview img{
+    height: 170px;
+    width: 170px;
+}
+
+.pet-container .pet-overview .pet-info{
+    width: calc(100% - 250px);
+    margin: 10 10 10 10;
+    font-size: smaller;
+}
+
+.pet-container .pet-overview .pet-description{
+    width: 100%;
+    margin: 10 10 10 10;
+    font-size: smaller;
+}
+
+.pet-container .pet-overview .petname{
+    flex: 0 0 100%;
+    font-weight: 900;
+    font-size: larger;
+    margin-bottom: 10px;
+}
+.pet-container .pet-overview .petgender, .pet-container .pet-overview .petorigin, .pet-container .pet-overview .petage, .pet-container .pet-overview .petweight{
+    flex: 0 0 50%;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.pet-container .pet-overview .petgender span, .pet-container .pet-overview .petorigin span, .pet-container .pet-overview .petage span, .pet-container .pet-overview .petweight span{
+    color: rosybrown;
+}
+
+/*******************pet form*******************/
+.pet-container .adoption-form{
+    padding: 20 20 20 20;
+    flex: 0 0 50%;
+}
