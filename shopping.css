@@ -307,7 +307,7 @@ select option {
 
 .pagination a {
     font-weight    : 800;
-    padding        : 0 1rem;
+    padding        : 0.5rem 1rem;
     text-decoration: none;
 }
 
@@ -319,7 +319,6 @@ select option {
 
 .p-pag,
 .n-pag {
-    font-size       : 2rem;
     border-radius   : 5px;
     background-color: #98cb46;
 }
