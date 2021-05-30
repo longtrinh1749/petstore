@@ -5,13 +5,15 @@
 <link rel="stylesheet" href="./service-stylesheet.css" media="screen,projection">
 
 <body>
+    <iframe name="hiddenFrame" class="hide"></iframe>
     <!-- form display-->
     <div id="form-area" class="form-area" onclick="displayform(0)">
     </div>
 
     <div id="form1" class="form1">
+        
         <table>
-            <form method='post' target="#">
+            <form method='post' target="hiddenFrame" action="http://localhost:3000/services/form" onsubmit="onSubmit()">
                 <tr>
                     <td colspan="1" style="width: 100%; text-align: center;">
                         SERVICE FORM
@@ -21,28 +23,39 @@
                     <td colspan="1" style="width: 100%;">
                         Name:
                         <br>
-                        <input type="text" name="name" required>
+                        <input type="text" name="name" required placeholder="Your name">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="1" style="width: 100%;">
                         Email:
                         <br>
-                        <input type="text" name="name" required>
+                        <input type="email" name="email" required placeholder="xyz@gmail.com">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="1" style="width: 100%;">
                         Phone-number:
                         <br>
-                        <input type="text" name="name" required>
+                        <input type="tel" name="phonenumber" pattern="[0-9]{10}" placeholder="i.e. 0123456789" required>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="1" style="width: 100%;">
                         Services:
                         <br>
-                        <input type="text" name="name" required>
+                        <select name="service" required>
+                            <option value="0">Spa</option>
+                            <option value="1">Health Care</option>
+                            <option value="2">Pet Sister</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" style="width: 100%;">
+                        Further requirement:
+                        <br>
+                        <input type="text" name="requirement" placeholder="some requirements">
                     </td>
                 </tr>
                 <tr>
@@ -62,7 +75,7 @@
     <!-- begin of html -->
     <div class="m-navigator-bar" id="top-nav">
         <div class="navbar-margin-left"></div>
-        <a href=# style="padding: 0; display: block; float: left;">
+        <a href="./" style="padding: 0; display: block; float: left;">
             <img src="./ImgSource/logo/logo-black.png">
         </a>
         <div class="navbar-margin-right"></div>
@@ -85,7 +98,7 @@
                     animi,sunt?
                 </span>
             </div>
-            <div class="flex-container item-container">
+            <div class="flex-container item-container" onclick="displayform(1)">
                 <div>
                     <img src="./ImgSource/service/medical-service.png">
                     <span>Nothing is more important than taking care of your pet</span>
@@ -103,7 +116,7 @@
                     </h4>
                 </div>
             </div>
-            <div class="flex-container item-container">
+            <div class="flex-container item-container" onclick="displayform(1)">
                 <div>
                     <img src="./ImgSource/service/petsister-service.png">
                     <span>Nothing is more important than taking care of your pet</span>
@@ -208,6 +221,11 @@
             default:
                 break;
         }
+    }
+
+    function onSubmit(){
+        displayform(0);
+        window.alert("Your request has been successfully submitted!");
     }
 </script>
 
