@@ -17,5 +17,9 @@ function printCart(cart) {
 }
 
 function removeProduct(productId) {
-    
+
+}
+
+function checkOut() {
+
 }
