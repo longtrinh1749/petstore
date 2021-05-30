@@ -12,6 +12,10 @@ function getCart() {
  * 
  * @param {Array} cart 
  */
-function printCart(cart){
+function printCart(cart) {
 
+}
+
+function removeProduct(productId) {
+    
 }
