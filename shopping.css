@@ -1,18 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
 * {
-    box-sizing: border-box;
+    box-sizing : border-box;
+    font-family: 'Quicksand', sans-serif;
 }
 
 body,
 html {
     font-size  : 16px;
-    font-family: 'Quicksand', sans-serif;
     height     : 100%;
     color      : #fff;
     line-height: 1.6;
     margin     : 0px;
     overflow-x : hidden;
+    min-width  : 400px;
 }
 
 a,
@@ -168,16 +169,26 @@ select option {
 }
 
 .form-control {
-    font-size       : 1.125rem;
-    outline         : none;
-    color           : #131313;
-    background-color: #FFF;
-    height          : auto;
-    padding         : 1rem;
-    border-radius   : 5px;
-    box-shadow      : none;
-    border          : none;
-    transition      : all 400ms ease-in-out;
+    font-size         : 1rem;
+    color             : #131313;
+    background-color  : #FFF;
+    height            : auto;
+    padding           : 1rem;
+    border-radius     : 5px;
+    box-shadow        : none;
+    border            : none;
+    outline           : none;
+    -webkit-appearance: none;
+    background-image  :
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%);
+    background-position:
+        calc(100% - 20px) calc(1em + 10px),
+        calc(100% - 15px) calc(1em + 10px);
+    background-size:
+        5px 5px,
+        5px 5px;
+    background-repeat: no-repeat;
 }
 
 .row {
@@ -207,8 +218,8 @@ select option {
 }
 
 .product-image {
-    position     : relative;
-    /* background: #27304b; */
+    position  : relative;
+    background: #eaeaea;
 }
 
 .product-image img {
@@ -240,7 +251,7 @@ select option {
 }
 
 .product-content .title {
-    font-size     : 1.25rem;
+    font-size     : 1rem;
     font-weight   : 600;
     text-transform: uppercase;
     margin        : 0 0 7px;
@@ -248,7 +259,7 @@ select option {
 
 .product-content .title a {
     color     : #27304b;
-    transition: all 0.3s ease 0s;
+    transition: 0.3s ease 0s;
 }
 
 .product-content .title a:hover {
@@ -260,7 +271,7 @@ select option {
     font-size  : 1.125rem;
     font-weight: 700;
     display    : block;
-    transition : all 0.4s ease-in-out;
+    transition : 0.4s ease-in-out;
     font-family: 'Changa', sans-serif;
     line-height: 1;
 }
@@ -272,7 +283,7 @@ select option {
     background-color: #98cb46;
     padding         : 0.5rem 1rem;
     cursor          : pointer;
-    transition      : all 0.4s ease;
+    transition      : 0.4s ease;
     border          : 3px solid transparent;
 }
 
@@ -309,19 +320,19 @@ select option {
 
 .pagination a {
     font-weight    : 800;
-    padding        : 0 1rem;
+    padding        : 0.5rem 1rem;
     text-decoration: none;
 }
 
-.m-pag .active,
-.m-pag a:hover {
+.m-pag.active,
+.m-pag:hover {
     color     : #f15e42;
     transition: 400ms;
+    cursor    : pointer;
 }
 
 .p-pag,
 .n-pag {
-    font-size       : 2rem;
     border-radius   : 5px;
     background-color: #98cb46;
 }
