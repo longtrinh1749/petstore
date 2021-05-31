@@ -83,7 +83,7 @@ create table serviceorder (
 create table itemorderlist (
     itemid varchar(10),
     size varchar(5),
-    orderid varchar(10),
+    orderid int,
     quantity int,
     FOREIGN KEY (`itemid`) REFERENCES item (id),
     FOREIGN KEY (`orderid`) REFERENCES itemorder (id),
@@ -101,7 +101,7 @@ create table itemorderlist (
 create table petpurchase (
     id int not null auto_increment primary key,
     customerid int,
-    orderid varchar(10),
+    orderid int,
     FOREIGN KEY (`customerid`) REFERENCES customer (id),
     FOREIGN KEY (`orderid`) REFERENCES petorder (id)
 );
@@ -109,7 +109,7 @@ create table petpurchase (
 create table servicepurchase (
     id int not null auto_increment primary key,
     customerid int,
-    orderid varchar(10),
+    orderid int,
     FOREIGN KEY (`customerid`) REFERENCES customer (id),
     FOREIGN KEY (`orderid`) REFERENCES serviceorder (id)
 );
