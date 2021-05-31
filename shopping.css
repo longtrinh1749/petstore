@@ -350,6 +350,38 @@ select option {
 }
 
 
+/* _______________search bar__________________ */
+.search-container{
+    height: 55px;
+}
+
+.search-container button{
+    height: 33px;
+    margin-right: 10px;
+    font-family: 'Quicksand', sans-serif;
+    border: 3px solid rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.search-container input, .search-container button{
+    float: right;
+    font-size: 16px;
+}
+
+.search-container button:hover{
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.search-container input[type=text]{
+    border: 2px solid rgba(0, 0, 0, .5);
+    font-family: 'Quicksand', sans-serif;
+    border-radius: 15px;
+    height: 33px;
+    padding: 0 20;
+}
+
 /* _______________footer__________________ */
 
 .section-container{
@@ -484,4 +516,65 @@ select option {
     .container {
         padding: 0 2rem;
     }
+}
+
+@media only screen and (max-width: 1600px) { 
+    .section-container{
+        padding: 60 60
+    }
+}
+
+
+@media only screen and (max-width: 1200px) {
+    .section-container{
+        padding: 60 10
+    }
+    .items-container > div{
+        flex: 0 0 50%;
+    }
+    .section-container .custommer-rating, .section-container .custommer-feedback{
+        flex: 0 0 100%;
+        padding-left: 60;
+    }
+}
+
+@media only screen and (max-width: 755px) {
+    .section-container{
+        padding: 60 10
+    }
+    .items-container > div{
+        flex: 0 0 100%;
+    }
+    .custommer-feedback .test-feedback-wrapper div{
+        flex-direction: column;
+    }
+
+    .section-container .custommer-rating, .section-container .custommer-feedback{
+        padding-left: 10;
+    }
+
+    .help-container{
+        flex: 0 0 100%;
+        margin-bottom: 30px;
+    }
+
+    .footer .footer-logo{
+        flex: 0 0 100%;
+    }
+    .footer .footer-social{
+        flex: 0 0 100%;
+    }
+    .footer .footer-about{
+        flex: 0 0 50%;
+    }
+    .footer .footer-explore{
+        flex: 0 0 50%;
+    }
+    .footer .footer-link{
+        flex: 0 0 50%;
+    }
+    .footer .footer-workinghour{
+        flex: 0 0 50%;
+    }
+
 }
