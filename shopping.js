@@ -210,13 +210,12 @@ function autocomplete(input) {
 				b.innerHTML += `<img src="${img}" width="50">`;
 				b.innerHTML += `<strong>${title.substr(0, val.length)}</strong>`;
 				b.innerHTML += title.substr(val.length);
-				b.innerHTML += `<input type='hidden' value="${product.id}">`;
 				b.addEventListener("click", function (e) {
-					input.value = title
+					input.value = title;
 					closeAllLists();
 					setTimeout(() => {
-						document.getElementById('search-product-btn').click();
-					}, 1000);
+						window.location.href = `product.html?id=${product.id}`
+					}, 1000)
 				});
 				a.appendChild(b);
 				count++;
