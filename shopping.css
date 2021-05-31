@@ -424,6 +424,7 @@ select option {
 	justify-content : flex-start;
 	align-items     : center;
 	padding         : 1rem;
+	font-size       : 1.125rem;
 	cursor          : pointer;
 	background-color: #fff;
 	color           : black;
