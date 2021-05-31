@@ -92,7 +92,9 @@
                                 Quantity
                                 <input type="number" name="quantity" min="1" value="1">
                             </label>
-                            <button class="add-to-cart" type="submit">ADD TO CART</button>
+                            <div class="add-to-cart" onclick="addToCart()">
+                                Add To Cart
+                                <i class="fas fa-shopping-bag"></i></div>
                         </div>
                     </div>
 
@@ -101,7 +103,7 @@
         </section>
     </main>
 
-
+    <script src="product.js"></script>
 </body>
 
 <script>
@@ -114,33 +116,6 @@
             topNav.className = "m-navigator-bar scrolled";
         }
         else topNav.className = topNav.className.replace("scrolled", "");
-    }
-
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("slide");
-        var dots = document.getElementsByClassName("dot");
-        if (n > slides.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = slides.length }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
     }
 </script>
 

@@ -1,8 +1,3 @@
-window.onload = function () {
-    let cart = getCart();
-    printCart(cart);
-}
-
 function getCart() {
     let cart = getCookie('cart');
     return JSON.parse(cart);
@@ -22,4 +17,9 @@ function removeProduct(productId) {
 
 function checkOut() {
 
+}
+
+window.onload = function () {
+    let cart = getCart();
+    printCart(cart);
 }
