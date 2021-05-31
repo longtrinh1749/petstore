@@ -1,28 +1,34 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
     <link rel="stylesheet" href="shopping.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" />
+    
 </head>
 
 <body>
-    <header>
-
-    </header>
+    
     <!-- begin of html -->
     <div class="m-navigator-bar" id="top-nav">
         <div class="navbar-margin-left"></div>
+        <a href=./ style="padding: 0; display: block; float: left;">
+            <img src="./ImgSource/logo/logo-black.png">
+        </a>
+        <div class="navbar-margin-right"></div>
         <a class="btm" href="#">About us</a>
         <a class="btn" href="./tryit/newpage">Community</a>
         <a class="btn selected" href="#shop">FAQs</a>
-        <a class="btn" href="#menu">Something</a>
+        <a class="btn" href="#menu">Login</a>
+        <!-- <div class="m-form-search">
+            <button type="submit" class="m-form-search-button" onclick="alert('Hello world!')"></button>
+            <input type="text" id="fname" name="fname" placeholder="Tim meo :>>">
+        </div> -->
     </div>
 
     <section class="breadcrumbs-page-wrap">
@@ -37,6 +43,10 @@
     <main id="body-content">
         <section>
             <div class="container">
+                <div class="search-container">
+                    <input type="text" id="petToSearch" placeholder="Search.." name="search">
+                    <button onclick="searchPet()">Search</button>
+                </div>
                 <div class="product-count">
                     <div>
                         <strong>
@@ -69,17 +79,72 @@
     <script src="utils.js"></script>
 </body>
 
-<script>
-    "use strict";
-    window.onscroll = function () { adjustTopNav(); };
+    <div class="section-container footer">
+        <div class="flex-container">
+            <div class="footer-logo">
+                <img src="./ImgSource/logo/logo-white.png">
+            </div>
+            <div class="footer-social">
+                <span style="margin-right: 20px;">We Are Social: </span>
+                <span>
+                    <div class="flex-container">
+                        <a href=# style="display: flex; padding: 0 5;">
+                            <img src="ImgSource/logo/facebook.png">
+                        </a>
+                        <a href=# style="display: flex; padding: 0 5;">
+                            <img src="ImgSource/logo/instagram.png">
+                        </a>
+                        <a href=# style="display: flex; padding: 0 5;">
+                            <img src="ImgSource/logo/twitter.png">
+                        </a>
+                    </div>
+                </span>
 
-    var topNav = document.getElementById("top-nav");
-    function adjustTopNav() {
-        if (document.body.scrollTop > window.innerHeight / 3 || document.documentElement.scrollTop > window.innerHeight / 3) {
-            topNav.className = "m-navigator-bar scrolled";
-        }
-        else topNav.className = topNav.className.replace("scrolled", "");
-    }
-</script>
+            </div>
+            <div class="footer-about">
+                <h3>About CateGlory</h3><br>
+                Such short little lives our pets have to spend with us, and they spend most of it waiting for us to come
+                home each day. It is amazing how much love and laughter they bring into our lives and even how much
+                closer we become with each other because of them.
+            </div>
+            <div class="footer-explore">
+                <h3>Explore</h3>
+                <a href=#>&#9830 About Us</a><br>
+                <a href=#>&#9830 Services</a><br>
+                <a href=#>&#9830 Our Team</a><br>
+                <a href=#>&#9830 Adopt Pet</a><br>
+                <a href=#>&#9830 Gallery</a><br>
+            </div>
+            <div class="footer-link">
+                <h3>Useful Links</h3>
+                <a href=#>&#9830 Pet Adoption</a><br>
+                <a href=#>&#9830 Shopping</a><br>
+                <a href=#>&#9830 Services</a><br>
+                <a href=#>&#9830 Blog</a><br>
+                <a href=#>&#9830 Payment</a><br>
+            </div>
+            <div class="footer-workinghour">
+                <h3>Working Hours</h3>
+                Our support available to help you 24 hours a day. We provide our best.<br>
+                <span style="color:chartreuse;">Mon - Fri :</span><span
+                    style="text-decoration: underline dotted white;text-align: left;">08.00 AM - 20.00 PM</span><br>
+                <span style="color:chartreuse;">Saturday :</span><span
+                    style="text-decoration: underline dotted white;text-align: left;">09.00 AM - 16.00 PM</span><br>
+                <span style="color:chartreuse;">Sunday :</span><span
+                    style="text-decoration: underline dotted white;text-align: left;">We are closed</span><br>
+
+
+            </div>
+            <hr style="width: 100%; height: 3px;background-color: white;">
+            <div class="footer-license" style="margin-bottom: 50px;">
+                Copyrights 2021 <span style="color: chocolate;">CateGlory</span> All Right Reserved.
+            </div>
+
+        </div>
+
+    </div>
+    <script src="navbarScript.js"></script>
+</body>
+
 
 </html>

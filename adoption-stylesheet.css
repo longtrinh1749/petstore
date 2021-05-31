@@ -24,12 +24,16 @@
 
 .search-container button{
     height: 33px;
-    margin-left: 10px;
+    margin-right: 10px;
     font-family: 'Quicksand', sans-serif;
     border: 3px solid rgba(0, 0, 0, .2);
     background-color: rgba(0, 0, 0, 0);
     border-radius: 30px;
     cursor: pointer;
+}
+
+.search-container input, .search-container button{
+    float: right;
 }
 
 .search-container button:hover{

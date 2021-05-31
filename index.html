@@ -328,10 +328,8 @@
 
                 </div>
                 <div class="footer-about">
-                    <h3>About CateGlory</h3>
-                    Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                    scrambled it to make a type specimen book.
+                    <h3>About CateGlory</h3><br>
+                    Such short little lives our pets have to spend with us, and they spend most of it waiting for us to come home each day. It is amazing how much love and laughter they bring into our lives and even how much closer we become with each other because of them.
                 </div>
                 <div class="footer-explore">
                     <h3>Explore</h3>
@@ -343,11 +341,11 @@
                 </div>
                 <div class="footer-link">
                     <h3>Useful Links</h3>
-                    <a href=#>&#9830 About Us</a><br>
+                    <a href=#>&#9830 Pet Adoption</a><br>
+                    <a href=#>&#9830 Shopping</a><br>
                     <a href=#>&#9830 Services</a><br>
-                    <a href=#>&#9830 Our Team</a><br>
-                    <a href=#>&#9830 Adopt Pet</a><br>
-                    <a href=#>&#9830 Gallery</a><br>
+                    <a href=#>&#9830 Blog</a><br>
+                    <a href=#>&#9830 Payment</a><br>
                 </div>
                 <div class="footer-workinghour">
                     <h3>Working Hours</h3>
@@ -435,6 +433,7 @@
     // ********top navigator**********
     var topNav = document.getElementById("top-nav");
     function adjustTopNav() {
+        console.log("here");
         if (document.body.scrollTop > window.innerHeight / 3 || document.documentElement.scrollTop > window.innerHeight / 3) {
             topNav.className = "m-navigator-bar scrolled";
         }
