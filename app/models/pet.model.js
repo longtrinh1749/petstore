@@ -56,6 +56,30 @@ Pet.get = (pet, result) => {
         }
     })
 }
+Pet.getFromKeyword = (keyword, result) => {
+    keyword = '%' + keyword + '%';
+    sql.query("select * from pet where id like N? or name like N? or breed like N? or female like N? or " +
+        "origin like N? or age like N? or weight like N? or price like N? or description like N?",
+        [keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword],
+        (err, res) => {
+            console.log(err, " and ", res.length);
+            if (err) {
+                console.log("Err: ", err);
+                result(err, null);
+                return;
+            }
+            console.log("tdn nhi")
+            if (!res.length) {
+                result({kind: "not_found"}, null);
+                return;
+            } else {
+                console.log("Found pets: ", res);
+                result(null, res);
+                return;
+            }
+        })
+}
+
 Pet.getFromDescription = (petDescription, result) => {
     var description = '%' + petDescription + '%';
     sql.query("select * from pet where description like N?", [description], (err, res) => {

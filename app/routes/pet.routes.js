@@ -23,7 +23,6 @@ router.post("/get", pets.find);
 
 router.get("/:petDescription", pets.findByDescription);
 
-
 router.get("/pet", (req, res) => {
     res.json({what: "the fuck"});
 });
