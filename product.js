@@ -28,6 +28,10 @@ function addToCart(){
     console.log("Add to Cart");
 }
 
+function showProduct(){
+	
+}
+
 window.onload = function() {
     showSlides(slideIndex);
 }

@@ -183,7 +183,7 @@ function addToCart(productId) {
 function searchProducts() {
 	let input = document.getElementById("product-to-search");
 	let value = input.value.trim();
-	console.log("search: " + value);
+	window.location.href = `product.html?name=${value}`
 }
 
 function autocomplete(input) {
@@ -256,7 +256,7 @@ function autocomplete(input) {
 	}
 	function closeAllLists(elem) {
 		var x = document.getElementsByClassName("autocomplete-items");
-		for (var i = 0; i < x.length; i++) {
+		for (let i = 0; i < x.length; i++) {
 			if (elem != x[i] && elem != input) {
 				x[i].parentNode.removeChild(x[i]);
 			}
