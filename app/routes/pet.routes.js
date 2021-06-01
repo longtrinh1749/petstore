@@ -19,6 +19,8 @@ const pets = require("../controllers/pet.controller.js");
 
 router.get("/all", pets.findAll);
 
+router.get("/get", pets.getByDescription);
+
 router.post("/get", pets.find);
 
 router.get("/:petDescription", pets.findByDescription);

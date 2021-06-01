@@ -72,27 +72,8 @@ Petorder.getFromKeyword = (keyword, result) => {
         })
 }
 
-// Petorder.getFromDescription = (petorderDescription, result) => {
-//     var description = '%' + petorderDescription + '%';
-//     sql.query("select * from petorder where description like N?", [description], (err, res) => {
-//         if (err) {
-//             console.log("Err: ", err);
-//             result(err, null);
-//             return;
-//         }
-//         if (res.length) {
-//             console.log("Found petorders: ", res);
-//             result(null, res);
-//             return;
-//         }
-//         result({kind: "not_found"}, null);
-//         return;
-//     })
-// }
-
 Petorder.create = (petorder, result) => {
     if(!petorder.petid) petorder.petid = "";
-    if(!petorder.id) petorder.id = "PO" + petorder.petid;
     if(!petorder.name) petorder.name = "";
     if(!petorder.phoneno) petorder.phoneno = "";
     if(!petorder.email) petorder.email = 0;

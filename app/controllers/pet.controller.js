@@ -29,6 +29,25 @@ exports.findByDescription = (req, res) => {
     })
 };
 
+exports.getByDescription = (req, res) => {
+    Pet.getFromDescription(req.query.petDescription, (err, data) => {
+        if(err) {
+            if (err.kind === "not_found") {
+                // res.status(404).send({
+                //     message: "Not found pet with description."
+                // });
+                res.send({});
+            } else {
+                res.status(500).send({
+                    message: err.message || "Some error occurred while get pet with description."
+                });
+            }
+        } else {
+            res.send(data);
+        }
+    })
+};
+
 exports.find = (req, res) => {
     pet = req.body;
     console.log(pet.id);
@@ -49,9 +68,11 @@ exports.find = (req, res) => {
 
 exports.createPet = (req, res) => {
     let data;
-    if (req.params) data = req.params;
-    else if(req.body) data = req.body;
-    else res.status(400).send({message: "Request content cannot be empty."});
+    // if (req.params) data = req.params;
+    // else if(req.body) data = req.body;
+    // else res.status(400).send({message: "Request content cannot be empty."});
+
+    data = req.body;
 
     const pet = new Pet({
         id: data.id,
@@ -77,9 +98,11 @@ exports.createPet = (req, res) => {
 
 exports.updatePet = (req, res) => {
     let data;
-    if (req.params) data = req.params;
-    else if(req.body) data = req.body;
-    else res.status(400).send({message: "Request content cannot be empty."});
+    // if (req.params) data = req.params;
+    // else if(req.body) data = req.body;
+    // else res.status(400).send({message: "Request content cannot be empty."});
+
+    data = req.body;
 
     const pet = new Pet({
         id: data.id,
