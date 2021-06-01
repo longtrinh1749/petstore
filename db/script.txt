@@ -1,14 +1,16 @@
+drop database petstoredb;
+
 ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'root';
 flush privileges;
 
-#create database petstoredb;
+create database petstoredb;
 use petstoredb;
 
 #CREATE QUERY
 create table pet (
     id varchar(10) primary key,
-    name varchar(50),
-    breed varchar(20),
+    name varchar(100),
+    breed varchar(100),
     female bool,
     origin varchar(50),
     age int,
@@ -17,71 +19,113 @@ create table pet (
     price int,
     imageurl varchar(200)
 );
+
 create table item (
-    id varchar(10) PRIMARY KEY,
-    name varchar(50),
-    category varchar(50),
-    brand varchar(50),
-    price int,
-    imageurl varchar(200)
-);
-create table service (
-    id varchar(10) PRIMARY KEY,
+    id varchar(10),
     name varchar(50),
     price int,
-    imageurl varchar(200)
-);
+    size varchar(5),
+    quantity int,
+    discount int,
+    description varchar(200),
+    imageurl varchar(200),
+    primary key (`id`, `size`)
+); -- size: M, L, XL
+
 create table customer (
-    id varchar(10) PRIMARY key,
+    id int not null auto_increment primary key,
+    name varchar(50),
     phoneno varchar(12), 
     email varchar(100),
     address varchar(200)
 );
+
 create table petorder (
-    id varchar(10) PRIMARY KEY,
-    total int,
-    customerid varchar(10),
+    id int not null auto_increment primary key,
+    petid varchar(10),
+    name varchar(50),
+    email varchar(100),
+    phoneno varchar(12),
     `timestamp` date,
-    FOREIGN KEY (`customerid`) REFERENCES customer (id)
+    `purchaseTimestamp` date null,
+    purchase int null,
+    FOREIGN KEY (`petid`) REFERENCES `pet` (id) on update cascade on delete cascade
 );
+
 create table itemorder (
-    id varchar(10) PRIMARY KEY,
-    total int,
-    customerid varchar(10),
+    id int not null auto_increment primary key,
+    name varchar(50),
+    email varchar(100),
+    phoneno varchar(12),
     `timestamp` date,
-    FOREIGN KEY (`customerid`) REFERENCES customer (id)
-);
+    `purchaseTimestamp` date null,
+    purchase int null -- so tien tra
+); -- co the van phai sua
+
 create table serviceorder (
-    id varchar(10) PRIMARY KEY,
-    total int, 
-    customerid varchar(10),
+    id int not null auto_increment primary key,
+    service varchar(20), -- 0 là spa 1 là health care 2 là pet sis
+    name varchar(50),
+    email varchar(100),
+    phoneno varchar(12),
+    requirement text,
     `timestamp` date,
-    note text,
-    FOREIGN KEY (`customerid`) REFERENCES customer (id)
+    `purchaseTimestamp` date null,
+    purchase int null
 );
-create table petorderlist (
+
+/* create table petorderlist (
     petid varchar(10),
     orderid varchar(10),
-    FOREIGN KEY (`petid`) REFERENCES pet (id),
-    FOREIGN KEY (`orderid`) REFERENCES petorder (id),
+    FOREIGN KEY (`petid`) REFERENCES pet (id) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES petorder (id) on update cascade on delete cascade,
 	PRIMARY KEY (petid, orderid)
-);
+); */
+
 create table itemorderlist (
-    itemid varchar(10) REFERENCES item(id),
-    orderid varchar(10) REFERENCES itemorder (id),
+    itemid varchar(10),
+    size varchar(5),
+    orderid int,
     quantity int,
-    FOREIGN KEY (`itemid`) REFERENCES item (id),
-    FOREIGN KEY (`orderid`) REFERENCES itemorder (id),
-    PRIMARY KEY (itemid, orderid)
+    FOREIGN KEY (`itemid`, `size`) REFERENCES item (id, size) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES itemorder (id) on update cascade on delete cascade,
+    PRIMARY KEY (itemid, orderid, size)
 );
-create table serviceorderlist (
-    spaid varchar(10) REFERENCES spa(id),
-    orderid varchar(10) REFERENCES spaorder(id),
-    FOREIGN KEY (`spaid`) REFERENCES spa (id),
-    FOREIGN KEY (`orderid`) REFERENCES spaorder (id),
-    PRIMARY KEY (spaid, orderid)
+
+/* create table serviceorderlist (
+    serviceid varchar(10) REFERENCES service(id),
+    orderid varchar(10) REFERENCES serviceorder(id),
+    FOREIGN KEY (`serviceid`) REFERENCES service (id) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES serviceorder (id) on update cascade on delete cascade,
+    PRIMARY KEY (serviceid, orderid)
+); */
+
+create table petpurchase (
+    id int not null auto_increment primary key,
+    customerid int,
+    orderid int,
+    FOREIGN KEY (`customerid`) REFERENCES customer (id) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES petorder (id) on update cascade on delete cascade
 );
-create table blog (
+
+create table servicepurchase (
+    id int not null auto_increment primary key,
+    customerid int,
+    orderid int,
+    FOREIGN KEY (`customerid`) REFERENCES customer (id) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES serviceorder (id) on update cascade on delete cascade
+);
+
+/* create table itempurchase (
+    id int primary key,
+    customerid varchar(10),
+    orderid varchar(10),
+    FOREIGN KEY (`customerphoneno`) REFERENCES customer (phoneno) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES itemorder (id) on update cascade on delete cascade
+); */
+
+
+/* create table blog (
     id varchar(10) PRIMARY KEY,
     content text, 
     author varchar(100),
@@ -91,7 +135,8 @@ create table blogimages(
     blogid varchar(10), 
     imageurl varchar(200),
     PRIMARY KEY (blogid, imageurl)
-);
+); */
+
 create table admin (
     id varchar(100) PRIMARY KEY,
     pw varchar(100)
@@ -99,117 +144,740 @@ create table admin (
 
 
 # INSERT QUERY
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P1', 'Alaska Nâu Đỏ Béo 
-Ú', 'Chó Alaska Malamute', 17000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P2', 'Bé Golden múp mụp', 'Chó Golden Retriever', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into admin(`id`, `pw`) values ('root', 'root');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P1', 'Brady', 'Golden Retriever', 17000000, 0, 'origin-origin-origin', 5, 10, 'Description1', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P3', '2 bé Poodle Tiny trắng đáng yêu quá trời', 'Chó Poodle', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');   
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P2', 'Teddy', 'Beagle', 
+9500000, 0, 'origin-origin-origin', 5, 10, 'Description2', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P4', 'Aalaska Béo ú béo 
-u', 'Chó Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P3', 'Frankie', 'Golden 
+Retriever', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description3', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P5', 'corgi siêu đáng yêu', 'Chó Corgi', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P4', 'Benji', 'Beagle', 
+18000000, 0, 'origin-origin-origin', 5, 10, 'Description4', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P6', '2 anh Poodle Tiny 
-da nâu cực yêu', 'Chó Poodle', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P5', 'Bandit', 'Poodle', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description5', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P7', 'Poodle trắng', 'Chó Poodle', 9000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P6', 'Walter', 'Husky Siberian', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description6', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P8', 'Beagle – chó săn thỏ', 'Chó Beagle', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P7', 'Milo', 'Golden Retriever', 9000000, 0, 'origin-origin-origin', 5, 10, 'Description7', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P9', 'Bé Corgi xinh xắn', 'Chó Corgi', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P8', 'Toby', 'Pomeranian', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description8', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P10', 'Alaska Đực hàng Khủng', 'Chó Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P9', 'Scout', 'Samoyed', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description9', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P11', 'Alaska Nâu đỏ béo nhợn mặt siêu đại ca', 'Chó Alaska Malamute', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P10', 'Rocco', 'Samoyed', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description10', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P12', 'Đàn Samoyed trắng xinh', 'Chó Samoyed', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P11', 'Frankie', 'Samoyed', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description11', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P13', 'Golden đực ú', 'Chó Golden Retriever', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P12', 'Ollie', 'Corgi', 
+10000000, 0, 'origin-origin-origin', 5, 10, 'Description12', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P14', 'Bé Pug mặt thộn ^^', 'Chó Pug', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P13', 'Brody', 'Samoyed', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description13', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P15', 'Sóc bông vàng', 'Chó Phốc Sóc - Pomeranian', 17000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P14', 'Scout', 'Beagle', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description14', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P16', 'Alaska hồng phấn 
-xinh lung linh', 'Chó Alaska Malamute', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg'); 
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P15', 'Loki', 'Golden Retriever', 17000000, 0, 'origin-origin-origin', 5, 10, 'Description15', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P16', 'Shadow', 'Corgi', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description16', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P17', 'Joey', 'Golden Retriever', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description17', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P18', 'Rufus', 'Golden Retriever', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description18', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P19', 'Rudy', 'Alaska Malamute', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description19', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P20', 'Champ', 'Poodle', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description20', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P21', 'Teddy', 'Husky Siberian', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description21', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P22', 'Coco', 'Poodle', 
+12000000, 0, 'origin-origin-origin', 5, 10, 'Description22', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P23', 'Luke', 'Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description23', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P24', 'Buster', 'Golden 
+Retriever', 15000000, 0, 'origin-origin-origin', 5, 10, 'Description24', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P25', 'Gus', 'Beagle', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description25', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P26', 'Coco', 'Corgi', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description26', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P27', 'Max', 'Golden Retriever', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description27', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P28', 'Boomer', 'Pomeranian', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description28', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P29', 'Bailey', 'Alaska 
+Malamute', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description29', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P30', 'Frankie', 'Golden Retriever', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description30', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P31', 'Bo', 'Poodle', 11000000, 0, 'origin-origin-origin', 5, 10, 'Description31', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P32', 'Archie', 'Pomeranian', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description32', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P33', 'Bailey', 'Corgi', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description33', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P34', 'Zeus', 'Golden Retriever', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description34', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P35', 'Blue', 'Golden Retriever', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description35', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P36', 'Hank', 'Beagle', 
+9500000, 0, 'origin-origin-origin', 5, 10, 'Description36', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P37', 'Hank', 'Alaska Malamute', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description37', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P38', 'Finn', 'Golden Retriever', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description38', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P39', 'Lucky', 'Alaska Malamute', 14000000, 0, 'origin-origin-origin', 5, 10, 'Description39', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P40', 'Mac', 'Poodle', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description40', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P41', 'Winston', 'Husky 
+Siberian', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description41', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P42', 'Oscar', 'Alaska Malamute', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description42', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P43', 'Benny', 'Pomeranian', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description43', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P44', 'Benji', 'Husky Siberian', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description44', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P45', 'Lucky', 'Pomeranian', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description45', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P46', 'Duke', 'Pomeranian', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description46', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P47', 'Jax', 'Pomeranian', 19000000, 0, 'origin-origin-origin', 5, 10, 'Description47', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P48', 'Frankie', 'Beagle', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description48', '../../db/images/pet/husky.jpg');
+
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P49', 'Roscoe', 'Corgi', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description49', '../../db/images/pet/husky.jpg');
 
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P17', 'Bé Samoyed mặt tươi', 'Chó Samoyed', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P18', 'alaska xám kháu khỉnh cute xỉu', 'Chó Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');  
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Elizabeth Lewis', '0971596631', 'uVIVBuN@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P19', '2 bé Poodle Xinh 
-xinh', 'Chó Poodle', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Lance Butterfield', '0968676622', 'uJIcBLt@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P20', 'alas đực màu hồng phấn siêu cưng', 'Chó Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Josephine Leppert', '0901304924', 'NGboeYk@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P21', 'Bé Samoyed xinh', 'Chó Samoyed', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Elizabeth Nelson', '0982010808', 'ttWQGBo@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P22', 'Samoyed siêu cute', 'Chó Samoyed', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Martha Bernstein', '0952113705', 'ewDRxkb@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P23', 'Alaska hồng phấn 
-siêu cute', 'Chó Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');      
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Gerald Russell', '0951262881', 'HzMFEvz@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P24', 'Alaska đen trắng 
-mặt ngầu', 'Chó Alaska Malamute', 15000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');       
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Mark Maupin', '0999572661', 'mOGJKGq@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P25', 'Đàn Alaska Đen- Trắng Xám', 'Chó Alaska Malamute', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');       
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Phillip Ramirez', '0915714065', 'KYWRVGM@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P26', 'corgi', 'Chó Corgi', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Mary Corvin', '0977269524', 'TmfdyzZ@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P27', 'Alas nâu đỏ siêu 
-phẩm', 'Chó Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Charles Buchmeier', '0935041095', 'KJTAVwS@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P28', 'Phốc sóc siêu cưng', 'Chó Phốc Sóc - Pomeranian', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');        
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('May Hamilton', '0914166358', 'MnoCJZq@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P29', 'Bé Alaska nâu đỏ 
-mập ú', 'Chó Alaska Malamute', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Kari Policare', '0944634400', 'xxiTnyl@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P30', 'husky đại ngáo', 
-'Chó Husky Siberian', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Stephanie Norton', '0912370320', 'kLrhedA@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P31', 'Husky nâu đỏ', 'Chó Husky Siberian', 11000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Jessica Harris', '0944936534', 'LExvNkk@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P32', 'Alaska siêu cưng 
-siêu béo', 'Chó Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');       
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Jayne Simmons', '0961979855', 'GQGMGis@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P33', 'Bé Pug béo tròn xinh', 'Chó Pug', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Tiffany Sims', '0958138894', 'xUAJLVD@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P34', 'Corgi chân ngắn mông to', 'Chó Corgi', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Mary Olson', '0931492053', 'fZSJJef@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P35', 'Bé Poodle bông gòn', 'Chó Poodle', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Brent Clark', '0927683265', 'fGNYUDs@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P36', 'phốc sóc béo ú', 
-'Chó Phốc Sóc - Pomeranian', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into customer (`name`, `phoneno`, `email`, `address`) values ('Staci Crabtree', '0958087881', 'KWNWmlJ@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P37', 'phốc sóc siêu cute', 'Chó Phốc Sóc - Pomeranian', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');        
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P38', 'Bé Alas nâu đỏ ú 
-nu', 'Chó Alaska Malamute', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P39', 'Đàn 5 bé alaska siêu ngầu', 'Chó Alaska Malamute', 14000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');       
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P40', 'Golden cưng siêu 
-cấp', 'Chó Golden Retriever', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P22', 'Roberta Hall', '0954061240', 'FJdqWNd@gmail.com', '2020-01-12 10:10:10-08:00');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P41', 'Alaska siêu xinh', 'Chó Alaska Malamute', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P20', 'Phyllis Mccants', '0964547463', 'myxOUxB@gmail.com', '2020-01-27 10:10:10-08:00');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P42', 'Alaska nâu dễ thương', 'Chó Alaska Malamute', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P9', 'Guadalupe Marzinske', '0905908990', 'pADbCHW@gmail.com', '2020-01-28 10:10:10-08:00');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P43', 'Các bé Beagle xinh xinh', 'Chó Beagle', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P30', 'Anna Hayes', '0911810962', 'NUXXwmn@gmail.com', '2020-01-25 10:10:10-08:00');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P44', 'Alaska nâu đỏ ú nụ', 'Chó Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P21', 'Mary Kroetch', '0999075802', 'SZRKlmO@gmail.com', '2020-01-10 10:10:10-08:00');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P45', 'Bé Pug ú nu', 'Chó Pug', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P22', 'Beverly Behm', '0990613091', 'JgPMstx@gmail.com', '2020-01-18 10:10:10-08:00');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P46', '2 bé Samoyed béo 
-như heo', 'Chó Samoyed', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P6', 'Richard Candelaria', '0981179502', 'jUQaBeW@gmail.com', '2020-01-12 10:10:10-08:00');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P47', 'Bé Alaska hồng phấn xinh', 'Chó Alaska Malamute', 19000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');        
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P17', 'Elena Ashley', '0940622043', 'tKouxzh@gmail.com', '2020-01-21 10:10:10-08:00');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P48', 'alaska hồng phấn 
-siêu cưng', 'Chó Alaska Malamute', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');      
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P9', 'Virginia Saucier', '0904779423', 'cLtDMZD@gmail.com', '2020-01-23 10:10:10-08:00');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P49', 'Bé Poodle socola', 'Chó Poodle', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description-Description', '../../db/images/pet/husky.jpg');
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P22', 'Hattie Weathers', '0998289211', 'qjLGdhk@gmail.com', '2020-01-24 10:10:10-08:00');
+
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P19', 'Thomas Prat', '0950183020', 'FoAwOjv@gmail.com', '2020-01-26 10:10:10-08:00');
+
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P15', 'Willie Moss', '0925566992', 'SflXkER@gmail.com', '2020-01-28 10:10:10-08:00');
+
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P21', 'James Ayala', '0912674114', 'bUqKtsM@gmail.com', '2020-01-28 10:10:10-08:00');
+
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P18', 'John Walters', '0983744320', 'KRAqVLS@gmail.com', '2020-01-27 10:10:10-08:00');
+
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P8', 'Paula Carter', '0907811570', 'hpLnQwr@gmail.com', '2020-01-24 10:10:10-08:00');
+
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P8', 'Fidel Hodge', '0934207325', 'wXPzXcW@gmail.com', '2020-01-19 10:10:10-08:00');
+
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P23', 'Timothy Woolard', '0918992992', 'VpCfTVS@gmail.com', '2020-01-11 10:10:10-08:00');
+
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P1', 'Carol Mitchell', '0996651769', 'AjmNkQL@gmail.com', '2020-01-17 10:10:10-08:00');
+
+insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P4', 'Larry Miles', '0915047689', 'RnyiAHl@gmail.com', '2020-01-13 10:10:10-08:00');
+
+
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Katherine Sellman', '0934746222', 'XUXglak@gmail.com', '2020-01-17 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Diego Genet', '0950432545', 'lykYLMV@gmail.com', '2020-01-10 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Stanley Womack', '0928680258', 'JgqZZqg@gmail.com', '2020-01-25 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Jeffrey Holmes', '0949304562', 'Ncddglk@gmail.com', '2020-01-27 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Amy Cowen', '0947766478', 'KdUfkTB@gmail.com', '2020-01-25 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('0', 'Thomas Mankins', '0952851942', 'nVOkmvf@gmail.com', '2020-01-18 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Darlene Snyder', '0913217223', 'aqQzQXG@gmail.com', '2020-01-14 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Emma Harper', '0951599430', 'gjShogV@gmail.com', '2020-01-20 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Heather Coleman', '0999508144', 'FjJLlak@gmail.com', '2020-01-20 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Michael Pippenger', '0966648513', 'QIjPIvH@gmail.com', '2020-01-10 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Jayna Torres', '0930299696', 'mqVvaCp@gmail.com', '2020-01-25 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Ashley Bouy', '0954811929', 'wDShFpO@gmail.com', '2020-01-18 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('0', 'Julia Collins', '0941539075', 'snokbZo@gmail.com', '2020-01-24 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Douglas Rubio', '0937937225', 'EkkAmPI@gmail.com', '2020-01-12 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('0', 'Emil Sellers', '0903236930', 'lctbrzD@gmail.com', '2020-01-22 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Dwight Hill', '0973246544', 'nKLSLgM@gmail.com', '2020-01-18 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Vivian Thomas', '0934654555', 'hDjaPBc@gmail.com', '2020-01-13 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Carol Robinson', '0905846804', 'cjzHGvX@gmail.com', '2020-01-22 10:10:10-08:00');
+
+insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Lenore Murray', '0947803098', 'ZjhkBOz@gmail.com', '2020-01-15 10:10:10-08:00');
+
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '2000000', 'XL', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '400000', 'XS', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '1600000', 'L', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I2','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '22', '10', 'ScoopFree by PetSafe Disposable Crystal Lavender Litter Tray for Cats', ''); 
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I2','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '22', '10', 'ScoopFree by PetSafe Disposable Crystal Lavender Litter Tray for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I3','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '19', '20', 'Tidy Cats Breeze Litter System Cat Pad Refills', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I3','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '19', '20', 'Tidy Cats Breeze Litter System Cat Pad Refills', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '1600000', 'L', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '1200000', 'M', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '400000', 'XS', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '1200000', 'M', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '800000', 'S', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '2000000', 'XL', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '2000000', 'XL', '30', '20', 'CatIt Hooded Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '800000', 'S', '30', '20', 'CatIt Hooded Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '1200000', 'M', '30', '20', 'CatIt Hooded Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '400000', 'XS', '30', '20', 'CatIt Hooded Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '2000000', 'XL', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '400000', 'XS', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '1200000', 'M', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '800000', 'S', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '1200000', 'M', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '800000', 'S', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '400000', 'XS', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '1600000', 'L', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I9','Cat Litter Box Liners, Filters & Refills', '400000', 'XS', '26', '20', 'Tidy Cats Breeze Spring Clean Cat Pads Refill Pack', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','Cat Litter Pans', '1200000', 'M', '30', '20', 'So Phresh Scatter Shield High-Back Litter Box in Navy', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','Cat Litter Pans', '1600000', 'L', '30', '20', 'So Phresh Scatter Shield High-Back Litter Box in Navy', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '800000', 'S', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '400000', 'XS', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '1600000', 'L', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '1200000', 'M', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '2000000', 'XL', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I12','Cat Litter Box Mats', '1200000', 'M', '10', '20', 'So Phresh Litter Trapper Mat', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I12','Cat Litter Box Mats', '800000', 'S', '10', '20', 'So Phresh Litter Trapper Mat', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I13','Cat Supplies', '800000', 'S', '34', '20', 'So Phresh Charcoal Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I14','Covered Litter Boxes', '1600000', 'L', '44', '20', 'Booda Clean Step Litter Box in Dark Grey', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I14','Covered Litter Boxes', '800000', 'S', '44', '20', 'Booda Clean Step Litter Box in Dark Grey', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '1200000', 'M', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '400000', 'XS', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '2000000', 'XL', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '1600000', 'L', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '800000', 'S', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I16','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '37', '10', 'Tidy Cats Breeze Cat Pads Refill Pack', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '1600000', 'L', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '800000', 'S', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '1200000', 'M', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '400000', 'XS', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '1200000', 'M', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '800000', 'S', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '2000000', 'XL', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '1600000', 'L', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '2000000', 'XL', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '1200000', 'M', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '400000', 'XS', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '800000', 'S', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '1200000', 'M', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '400000', 'XS', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '1600000', 'L', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '2000000', 'XL', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '2000000', 'XL', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '400000', 'XS', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '1200000', 'M', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '800000', 'S', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '1600000', 'L', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '400000', 'XS', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '1200000', 'M', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '2000000', 'XL', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '800000', 'S', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '1600000', 'L', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '1200000', 'M', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '400000', 'XS', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '1600000', 'L', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '2000000', 'XL', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '1200000', 'M', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '800000', 'S', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '400000', 'XS', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '1600000', 'L', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '1200000', 'M', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '2000000', 'XL', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '800000', 'S', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '400000', 'XS', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','Cat Litter Pans', '400000', 'XS', '10', '20', 'So Phresh Grey Litter Box Starter Bundle', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','Cat Litter Pans', '2000000', 'XL', '10', '20', 'So Phresh Grey Litter Box Starter Bundle', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I27','Self-Cleaning Litter Boxes', '1600000', 'L', '17', '20', 'Natures Miracle Multi-Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I27','Self-Cleaning Litter Boxes', '400000', 'XS', '17', '20', 'Natures Miracle Multi-Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '1200000', 'M', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '400000', 'XS', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '2000000', 'XL', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '800000', 'S', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '400000', 'XS', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '800000', 'S', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '1600000', 'L', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I31','Self-Cleaning Litter Boxes', '800000', 'S', '30', '20', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '1200000', 'M', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '400000', 'XS', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '2000000', 'XL', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '1600000', 'L', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '400000', 'XS', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '2000000', 'XL', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '1200000', 'M', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '2000000', 'XL', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '400000', 'XS', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '1600000', 'L', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '1200000', 'M', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '800000', 'S', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '1600000', 'L', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '400000', 'XS', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '2000000', 'XL', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I36','Covered Litter Boxes', '1200000', 'M', '25', '10', 'So Phresh Geometric Covered Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I36','Covered Litter Boxes', '1600000', 'L', '25', '10', 'So Phresh Geometric Covered Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I37','Cat Litter Box Mats', '800000', 'S', '36', '20', 'So Phresh Tan Paw-Shaped Cat Litter Trapper Mat', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '1600000', 'L', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '800000', 'S', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '2000000', 'XL', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '1200000', 'M', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '1600000', 'L', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '2000000', 'XL', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '800000', 'S', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '2000000', 'XL', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '1200000', 'M', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '1600000', 'L', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '800000', 'S', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '1200000', 'M', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '800000', 'S', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '2000000', 'XL', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '1600000', 'L', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '400000', 'XS', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '1200000', 'M', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '400000', 'XS', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '400000', 'XS', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '1600000', 'L', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '800000', 'S', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '1200000', 'M', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '2000000', 'XL', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '1600000', 'L', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
+
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '800000', 'S', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
+
+
+
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Corine Laundree', 'gWsQpXb@gmail.com', '0967781834', '2020-01-21 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I32', 'M', '1', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I1', 'XL', '1', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I7', 'L', '1', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I23', 'XS', '1', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I31', 'XL', '1', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I21', 'M', '1', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'XL', '1', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Sheila Petterson', 'FGBWNQV@gmail.com', '0988576109', '2020-01-16 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I11', 'XL', '2', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I10', 'XL', '2', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I14', 'S', '2', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'XL', '2', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'L', '2', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I18', 'M', '2', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'XS', '2', '2');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Susan Kimura', 'leOBVYN@gmail.com', '0929914442', '2020-01-26 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I29', 'M', '3', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I39', 'S', '3', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I12', 'XS', '3', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'S', '3', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I32', 'XL', '3', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I5', 'M', '3', '1');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Glenn Ayers', 'iiWtNXR@gmail.com', '0994098166', '2020-01-19 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I25', 'L', '4', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I22', 'XL', '4', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I21', 'XS', '4', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I2', 'M', '4', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'M', '4', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I34', 'XL', '4', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I9', 'XS', '4', '1');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Annette Kay', 'zegAJfg@gmail.com', '0947052031', '2020-01-27 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I12', 'M', '5', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'XS', '5', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Mary Whitmore', 'jXfMtVC@gmail.com', '0920554506', '2020-01-16 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I28', 'XL', '6', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'M', '6', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I22', 'S', '6', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I6', 'XL', '6', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I39', 'L', '6', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'L', '6', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Marvin Jansson', 'SxuHfcz@gmail.com', '0929736877', '2020-01-30 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I26', 'M', '7', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I12', 'M', '7', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I2', 'XS', '7', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('John Ruhl', 'ykRnvGL@gmail.com', '0908125585', '2020-01-30 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I23', 'L', '8', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I5', 'XL', '8', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'XS', '8', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I13', 'L', '8', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I27', 'S', '8', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Philip Stryker', 'qOOCQDQ@gmail.com', '0983124323', '2020-01-26 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I25', 'L', '9', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I22', 'M', '9', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I12', 'XS', '9', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I32', 'L', '9', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'M', '9', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Robert Griffiths', 'uzeBOiC@gmail.com', '0969959647', '2020-01-25 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'XS', '10', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'XL', '10', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Anthony Barnett', 'kWrBnXG@gmail.com', '0997051157', '2020-01-24 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I6', 'L', '11', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I20', 'L', '11', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I27', 'XL', '11', '1');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Iva Johnson', 'yhqCbYm@gmail.com', '0945084558', '2020-01-17 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I1', 'L', '12', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I5', 'S', '12', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I7', 'S', '12', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I27', 'M', '12', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Elizabeth Benson', 'xKFupJY@gmail.com', '0931315910', '2020-01-30 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I6', 'M', '13', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I28', 'M', '13', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I9', 'M', '13', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Xavier Baez', 'lgumkSI@gmail.com', '0948668047', '2020-01-27 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I26', 'M', '14', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I30', 'M', '14', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I34', 'L', '14', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I11', 'M', '14', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I1', 'XS', '14', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I35', 'S', '14', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Manuel Brown', 'MjvWgoJ@gmail.com', '0932015826', '2020-01-15 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I10', 'XS', '15', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I14', 'M', '15', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'XL', '15', '2');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Rebecca Hawkins', 'CbCaLvF@gmail.com', '0979905296', '2020-01-20 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I23', 'S', '16', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I15', 'L', '16', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I30', 'L', '16', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'XS', '16', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I11', 'XL', '16', '1');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Monica Pinto', 'awbwPOr@gmail.com', '0970869395', '2020-01-22 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I9', 'S', '17', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I23', 'S', '17', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I29', 'XS', '17', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Edward Hallock', 'EsFZVKS@gmail.com', '0999707451', '2020-01-28 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I39', 'M', '18', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I14', 'XL', '18', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I3', 'XL', '18', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I34', 'S', '18', '2');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Mary Mccully', 'CvwfsiP@gmail.com', '0975873024', '2020-01-23 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I28', 'L', '19', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I4', 'S', '19', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'L', '19', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I2', 'XL', '19', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I24', 'L', '19', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I15', 'L', '19', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I33', 'L', '19', '1');
