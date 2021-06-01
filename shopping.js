@@ -2,236 +2,6 @@ var productList = [];
 var currentPage = 1;
 const PRODUCTS_PER_PAGE = 12;
 
-async function getAllProducts() {
-	try {
-		const res = await fetch('http://localhost:3000/items/all');
-		if (res) {
-			data = await res.json();
-			data.forEach(item => {
-				if (productList.findIndex(product => product.name.localeCompare(item.name) === 0) === -1) {
-					productList.push(item);
-				}
-			})
-		}
-	} catch (error) {
-		console.log(error);
-	}
-}
-
-function getAllSampleProducts() {
-	return (productList = [
-		{
-			id: "1",
-			imageurl: "ImgSource/shop_img_1.jpg",
-			name: "Collapsible Dog Bowl",
-			price: 45,
-			discount: 20,
-		},
-		{
-			id: "2",
-			imageurl: "ImgSource/shop_img_2.jpg",
-			name: "Lounger",
-			price: 85,
-			discount: 10,
-		},
-		{
-			id: "3",
-			imageurl: "ImgSource/shop_img_3.jpg",
-			name: "Active Pet Dog Harness",
-			price: 250,
-			discount: 30,
-		},
-		{
-			id: "4",
-			imageurl: "ImgSource/shop_img_4.jpg",
-			name: "Sara's Doggie Treat",
-			price: 45,
-			discount: 0,
-		},
-		{
-			id: "5",
-			imageurl: "ImgSource/shop_img_5.jpg",
-			name: "Little Scoop For Ultra",
-			price: 35,
-			discount: 0,
-		},
-		{
-			id: "6",
-			imageurl: "ImgSource/shop_img_6.jpg",
-			name: "Double Feeding Bowls",
-			price: 95,
-			discount: 0,
-		},
-		{
-			id: "7",
-			imageurl: "ImgSource/shop_img_7.jpg",
-			name: "Small Pet Drink Bottle",
-			price: 25,
-			discount: 0,
-		},
-		{
-			id: "8",
-			imageurl: "ImgSource/shop_img_8.jpg",
-			name: "Cat Scratch Apple Toy",
-			price: 90,
-			discount: 10,
-		},
-		{
-			id: "9",
-			imageurl: "ImgSource/shop_img_9.jpg",
-			name: "Mouse Cat Toy 10cm",
-			price: 55,
-			discount: 0,
-		},
-		{
-			id: "10",
-			imageurl: "ImgSource/shop_img_10.jpg",
-			name: "Dogs Name Tag",
-			price: 70,
-			discount: 0,
-		},
-		{
-			id: "11",
-			imageurl: "ImgSource/shop_img_11.jpg",
-			name: "Slow Feeder Bowl",
-			price: 50,
-			discount: 0,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-		{
-			id: "12",
-			imageurl: "ImgSource/shop_img_12.jpg",
-			name: "Dog Blanket With Cushion",
-			price: 90,
-			discount: 20,
-		},
-	]);
-}
-
-/**
- * 
- * @param {String} name 
- * @returns {Array}
- */
-function getProductsByName(name) {
-	let result = productList.filter(product => {
-		const productName = product.name.toLowerCase();
-		return productName.toLowerCase().includes(name);
-	});
-	return result
-}
-
 function sortProductList() {
 	const TYPE = document.getElementById("sort-product").value;
 	switch (TYPE) {
@@ -283,21 +53,21 @@ function comparePriceDescending(productA, productB) {
 		: priceB - priceA;
 }
 
-function addToCart(productId) {
+function addToCart(productId, productSize) {
 	let product;
 	let cart = getCookie("cart");
 	cart = JSON.parse(cart);
 	if (!cart) {
-		product = { id: productId, quantity: 1 };
+		product = { id: productId, size: productSize, quantity: 1 };
 		setCookie("cart", JSON.stringify([product]), 1);
 	} else if (Array.isArray(cart)) {
 		if (cart.length == 0) {
-			product = { id: productId, quantity: 1 };
+			product = { id: productId, size: productSize, quantity: 1 };
 			setCookie("cart", JSON.stringify([product]), 1);
 		} else {
 			product = cart.find((item) => item.id === productId);
 			if (!product) {
-				product = { id: productId, quantity: 1 };
+				product = { id: productId, size: productSize, quantity: 1 };
 				setCookie("cart", JSON.stringify([...cart, product]), 1);
 			} else {
 				product.quantity += 1;
@@ -317,9 +87,9 @@ function searchProducts() {
 function autocomplete(input) {
 	var currentFocus;
 	const limit = 5;
-	input.addEventListener("input", function (e) {
+	input.addEventListener("input", async function (e) {
 		const val = this.value.toLowerCase();
-		const result = getProductsByName(val);
+		const result = await getProductsByName(val);
 		closeAllLists();
 		if (!val) return false;
 		currentFocus = -1;
@@ -335,15 +105,13 @@ function autocomplete(input) {
 			if (count == limit) break;
 			if (name.substr(0, val.length).toLowerCase() == val.toLowerCase()) {
 				let b = document.createElement("div");
-				b.innerHTML += `<img src="${imageurl}" width="50">`;
+				b.innerHTML += `<img src="${imageurl == "" ? "ImgSource/logo/logo-black.png" : imageurl}" width="50">`;
 				b.innerHTML += `<strong>${name.substr(0, val.length)}</strong>`;
 				b.innerHTML += name.substr(val.length);
 				b.addEventListener("click", function (e) {
 					input.value = name;
 					closeAllLists();
-					setTimeout(() => {
-						window.location.href = `product.html?id=${product.id}`
-					}, 1000)
+					window.location.href = `product.html?id=${product.id}`
 				});
 				a.appendChild(b);
 				count++;
@@ -445,9 +213,9 @@ function changePage(page) {
             <div class="product-grid">
                 <div class="product-image">
                     <a href="product.html?id=${product.id}" class="image">
-                        <img src="${product.imageurl == "" ? "./ImgSource/shop_img_1.jpg" : product.imageurl}" alt="${product.id}">
+                        <img src="${product.imageurl == "" ? "ImgSource/logo/logo-black.png" : product.imageurl}" alt="${product.id}">
                     </a>
-                    ${product.discount ? `<span class="product-discount-label">-${product.discount}%</span>` : ""}
+                    ${product.discount > 0 ? `<span class="product-discount-label">-${product.discount}%</span>` : ""}
                 </div>
                 <div class="product-content">
                     <h3 class="name">
@@ -457,7 +225,7 @@ function changePage(page) {
                     ${product.discount > 0 ? `<span>$${product.price.toFixed(2)}</span> $${(product.price - product.price * product.discount / 100).toFixed(2)}` : `$${product.price.toFixed(2)}`}
                     </div>
                 </div>
-                <div class="add-to-cart" onclick="addToCart(${product.id})">
+                <div class="add-to-cart" onclick="addToCart(${product.id}, ${product.size})">
                     Add To Cart
                     <i class="fas fa-shopping-bag"></i>
                 </div>
@@ -492,8 +260,8 @@ function numPages() {
 }
 
 window.onload = async function () {
-	// await getAllProducts();
-	getAllSampleProducts();
+	productList = await getAllProducts();
+	// productList = getAllSampleProducts();
 	autocomplete(document.getElementById('product-to-search'));
 	changePage(1);
 };
