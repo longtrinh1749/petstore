@@ -95,7 +95,8 @@ Item.getFromName = (itemName, result) => {
 }
 
 Item.getFromId = (itemId, result) => {
-    var id = '%' + itemId + '%';
+    // var id = '%' + itemId + '%';
+    var id = itemId;
     sql.query("select * from item where id like N?", [id], (err, res) => {
         if (err) {
             console.log("Err: ", err);
@@ -121,7 +122,6 @@ Item.create = (item, result) => {
     if(!item.discount) item.discount = 0;
     if(!item.imageurl) item.imageurl = "";
 
-
     sql.query("insert into item set ?;", item,
         (err, res) => {
             if (err) {
@@ -141,9 +141,15 @@ Item.create = (item, result) => {
 }
 
 Item.update = (item, result) => {
-    sql.query("update item set name = ?, price = ?, discount = ?, description = ?, size = ?, quantity = ?, " +
-        "imageurl = ? where id = ?", [item.name, item.price, item.discount, item.description,
-        item.size, item.quantity, item.imageurl, item.id], (err, res) => {
+    console.log(JSON.stringify(item));
+    // sql.query("update item set name = ?, price = ?, discount = ?, description = ?, quantity = ?  " +
+    //     "where id = ? and size = ?",
+    //     [item.name, item.price, item.discount, item.description, item.quantity, item.id, item.size],
+    //     (err, res) => {
+    sql.query("update item set name = ?, price = ?, discount = ?, description = ?, quantity = ?  " +
+        "where id = ? and size = ?",
+        [item.name, item.price, item.discount, item.description, item.quantity, item.id, item.size],
+        (err, res) => {
         if (err) {
             console.log("Err updating item: ", err);
             result(err, null);

@@ -1,37 +1,14 @@
 const express = require('express');
 const session = require('express-session');
 const routes = express.Router();
-const Customer = require("../models/customer.model");
+const Item = require("../models/item.model");
 
 const path = require('../config')
 
 module.exports = routes;
 
-routes.get("/all", (req, res) => {
-    console.log("Adm");
-    Customer.getAll((err, data) => {
-        if(err) {
-            res.status(500).send({
-                message: err.message || "Some error occurred while get all item."
-            });
-        }
-        else res.send(data);
-    });
-});
-
-routes.post("/get", (req, res) => {
-    customer = req.body;
-    Customer.get(customer, (err, data) => {
-        if(err)
-            res.status(500).send({
-                message: err.message || "Some error occurred while get all item."
-            });
-        else res.send(data);
-    });
-});
-
 routes.get("/", (req, res) => {
-    if(req.session.admin) res.sendFile(path.views + "/admin/customer.html");
+    if(req.session.admin) res.sendFile(path.views + "/admin/item.html");
     else {
         res.redirect("/admin");
     }
@@ -40,39 +17,38 @@ routes.get("/", (req, res) => {
 routes.post("/create", (req, res) => {
     console.log("Creating");
     if(req.session.admin) {
-        customer = req.body;
-        Customer.create(customer, (err, data) => {
+        item = req.body;
+        Item.create(item, (err, data) => {
             if(err) {
                 if (err.kind === "not_found") {
                     res.send({});
                 } else {
                     res.status(500).send({
-                        message: err.message || "Some error occurred while updating customer."
+                        message: err.message || "Some error occurred while updating item."
                     });
                 }
             } else {
                 res.send();
-                console.log("Update success");
+                console.log("Insert success");
             }
         })
     }
     else {
         res.redirect("/admin")
-        console.log("Lay file customer bang cach d nao co ?? :D ??");
     }
 });
 
 routes.post("/update", (req, res) => {
     console.log("Updating");
     if(req.session.admin) {
-        customer = req.body;
-        Customer.update(customer, (err, data) => {
+        item = req.body;
+        Item.update(item, (err, data) => {
             if(err) {
                 if (err.kind === "not_found") {
                     res.send({});
                 } else {
                     res.status(500).send({
-                        message: err.message || "Some error occurred while updating customer."
+                        message: err.message || "Some error occurred while updating item."
                     });
                 }
             } else {
@@ -82,21 +58,20 @@ routes.post("/update", (req, res) => {
         })
     }
     else {
-        res.redirect("/admin")
-        console.log("Lay file customer bang cach d nao co ?? :D ??");
+        res.redirect("/admin");
     }
 });
 
 routes.post("/delete", (req, res) => {
     if(req.session.admin) {
-        customer = req.body;
-        Customer.delete(customer, (err, data) => {
+        item = req.body;
+        Item.delete(item, (err, data) => {
             if(err) {
                 if (err.kind === "not_found") {
                     res.send({});
                 } else {
                     res.status(500).send({
-                        message: err.message || "Some error occurred while updating customer."
+                        message: err.message || "Some error occurred while updating item."
                     });
                 }
             } else {
@@ -107,7 +82,7 @@ routes.post("/delete", (req, res) => {
     }
     else {
         res.redirect("/admin")
-        console.log("Lay file customer bang cach d nao co ?? :D ??");
+        console.log("Lay file item bang cach d nao co ?? :D ??");
     }
 });
 

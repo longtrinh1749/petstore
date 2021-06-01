@@ -20,8 +20,10 @@ create table pet (
     imageurl varchar(200)
 );
 
+-- id, name, breed, female, origin, age, weight, price, image, description
+-- id, name, price, size, quantity, discount, image, description
 create table item (
-    id varchar(10),
+    id varchar(10), 
     name varchar(50),
     price int,
     size varchar(5),
@@ -32,6 +34,8 @@ create table item (
     primary key (`id`, `size`)
 ); -- size: M, L, XL
 
+-- id, name, phoneno, email, address
+-- id, name, price, size, quantity, discount, description
 create table customer (
     id int not null auto_increment primary key,
     name varchar(50),

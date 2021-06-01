@@ -117,6 +117,8 @@ const callback = function (err, res) {
 }
 
 // Customer.getAll(callback);
+
+// Customer.getAll(callback);
 // let customer = new Customer({id: "P20"});
 // Customer.delete(customer, callback);
 

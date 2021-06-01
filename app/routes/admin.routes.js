@@ -7,13 +7,14 @@ const path = require('../config');
 const Admin = require('../models/admin.model');
 const adminPetRoutes = require('./admin.pet.routes');
 const adminCustomerRoutes = require('./admin.customer.routes');
+const adminItemRoutes = require('./admin.item.routes')
 
 module.exports = routes;
 
 routes.get('/',(req,res) => {
     if(req.session.admin) {
         console.log("wtf Success");
-        res.sendFile("../" + path.views + "/admin/index.html");
+        res.sendFile(path.views + "/admin/index.html");
     }
     else {
         console.log(req.session.admin);
@@ -59,4 +60,5 @@ routes.get('/logout',(req,res) => {
 
 routes.use("/pets", adminPetRoutes);
 routes.use("/customers", adminCustomerRoutes);
+routes.use("/items", adminItemRoutes);
 
