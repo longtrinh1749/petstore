@@ -9,6 +9,8 @@ const client  = redis.createClient();
 
 const petRouter = require('./routes/pet.routes');
 const adminRouter = require('./routes/admin.routes');
+const itemRouter = require('./routes/item.routes')
+const itemOrderRouter = require('./routes/itemorder.routes')
 const pets = require("./controllers/pet.controller.js");
 
 const app = express();
@@ -32,6 +34,8 @@ app.get("/", (req, res) => {
 
 app.use("/pets", petRouter);
 app.use("/admin", adminRouter);
+app.use("/items", itemRouter);
+app.use("/itemOrders", itemOrderRouter);
 
 const port = process.env.NODEJS_LOCAL_PORT || 3000;
 app.listen(port, () => {
