@@ -10,12 +10,61 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
 		integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
 		crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
-	<header>
+	<div class="modal" id="remove-item-modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span id="close-remove-item-modal">&times;</span>
+				<p>Confirm</p>
+			</div>
+			<div class="modal-body">
+				<p>Remove this item from cart?</p>
+			</div>
+			<div class="modal-footer">
+				<button id="cancel-remove-btn">Cancel</button>
+				<button id="remove-item-btn">Remove</button>
+			</div>
+		</div>
+	</div>
 
-	</header>
+	<div class="modal" id="cart-form-modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span id="close-cart-form-modal">&times;</span>
+				<p>Billing details</p>
+			</div>
+			<div class="modal-body cart-form">
+				<label for="cart-name">
+					<input type="text" name="name" id="cart-name" placeholder="Full name *" oninput="checkName()"
+						autocomplete="false">
+					<div class="error-alert animate__animated animate__bounceIn" id="name-alert"></div>
+				</label>
+				<label for="cart-email">
+					<input type="email" name="email" id="cart-email" placeholder="Email address *"
+						oninput="checkEmail()" autocomplete="false">
+					<div class="error-alert animate__animated animate__bounceIn" id="email-alert"></div>
+				</label>
+				<label for="cart-phonenumber">
+					<input type="text" name="phonenumber" id="cart-phonenumber" placeholder="Phone number *"
+						oninput="checkPhoneNumber()">
+					<div class="error-alert animate__animated animate__bounceIn" id="phonenumber-alert"></div>
+				</label>
+				<label for="cart-note">
+					<textarea name="note" id="cart-note" rows="5"
+						placeholder="Give us your note here (optional) ..."></textarea>
+				</label>
+			</div>
+			<div class="modal-footer">
+				<div class="success-alert animate__animated animate__bounceIn" id="order-success-alert">Order
+					successfully! Please check your email.</div>
+				<button id="cancel-cart-form-btn">Cancel</button>
+				<button id="order-btn" onclick="submitOrder()">Order</button>
+			</div>
+		</div>
+	</div>
 	<!-- begin of html -->
 	<div class="m-navigator-bar" id="top-nav">
 		<div class="navbar-margin-left"></div>
@@ -23,7 +72,10 @@
 			<img src="./ImgSource/logo/logo-black.png">
 		</a>
 		<div class="navbar-margin-right"></div>
-		<a class="btm" href="#">About us</a>
+		<a class="btn" href="cart.html" style="font-size: 1.125rem;">
+			<span><i class="fas fa-shopping-cart"></i></span>
+		</a>
+		<a class="btn" href="#">About us</a>
 		<a class="btn" href="./tryit/newpage">Community</a>
 		<a class="btn selected" href="#shop">FAQs</a>
 		<a class="btn" href="#menu">Login</a>
@@ -49,129 +101,20 @@
 					<table class="cart-table">
 						<thead class="cart-headings">
 							<th><span>&nbsp;</span></th>
+							<th><span>ID</span></th>
 							<th><span>Product</span></th>
 							<th><span>Size</span></th>
 							<th><span>Price</span></th>
 							<th><span>Quantity</span></th>
 							<th><span>Total</span></th>
 						</thead>
-						<tbody class="cart-body">
-							<tr>
-								<th class="item-remove">
-									<a href="#" class="link-orange">
-										<i class="fas fa-minus-square"></i>
-									</a>
-								</th>
-								<td>
-									<div class="item-product">
-										<span class="img-wrap">
-											<img src="ImgSource/item-1.jpg" alt="">
-										</span>
-										<span>Rubber Dumbell</span>
-									</div>
-								</td>
-								<td>
-									<strong class="item-size">XL</strong>
-								</td>
-								<td>
-									<strong class="item-price">$75.00</strong>
-								</td>
-								<td>
-									<input type="number" name="quantity" min="1" value="1">
-								</td>
-								<td>
-									<strong class="item-total">$75.00</strong>
-								</td>
-							</tr>
-							<tr>
-								<th class="item-remove">
-									<a href="#" class="link-orange">
-										<i class="fas fa-minus-square"></i>
-									</a>
-								</th>
-								<td>
-									<div class="item-product">
-										<span class="img-wrap">
-											<img src="ImgSource/item-2.jpg" alt="">
-										</span>
-										<span>Mouse Cat Toy 10cm</span>
-									</div>
-								</td>
-								<td>
-									<strong class="item-size">XL</strong>
-								</td>
-								<td>
-									<strong class="item-price">$75.00</strong>
-								</td>
-								<td>
-									<input type="number" name="quantity" min="1" value="1">
-								</td>
-								<td>
-									<strong class="item-total">$75.00</strong>
-								</td>
-							</tr>
-							<tr>
-								<th class="item-remove">
-									<a href="#" class="link-orange">
-										<i class="fas fa-minus-square"></i>
-									</a>
-								</th>
-								<td>
-									<div class="item-product">
-										<span class="img-wrap">
-											<img src="ImgSource/item-3.jpg" alt="">
-										</span>
-										<span>Cat Scratch Apple Toy</span>
-									</div>
-								</td>
-								<td>
-									<strong class="item-size">XL</strong>
-								</td>
-								<td>
-									<strong class="item-price">$75.00</strong>
-								</td>
-								<td>
-									<input type="number" name="quantity" min="1" value="1">
-								</td>
-								<td>
-									<strong class="item-total">$75.00</strong>
-								</td>
-							</tr>
-							<tr>
-								<th class="item-remove">
-									<a href="#" class="link-orange">
-										<i class="fas fa-minus-square"></i>
-									</a>
-								</th>
-								<td>
-									<div class="item-product">
-										<span class="img-wrap">
-											<img src="ImgSource/item-4.jpg" alt="">
-										</span>
-										<span>Collapsible Dog Bowl</span>
-									</div>
-								</td>
-								<td>
-									<strong class="item-size">XL</strong>
-								</td>
-								<td>
-									<strong class="item-price">$75.00</strong>
-								</td>
-								<td>
-									<input type="number" name="quantity" min="1" value="1">
-								</td>
-								<td>
-									<strong class="item-total">$75.00</strong>
-								</td>
-							</tr>
-						</tbody>
+						<tbody class="cart-body"></tbody>
 					</table>
 				</div>
 
-				<div class="cart-update-wrapper">
+				<div class="cart-continue-shopping-wrapper">
 					<button id="continue-shopping-btn" onclick="window.location.href='shopping.html'">
 						Continue Shopping</button>
-					<button id="cart-update-btn" onclick="updateCart()">Update Cart</button>
 				</div>
 				<div class="cart-total-wrapper">
 					<div class="cart-total">
@@ -182,15 +125,15 @@
 							<ul>
 								<li>
 									<span style="color: #707070;">Subtotal</span>
-									<span style="color: #98cb46;">$300.00</span>
+									<span id="sub-total" style="color: #98cb46;"></span>
 								</li>
 								<li>
 									<span style="color: #707070;">Total</span>
-									<span style="color: #98cb46;">$300.00</span>
+									<span id="total" style="color: #98cb46;"></span>
 								</li>
 							</ul>
 						</div>
-						<button id="checkout-btn">Proceed to checkout</button>
+						<button id="checkout-btn" onclick="checkout()">Proceed to checkout</button>
 					</div>
 				</div>
 			</div>
@@ -250,8 +193,6 @@
 					style="text-decoration: underline dotted white;text-align: left;">09.00 AM - 16.00 PM</span><br>
 				<span style="color:chartreuse;">Sunday :</span><span
 					style="text-decoration: underline dotted white;text-align: left;">We are closed</span><br>
-
-
 			</div>
 			<hr style="width: 100%; height: 3px;background-color: white;">
 			<div class="footer-license" style="margin-bottom: 50px;">
@@ -266,18 +207,5 @@
 	<script src="utils.js"></script>
 	<script src="api.js"></script>
 </body>
-
-<script>
-	"use strict";
-	window.onscroll = function () { adjustTopNav(); };
-
-	var topNav = document.getElementById("top-nav");
-	function adjustTopNav() {
-		if (document.body.scrollTop > window.innerHeight / 3 || document.documentElement.scrollTop > window.innerHeight / 3) {
-			topNav.className = "m-navigator-bar scrolled";
-		}
-		else topNav.className = topNav.className.replace("scrolled", "");
-	}
-</script>
 
 </html>

@@ -22,7 +22,7 @@ async function getProductsById(id) {
 		if (res) {
 			data = await res.json();
 			return data;
-		} 
+		}
 		return [];
 	} catch (error) {
 		console.log(error);
@@ -53,14 +53,31 @@ async function getProductsByName(name) {
 async function getProductByIdAndSize(id, size) {
 	try {
 		const res = await fetch(`http://localhost:3000/items/getByIdAndSize?itemId=${id}&itemSize=${size}`);
-		if (res){
+		if (res) {
 			data = await res.json();
-			return data;
+			return data[0];
 		}
 		return null;
 	} catch (error) {
 		console.log(error);
 		return null;
+	}
+}
+
+async function postOrder(order) {
+	try {
+		const res = await fetch(`http://localhost:3000/items/form`, {
+			method: 'POST',
+			mode: 'cors',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(order)
+		})
+		if (res) return true
+	} catch (error) {
+		console.log(error);
+		return false
 	}
 }
 

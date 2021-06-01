@@ -31,20 +31,20 @@ function addToCart(productId, productSize) {
 	let product;
 	cart = JSON.parse(cart);
 	if (!cart) {
-		product = { id: productId, size: productSize, quantity };
+		product = { itemid: productId, size: productSize, quantity };
 		setCookie("cart", JSON.stringify([product]), 1);
 	} else if (Array.isArray(cart)) {
 		if (cart.length == 0) {
-			product = { id: productId, size: productSize, quantity };
+			product = { itemid: productId, size: productSize, quantity };
 			setCookie("cart", JSON.stringify([product]), 1);
 		} else {
-			product = cart.find((item) => item.id == productId && item.size == productSize);
+			product = cart.find(item => item.itemid == productId && item.size == productSize);
 			if (!product) {
-				product = { id: productId, size: productSize, quantity };
+				product = { itemid: productId, size: productSize, quantity };
 				setCookie("cart", JSON.stringify([...cart, product]), 1);
 			} else {
 				product.quantity = parseInt(product.quantity) + quantity;
-				setCookie("cart", JSON.stringify([...cart]), 1);
+				setCookie("cart", JSON.stringify(cart), 1);
 			}
 		}
 	}

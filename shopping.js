@@ -58,16 +58,16 @@ function addToCart(productId, productSize) {
 	let cart = getCookie("cart");
 	cart = JSON.parse(cart);
 	if (!cart) {
-		product = { id: productId, size: productSize, quantity: 1 };
+		product = { itemid: productId, size: productSize, quantity: 1 };
 		setCookie("cart", JSON.stringify([product]), 1);
 	} else if (Array.isArray(cart)) {
 		if (cart.length == 0) {
-			product = { id: productId, size: productSize, quantity: 1 };
+			product = { itemid: productId, size: productSize, quantity: 1 };
 			setCookie("cart", JSON.stringify([product]), 1);
 		} else {
-			product = cart.find((item) => item.id === productId);
+			product = cart.find(item => item.itemid === productId);
 			if (!product) {
-				product = { id: productId, size: productSize, quantity: 1 };
+				product = { itemid: productId, size: productSize, quantity: 1 };
 				setCookie("cart", JSON.stringify([...cart, product]), 1);
 			} else {
 				product.quantity += 1;
@@ -213,7 +213,7 @@ function changePage(page) {
             <div class="product-grid">
                 <div class="product-image">
                     <a href="product.html?id=${product.id}" class="image">
-                        <img src="${product.imageurl == "" ? "ImgSource/logo/logo-black.png" : product.imageurl}" alt="${product.id}">
+                        <img src="${product.imageurl || "ImgSource/logo/logo-black.png"}" alt="${product.id}">
                     </a>
                     ${product.discount > 0 ? `<span class="product-discount-label">-${product.discount}%</span>` : ""}
                 </div>
@@ -225,7 +225,7 @@ function changePage(page) {
                     ${product.discount > 0 ? `<span>$${product.price.toFixed(2)}</span> $${(product.price - product.price * product.discount / 100).toFixed(2)}` : `$${product.price.toFixed(2)}`}
                     </div>
                 </div>
-                <div class="add-to-cart" onclick="addToCart(${product.id}, ${product.size})">
+                <div class="add-to-cart">
                     Add To Cart
                     <i class="fas fa-shopping-bag"></i>
                 </div>
@@ -253,6 +253,14 @@ function changePage(page) {
 	page == numPages()
 		? nextBtn.classList.add("disabled")
 		: nextBtn.classList.remove("disabled");
+
+	const addToCartBtns = document.getElementsByClassName('add-to-cart');
+	for (let i = 0; i < addToCartBtns.length; i++) {
+		const addToCartBtn = addToCartBtns[i];
+		addToCartBtn.addEventListener('click', function(){
+			addToCart(productList[i].id, productList[i].size)
+		})
+	}
 }
 
 function numPages() {
