@@ -17,7 +17,8 @@ create table pet (
     weight int,
     `description` text, 
     price int,
-    imageurl varchar(200)
+    imageurl varchar(200),
+    sold boolean default false
 );
 
 -- id, name, breed, female, origin, age, weight, price, image, description
@@ -104,7 +105,7 @@ create table itemorderlist (
     PRIMARY KEY (serviceid, orderid)
 ); */
 
-create table petpurchase (
+/* create table petpurchase (
     id int not null auto_increment primary key,
     customerid int,
     orderid int,
@@ -118,7 +119,7 @@ create table servicepurchase (
     orderid int,
     FOREIGN KEY (`customerid`) REFERENCES customer (id) on update cascade on delete cascade,
     FOREIGN KEY (`orderid`) REFERENCES serviceorder (id) on update cascade on delete cascade
-);
+); */
 
 /* create table itempurchase (
     id int primary key,
@@ -301,30 +302,18 @@ insert into customer (`name`, `phoneno`, `email`, `address`) values ('Staci Crab
 
 
 
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P22', 'Roberta Hall', '0954061240', 'FJdqWNd@gmail.com', '2020-01-12 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P20', 'Phyllis Mccants', '0964547463', 'myxOUxB@gmail.com', '2020-01-27 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P9', 'Guadalupe Marzinske', '0905908990', 'pADbCHW@gmail.com', '2020-01-28 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P30', 'Anna Hayes', '0911810962', 'NUXXwmn@gmail.com', '2020-01-25 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P21', 'Mary Kroetch', '0999075802', 'SZRKlmO@gmail.com', '2020-01-10 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P22', 'Beverly Behm', '0990613091', 'JgPMstx@gmail.com', '2020-01-18 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P6', 'Richard Candelaria', '0981179502', 'jUQaBeW@gmail.com', '2020-01-12 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P17', 'Elena Ashley', '0940622043', 'tKouxzh@gmail.com', '2020-01-21 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P9', 'Virginia Saucier', '0904779423', 'cLtDMZD@gmail.com', '2020-01-23 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P22', 'Hattie Weathers', '0998289211', 'qjLGdhk@gmail.com', '2020-01-24 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P19', 'Thomas Prat', '0950183020', 'FoAwOjv@gmail.com', '2020-01-26 10:10:10-08:00');
-
-insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P15', 'Willie Moss', '0925566992', 'SflXkER@gmail.com', '2020-01-28 10:10:10-08:00');
-
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P22', 'Roberta Hall', '0954061240', 'FJdqWNd@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P20', 'Phyllis Mccants', '0964547463', 'myxOUxB@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P9', 'Guadalupe Marzinske', '0905908990', 'pADbCHW@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P30', 'Anna Hayes', '0911810962', 'NUXXwmn@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P21', 'Mary Kroetch', '0999075802', 'SZRKlmO@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P22', 'Beverly Behm', '0990613091', 'JgPMstx@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P6', 'Richard Candelaria', '0981179502', 'jUQaBeW@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P17', 'Elena Ashley', '0940622043', 'tKouxzh@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P9', 'Virginia Saucier', '0904779423', 'cLtDMZD@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P22', 'Hattie Weathers', '0998289211', 'qjLGdhk@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P19', 'Thomas Prat', '0950183020', 'FoAwOjv@gmail.com');
+insert into petorder (`petid`, `name`, `phoneno`, `email`) values ('P15', 'Willie Moss', '0925566992', 'SflXkER@gmail.com');
 insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P21', 'James Ayala', '0912674114', 'bUqKtsM@gmail.com', '2020-01-28 10:10:10-08:00');
 
 insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values ('P18', 'John Walters', '0983744320', 'KRAqVLS@gmail.com', '2020-01-27 10:10:10-08:00');
@@ -341,29 +330,18 @@ insert into petorder (`petid`, `name`, `phoneno`, `email`, `timestamp`) values (
 
 
 
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Katherine Sellman', '0934746222', 'XUXglak@gmail.com', '2020-01-17 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Diego Genet', '0950432545', 'lykYLMV@gmail.com', '2020-01-10 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Stanley Womack', '0928680258', 'JgqZZqg@gmail.com', '2020-01-25 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Jeffrey Holmes', '0949304562', 'Ncddglk@gmail.com', '2020-01-27 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Amy Cowen', '0947766478', 'KdUfkTB@gmail.com', '2020-01-25 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('0', 'Thomas Mankins', '0952851942', 'nVOkmvf@gmail.com', '2020-01-18 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Darlene Snyder', '0913217223', 'aqQzQXG@gmail.com', '2020-01-14 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Emma Harper', '0951599430', 'gjShogV@gmail.com', '2020-01-20 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Heather Coleman', '0999508144', 'FjJLlak@gmail.com', '2020-01-20 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Michael Pippenger', '0966648513', 'QIjPIvH@gmail.com', '2020-01-10 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Jayna Torres', '0930299696', 'mqVvaCp@gmail.com', '2020-01-25 10:10:10-08:00');
-
-insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('1', 'Ashley Bouy', '0954811929', 'wDShFpO@gmail.com', '2020-01-18 10:10:10-08:00');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('2', 'Katherine Sellman', '0934746222', 'XUXglak@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('2', 'Diego Genet', '0950432545', 'lykYLMV@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('2', 'Stanley Womack', '0928680258', 'JgqZZqg@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('2', 'Jeffrey Holmes', '0949304562', 'Ncddglk@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('2', 'Amy Cowen', '0947766478', 'KdUfkTB@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('0', 'Thomas Mankins', '0952851942', 'nVOkmvf@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('1', 'Darlene Snyder', '0913217223', 'aqQzQXG@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('1', 'Emma Harper', '0951599430', 'gjShogV@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('1', 'Heather Coleman', '0999508144', 'FjJLlak@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('1', 'Michael Pippenger', '0966648513', 'QIjPIvH@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('1', 'Jayna Torres', '0930299696', 'mqVvaCp@gmail.com');
+insert into serviceorder (`service`, `name`, `phoneno`, `email`) values ('1', 'Ashley Bouy', '0954811929', 'wDShFpO@gmail.com');
 
 insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('0', 'Julia Collins', '0941539075', 'snokbZo@gmail.com', '2020-01-24 10:10:10-08:00');
 

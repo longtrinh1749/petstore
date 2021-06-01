@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Create two equal columns that floats next to each other */
+        .column {
+            text-align: center;
+            float: left;
+            width: 120px;
+        }
+
+        .desColumn {
+            text-align: center;
+            float: left;
+            width: 120px;
+        }
+
+        .actionColumn {
+            text-align: center;
+            float: right;
+            width: 12%;
+        }
+
+        .row {
+            /*border-style: solid;*/
+            /*border-width: thin;*/
+            /*border-color: black;*/
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .ta {
+            width: 119px;
+            height: 40px
+        }
+
+        .taDes {
+            width: 119px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+<a href="/admin">Return to Home</a>
+<div class="row">
+    <div class="column">
+        ID
+    </div>
+    <div class="column">
+        PetId
+    </div>
+    <div class="column">
+        Name
+    </div>
+    <div class="column">
+        Email
+    </div>
+    <div class="column">
+        Phoneno
+    </div>
+    <div class="column">
+        Date created
+    </div>
+    <div class="column">
+        Date purchased
+    </div>
+    <div class="column">
+        Purchase
+    </div>
+</div>
+<form id="searchForm">
+    <div class="row">
+        <div class="column">
+            <input class="ta" type="text" id="searchId" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchPetId" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchName" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchEmail" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchPhoneno" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchTimestamp" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchPurchaseTimestamp" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchPurchase" value="">
+        </div>
+        <div class="actionColumn">
+            <button id="searchAllButton" type="button" value="Search" onclick="getAllPetorderRequest()">Search All</button>
+            <button id="searchButton" type="button" value="Search" onclick="searchPetorder()">Search</button>
+            <button class="createButton" id="createButton" type="button" value="Create" onclick="createPetorder()">Create</button>
+            <input type="reset">
+        </div>
+    </div>
+</form>
+<div>Your pet orders:</div>
+<!--dung jquery ajax how to submit form without redirect-->
+<!--https://stackoverflow.com/questions/25983603/how-to-submit-an-html-form-without-redirection-->
+<div class="row" id="petorders">
+
+</div>
+<script>
+
+    function getXMLHttpRequest() {
+        var req, err;
+        try {
+            req = new XMLHttpRequest();
+        } catch (err) {
+            try {
+                req = new ActiveXObject("MSXML2.XMLHttp.6.0");
+            } catch (err) {
+                try {
+                    req = new ActiveXObject("MSXML2.XMLHttp.3.0");
+                } catch (err) {
+                    req = false;
+                }
+            }
+        }
+        return req;
+    }
+
+    var ajaxRequest = getXMLHttpRequest();
+
+    function getAllPetorderRequest() {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getPetorderResponse;
+            ajaxRequest.open("GET", "http://localhost:3000/admin/petorders/all");
+            ajaxRequest.send(null);
+        }
+    }
+
+    function searchPetorder() {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getPetorderResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/petorders/get", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            let id = document.getElementById("searchId").value;
+            let petid = document.getElementById("searchPetId").value;
+            let name = document.getElementById("searchName").value;
+            let email = document.getElementById("searchEmail").value;
+            let phoneno = document.getElementById("searchPhoneno").value;
+            let timestamp = document.getElementById("searchTimestamp").value;
+            let purchaseTimestamp = document.getElementById("searchPurchaseTimestamp").value;
+            let purchase = document.getElementById("searchPurchase").value;
+            datas += '&id=' + id + '&petid=' + petid + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno
+                + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
+            ajaxRequest.send(datas);
+        }
+    }
+
+    function createPetorder() {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getPetorderCreateResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/petorders/create", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            let datas = "";
+            let id = document.getElementById("searchId").value;
+            let petid = document.getElementById("searchPetId").value;
+            let name = document.getElementById("searchName").value;
+            let email = document.getElementById("searchEmail").value;
+            let phoneno = document.getElementById("searchPhoneno").value;
+            let timestamp = document.getElementById("searchTimestamp").value;
+            let purchaseTimestamp = document.getElementById("searchPurchaseTimestamp").value;
+            let purchase = document.getElementById("searchPurchase").value;
+            datas += 'id=' + id + '&petid=' + petid + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno
+                + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
+            ajaxRequest.send(datas);
+            // ajaxRequest.send('&id=' + id);
+        }
+    }
+
+    function updatePetorder(petorder) {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getPetorderUpdateResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/petorders/confirm", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            datas += '&id=' + petorder.id + '&petid=' + petorder.petid + '&name=' + petorder.name + '&email='
+                + petorder.email + '&phoneno=' + petorder.phoneno + '&timestamp=' + petorder.timestamp + '&purchaseTimestamp='
+                + petorder.purchaseTimestamp + '&purchase=' + petorder.purchase;
+            ajaxRequest.send(datas);
+        }
+    }
+
+    function deletePetorder(petorder) {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getPetorderDeleteResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/petorders/delete", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            datas += '&id=' + petorder.id;
+            ajaxRequest.send(datas);
+        }
+    }
+
+    function updateButtonPress(button) {
+        console.log("asdasd");
+        var id = button.id.replace("updateButton", "");
+        var buttonPetId = button.class;
+        var buttonId = button.id;
+        // console.log("onClick: button petid: ", buttonPetId, "||id: ", id, "||button id: ", buttonId);
+        // if (document.getElementById(buttonId).innerHTML === "Confirm") {
+        //     document.getElementById(id).getElementsByClassName("ta")[1].removeAttribute("readonly");
+        //     document.getElementById(id).getElementsByClassName("ta")[2].removeAttribute("readonly");
+        //     document.getElementById(id).getElementsByClassName("ta")[3].removeAttribute("readonly");
+        //     document.getElementById(id).getElementsByClassName("ta")[4].removeAttribute("readonly");
+        //     document.getElementById(id).getElementsByClassName("ta")[5].removeAttribute("readonly");
+        //     document.getElementById(id).getElementsByClassName("ta")[6].removeAttribute("readonly");
+        //     document.getElementById(id).getElementsByClassName("ta")[7].removeAttribute("readonly");
+        //     document.getElementById(buttonId).innerHTML = "Done";
+        // } else {
+            var petorder = {};
+            // console.log(document.getElementById(id).getElementsByClassPetId("ta")[9].value);
+            petorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+            petorder.petid = document.getElementById(id).getElementsByClassName("ta")[1].value;
+            // petorder.name = document.getElementById(id).getElementsByClassName("ta")[2].value;
+            // petorder.email = document.getElementById(id).getElementsByClassName("ta")[3].value;
+            // petorder.phoneno = document.getElementById(id).getElementsByClassName("ta")[4].value;
+            // petorder.timestamp = document.getElementById(id).getElementsByClassName("ta")[5].value;
+            // petorder.purchaseTimestamp = document.getElementById(id).getElementsByClassName("ta")[6].value;
+            // // petorder.purchase = document.getElementById(id).getElementsByClassName("ta")[7].value;
+            // document.getElementById(id).getElementsByClassName("ta")[1].readOnly = true;
+            // document.getElementById(id).getElementsByClassName("ta")[2].readOnly = true;
+            // document.getElementById(id).getElementsByClassName("ta")[3].readOnly = true;
+            // document.getElementById(id).getElementsByClassName("ta")[4].readOnly = true;
+            // document.getElementById(id).getElementsByClassName("ta")[5].readOnly = true;
+            // document.getElementById(id).getElementsByClassName("ta")[6].readOnly = true;
+            // // document.getElementById(id).getElementsByClassName("ta")[7].readOnly = true;
+            // document.getElementById(buttonId).innerHTML = "Confirm";
+            updatePetorder(petorder);
+        // }
+    }
+
+    function deleteButtonPress(button) {
+        var id = button.id.replace("deleteButton", "");
+        var buttonPetId = button.class;
+        var buttonId = button.id;
+        // console.log("onClick: button petid: ", buttonPetId, "||id: ", id, "||button id: ", buttonId);
+        var petorder = {};
+        petorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+        deletePetorder(petorder);
+    }
+
+    function getPetorderResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                var jsonRes = JSON.parse(ajaxRequest.responseText);
+                var tmpHtml = "";
+                for (var i = 0; i < jsonRes.length; i++) {
+                    tmpHtml += '<div class="row" id="' + i + '">';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexId' + i + '" readonly="readonly">' + jsonRes[i].id + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPetId' + i + '" readonly="readonly">' + jsonRes[i].petid + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexName' + i + '" readonly="readonly">' + jsonRes[i].name + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexEmail' + i + '" readonly="readonly">' + jsonRes[i].email + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].phoneno + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexTimestamp' + i + '" readonly="readonly">' + jsonRes[i].timestamp + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPurchaseTimestamp' + i + '" readonly="readonly">' + jsonRes[i].purchaseTimestamp + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="purchase' + i + '" readonly="readonly">' + jsonRes[i].purchase + '</textarea></div>';
+                    tmpHtml += '<div class="actionColumn" >\n' +
+                        '        <button type="button" class="updateButton" id="updateButton' + i + '" value="Confirm" onclick="updateButtonPress(this)">Confirm</button>' +
+                        '        <button type="button" class="deleteButton" id="deleteButton' + i + '" value="Delete" onclick="deleteButtonPress(this)">Delete</button>' +
+                        '    </div>';
+                    tmpHtml += '</div>';
+                }
+                // console.log(tmpHtml);
+                document.getElementById("petorders").innerHTML = tmpHtml;
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+        // restartJQuery();
+    }
+
+    function getPetorderCreateResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                console.log("Create success");
+                searchPetorder();
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+        // restartJQuery();
+    }
+    function getPetorderDeleteResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                console.log("Delete success");
+                searchPetorder();
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+        // restartJQuery();
+    }
+
+    function getPetorderUpdateResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                console.log("Update success");
+                searchPetorder();
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+    }
+
+    getAllPetorderRequest();
+</script>
+</body>
+</html>

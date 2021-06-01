@@ -13,6 +13,8 @@ router.get("/getById", items.findById);
 
 router.get("/getByName", items.findByName);
 
+router.get("/getByIdAndSize", items.findByIdandSize);
+
 router.get("/item", (req, res) => {
     res.json({what: "the fuck"});
 });

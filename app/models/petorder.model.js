@@ -28,9 +28,14 @@ Petorder.get = (petorder, result) => {
     petorder.name = '%' + petorder.name + '%';
     petorder.email = '%' + petorder.email + '%';
     petorder.phoneno = '%' + petorder.phoneno + '%';
+    petorder.timestamp = '%' + petorder.timestamp + '%';
+    petorder.purchaseTimestamp = '%' + petorder.purchaseTimestamp + '%';
+    petorder.purchase = '%' + petorder.purchase + '%';
+    console.log(JSON.stringify(petorder));
     sql.query("select * from petorder where id like N? and petid like N? and name like N? and email like N? and " +
-        "phoneno like N?",
-        [petorder.id, petorder.petid, petorder.name, petorder.email, petorder.phoneno],
+        "phoneno like N? and (timestamp like N? or timestamp is null) and (purchaseTimestamp or purchaseTimestamp is null) like N? " +
+        "and (purchase like N? or purchase is null);",
+        [petorder.id, petorder.petid, petorder.name, petorder.email, petorder.phoneno, petorder.timestamp, petorder.purchaseTimestamp, petorder.purchase],
         (err, res) => {
             console.log(err, " and ", res.length);
             if (err) {
@@ -77,7 +82,7 @@ Petorder.create = (petorder, result) => {
     if(!petorder.name) petorder.name = "";
     if(!petorder.phoneno) petorder.phoneno = "";
     if(!petorder.email) petorder.email = 0;
-    if(!petorder.timestamp) petorder.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    // if(!petorder.timestamp) petorder.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     sql.query("insert into petorder set ?;", petorder,
         (err, res) => {
             if (err) {
@@ -96,10 +101,10 @@ Petorder.create = (petorder, result) => {
         });
 }
 
-Petorder.update = (petorder, result) => {
-    sql.query("update petorder set petid =?, name = ?, email = ?, phoneno = ? " +
-        "where id = ?", [petorder.petid, petorder.name,
-        petorder.email, petorder.phoneno, petorder.id], (err, res) => {
+Petorder.purchase = (petorder, result) => {
+    purchaseTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    sql.query("update petorder set purchase = (select (price) from pet where id like ?), purchaseTimestamp = ? " +
+        "where id = ?", [petorder.petid, purchaseTimestamp, petorder.id], (err, res) => {
         if (err) {
             console.log("Err updating petorder: ", err);
             result(err, null);
@@ -119,6 +124,26 @@ Petorder.update = (petorder, result) => {
 Petorder.delete = (petorder, result) => {
     sql.query("delete from petorder where id like N?", [petorder.id], (err, res) => {
         console.log(petorder.id);
+        if (err) {
+            console.log("Err deleting petorder: ", err);
+            result(err, null);
+            return;
+        } else if (!res.affectedRows) {
+            console.log("Err delete petorder: Error inside database (maybe cannot find id?).");
+            result({message: "Err delete petorder: Error inside database (maybe cannot find id?)."}, null);
+            return;
+        } else if (res.affectedRows) {
+            console.log("Deleted from table petorder");
+            result(null, res);
+            return;
+        }
+    })
+}
+
+Petorder.confirmOrder = (petorder, result) => {
+    timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    sql.query("update pet, petorder set pet.sold = true, petorder.timestamp = ? where pet.id like N? and petorder.id like N?", [timestamp, petorder.petid, petorder.id], (err, res) => {
+        console.log("Petid attempting to delete"+petorder.petid);
         if (err) {
             console.log("Err deleting petorder: ", err);
             result(err, null);

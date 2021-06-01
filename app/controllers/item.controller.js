@@ -49,6 +49,28 @@ exports.findById = (req, res) => {
     })
 };
 
+exports.findByIdandSize = (req, res) => {
+    console.log(req.query);
+    var id = req.query.itemId;
+    var size = req.query.itemSize;
+    Item.getFromIdandSize(id, size, (err, data) => {
+        if(err) {
+            if (err.kind === "not_found") {
+                // res.status(404).send({
+                //     message: "Not found item with description."
+                // });
+                res.send({});
+            } else {
+                res.status(500).send({
+                    message: err.message || "Some error occurred while get item with description."
+                });
+            }
+        } else {
+            res.send(data);
+        }
+    })
+};
+
 exports.find = (req, res) => {
     item = req.body;
     console.log(item.id);
