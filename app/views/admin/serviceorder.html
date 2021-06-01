@@ -14,7 +14,7 @@
         .column {
             text-align: center;
             float: left;
-            width: 120px;
+            width: 100px;
         }
 
         .desColumn {
@@ -43,7 +43,7 @@
         }
 
         .ta {
-            width: 119px;
+            width: 99px;
             height: 40px
         }
 
@@ -60,7 +60,7 @@
         ID
     </div>
     <div class="column">
-        PetId
+        Service
     </div>
     <div class="column">
         Name
@@ -70,6 +70,9 @@
     </div>
     <div class="column">
         Phoneno
+    </div>
+    <div class="column">
+        Requirement
     </div>
     <div class="column">
         Date created
@@ -87,7 +90,7 @@
             <input class="ta" type="text" id="searchId" value="">
         </div>
         <div class="column">
-            <input class="ta" type="text" id="searchPetId" value="">
+            <input class="ta" type="text" id="searchService" value="">
         </div>
         <div class="column">
             <input class="ta" type="text" id="searchName" value="">
@@ -99,6 +102,9 @@
             <input class="ta" type="text" id="searchPhoneno" value="">
         </div>
         <div class="column">
+            <input class="ta" type="text" id="searchRequirement" value="">
+        </div>
+        <div class="column">
             <input class="ta" type="text" id="searchTimestamp" value="">
         </div>
         <div class="column">
@@ -108,17 +114,17 @@
             <input class="ta" type="text" id="searchPurchase" value="">
         </div>
         <div class="actionColumn">
-            <button id="searchAllButton" type="button" value="Search" onclick="getAllPetorderRequest()">Search All</button>
-            <button id="searchButton" type="button" value="Search" onclick="searchPetorder()">Search</button>
-            <button class="createButton" id="createButton" type="button" value="Create" onclick="createPetorder()">Create</button>
+            <button id="searchAllButton" type="button" value="Search" onclick="getAllServiceorderRequest()">Search All</button>
+            <button id="searchButton" type="button" value="Search" onclick="searchServiceorder()">Search</button>
+            <button class="createButton" id="createButton" type="button" value="Create" onclick="createServiceorder()">Create</button>
             <input type="reset">
         </div>
     </div>
 </form>
-<div>Your pet orders:</div>
+<div>Your service orders:</div>
 <!--dung jquery ajax how to submit form without redirect-->
 <!--https://stackoverflow.com/questions/25983603/how-to-submit-an-html-form-without-redirection-->
-<div class="row" id="petorders">
+<div class="row" id="serviceorders">
 
 </div>
 <script>
@@ -143,90 +149,92 @@
 
     var ajaxRequest = getXMLHttpRequest();
 
-    function getAllPetorderRequest() {
+    function getAllServiceorderRequest() {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getPetorderResponse;
-            ajaxRequest.open("GET", "http://localhost:3000/admin/petorders/all");
+            ajaxRequest.onreadystatechange = getServiceorderResponse;
+            ajaxRequest.open("GET", "http://localhost:3000/admin/serviceorders/all");
             ajaxRequest.send(null);
         }
     }
 
-    function searchPetorder() {
+    function searchServiceorder() {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getPetorderResponse;
-            ajaxRequest.open("POST", "http://localhost:3000/admin/petorders/get", true);
+            ajaxRequest.onreadystatechange = getServiceorderResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/serviceorders/get", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
             let id = document.getElementById("searchId").value;
-            let petid = document.getElementById("searchPetId").value;
+            let service = document.getElementById("searchService").value;
             let name = document.getElementById("searchName").value;
             let email = document.getElementById("searchEmail").value;
             let phoneno = document.getElementById("searchPhoneno").value;
+            let requirement = document.getElementById("searchRequirement").value;
             let timestamp = document.getElementById("searchTimestamp").value;
             let purchaseTimestamp = document.getElementById("searchPurchaseTimestamp").value;
             let purchase = document.getElementById("searchPurchase").value;
-            datas += '&id=' + id + '&petid=' + petid + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno
+            datas += '&id=' + id + '&service=' + service + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno + '&requirement=' + requirement
                 + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
             ajaxRequest.send(datas);
         }
     }
 
-    function createPetorder() {
+    function createServiceorder() {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getPetorderCreateResponse;
-            ajaxRequest.open("POST", "http://localhost:3000/admin/petorders/create", true);
+            ajaxRequest.onreadystatechange = getServiceorderCreateResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/serviceorders/create", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             let datas = "";
             let id = document.getElementById("searchId").value;
-            let petid = document.getElementById("searchPetId").value;
+            let service = document.getElementById("searchService").value;
             let name = document.getElementById("searchName").value;
             let email = document.getElementById("searchEmail").value;
             let phoneno = document.getElementById("searchPhoneno").value;
+            let requirement = document.getElementById("searchRequirement").value;
             let timestamp = document.getElementById("searchTimestamp").value;
             let purchaseTimestamp = document.getElementById("searchPurchaseTimestamp").value;
             let purchase = document.getElementById("searchPurchase").value;
-            datas += 'id=' + id + '&petid=' + petid + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno
+            datas += 'id=' + id + '&service=' + service + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno + '&requirement=' + requirement
                 + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
             ajaxRequest.send(datas);
             // ajaxRequest.send('&id=' + id);
         }
     }
 
-    function updatePetorder(petorder) {
+    function updateServiceorder(serviceorder) {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getPetorderUpdateResponse;
-            ajaxRequest.open("POST", "http://localhost:3000/admin/petorders/confirm", true);
+            ajaxRequest.onreadystatechange = getServiceorderUpdateResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/serviceorders/confirm", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
-            datas += '&id=' + petorder.id + '&petid=' + petorder.petid + '&name=' + petorder.name + '&email='
-                + petorder.email + '&phoneno=' + petorder.phoneno + '&timestamp=' + petorder.timestamp + '&purchaseTimestamp='
-                + petorder.purchaseTimestamp + '&purchase=' + petorder.purchase;
+            datas += '&id=' + serviceorder.id + '&service=' + serviceorder.service + '&name=' + serviceorder.name + '&email='
+                + serviceorder.email + '&phoneno=' + serviceorder.phoneno + '&requirement=' + serviceorder.requirement + '&timestamp=' + serviceorder.timestamp + '&purchaseTimestamp='
+                + serviceorder.purchaseTimestamp + '&purchase=' + serviceorder.purchase;
             ajaxRequest.send(datas);
         }
     }
 
-    function deletePetorder(petorder) {
+    function deleteServiceorder(serviceorder) {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getPetorderDeleteResponse;
-            ajaxRequest.open("POST", "http://localhost:3000/admin/petorders/delete", true);
+            ajaxRequest.onreadystatechange = getServiceorderDeleteResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/serviceorders/delete", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
-            datas += '&id=' + petorder.id;
+            datas += '&id=' + serviceorder.id;
             ajaxRequest.send(datas);
         }
     }
 
-    function purchasePetorder(petorder) {
+    function purchaseServiceorder(serviceorder) {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getPetorderPurchaseResponse;
-            ajaxRequest.open("POST", "http://localhost:3000/admin/petorders/purchase", true);
+            ajaxRequest.onreadystatechange = getServiceorderPurchaseResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/serviceorders/purchase", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
-            datas += '&id=' + petorder.id + '&petid=' +petorder.petid;
+            datas += '&id=' + serviceorder.id + '&service=' +serviceorder.service;
             ajaxRequest.send(datas);
         }
     }
@@ -234,9 +242,9 @@
     function updateButtonPress(button) {
         console.log("asdasd");
         var id = button.id.replace("updateButton", "");
-        var buttonPetId = button.class;
+        var buttonService = button.class;
         var buttonId = button.id;
-        // console.log("onClick: button petid: ", buttonPetId, "||id: ", id, "||button id: ", buttonId);
+        // console.log("onClick: button service: ", buttonService, "||id: ", id, "||button id: ", buttonId);
         // if (document.getElementById(buttonId).innerHTML === "Confirm") {
         //     document.getElementById(id).getElementsByClassName("ta")[1].removeAttribute("readonly");
         //     document.getElementById(id).getElementsByClassName("ta")[2].removeAttribute("readonly");
@@ -247,50 +255,50 @@
         //     document.getElementById(id).getElementsByClassName("ta")[7].removeAttribute("readonly");
         //     document.getElementById(buttonId).innerHTML = "Done";
         // } else {
-            var petorder = {};
-            // console.log(document.getElementById(id).getElementsByClassPetId("ta")[9].value);
-            petorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
-            petorder.petid = document.getElementById(id).getElementsByClassName("ta")[1].value;
-            // petorder.name = document.getElementById(id).getElementsByClassName("ta")[2].value;
-            // petorder.email = document.getElementById(id).getElementsByClassName("ta")[3].value;
-            // petorder.phoneno = document.getElementById(id).getElementsByClassName("ta")[4].value;
-            // petorder.timestamp = document.getElementById(id).getElementsByClassName("ta")[5].value;
-            // petorder.purchaseTimestamp = document.getElementById(id).getElementsByClassName("ta")[6].value;
-            // // petorder.purchase = document.getElementById(id).getElementsByClassName("ta")[7].value;
-            // document.getElementById(id).getElementsByClassName("ta")[1].readOnly = true;
-            // document.getElementById(id).getElementsByClassName("ta")[2].readOnly = true;
-            // document.getElementById(id).getElementsByClassName("ta")[3].readOnly = true;
-            // document.getElementById(id).getElementsByClassName("ta")[4].readOnly = true;
-            // document.getElementById(id).getElementsByClassName("ta")[5].readOnly = true;
-            // document.getElementById(id).getElementsByClassName("ta")[6].readOnly = true;
-            // // document.getElementById(id).getElementsByClassName("ta")[7].readOnly = true;
-            // document.getElementById(buttonId).innerHTML = "Confirm";
-            updatePetorder(petorder);
+        var serviceorder = {};
+        // console.log(document.getElementById(id).getElementsByClassService("ta")[9].value);
+        serviceorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+        serviceorder.service = document.getElementById(id).getElementsByClassName("ta")[1].value;
+        // serviceorder.name = document.getElementById(id).getElementsByClassName("ta")[2].value;
+        // serviceorder.email = document.getElementById(id).getElementsByClassName("ta")[3].value;
+        // serviceorder.phoneno = document.getElementById(id).getElementsByClassName("ta")[4].value;
+        // serviceorder.timestamp = document.getElementById(id).getElementsByClassName("ta")[5].value;
+        // serviceorder.purchaseTimestamp = document.getElementById(id).getElementsByClassName("ta")[6].value;
+        // // serviceorder.purchase = document.getElementById(id).getElementsByClassName("ta")[7].value;
+        // document.getElementById(id).getElementsByClassName("ta")[1].readOnly = true;
+        // document.getElementById(id).getElementsByClassName("ta")[2].readOnly = true;
+        // document.getElementById(id).getElementsByClassName("ta")[3].readOnly = true;
+        // document.getElementById(id).getElementsByClassName("ta")[4].readOnly = true;
+        // document.getElementById(id).getElementsByClassName("ta")[5].readOnly = true;
+        // document.getElementById(id).getElementsByClassName("ta")[6].readOnly = true;
+        // // document.getElementById(id).getElementsByClassName("ta")[7].readOnly = true;
+        // document.getElementById(buttonId).innerHTML = "Confirm";
+        updateServiceorder(serviceorder);
         // }
     }
 
     function deleteButtonPress(button) {
         var id = button.id.replace("deleteButton", "");
-        var buttonPetId = button.class;
+        var buttonService = button.class;
         var buttonId = button.id;
-        // console.log("onClick: button petid: ", buttonPetId, "||id: ", id, "||button id: ", buttonId);
-        var petorder = {};
-        petorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
-        deletePetorder(petorder);
+        // console.log("onClick: button service: ", buttonService, "||id: ", id, "||button id: ", buttonId);
+        var serviceorder = {};
+        serviceorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+        deleteServiceorder(serviceorder);
     }
 
     function purchaseButtonPress(button) {
         var id = button.id.replace("purchaseButton", "");
-        var buttonPetId = button.class;
+        var buttonService = button.class;
         var buttonId = button.id;
-        // console.log("onClick: button petid: ", buttonPetId, "||id: ", id, "||button id: ", buttonId);
-        var petorder = {};
-        petorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
-        petorder.petid = document.getElementById(id).getElementsByClassName("ta")[1].value;
-        purchasePetorder(petorder);
+        // console.log("onClick: button service: ", buttonService, "||id: ", id, "||button id: ", buttonId);
+        var serviceorder = {};
+        serviceorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+        serviceorder.service = document.getElementById(id).getElementsByClassName("ta")[1].value;
+        purchaseServiceorder(serviceorder);
     }
 
-    function getPetorderResponse() {
+    function getServiceorderResponse() {
         if (ajaxRequest.readyState != 4) return;
         else {
             if (ajaxRequest.status == 200) {
@@ -299,10 +307,11 @@
                 for (var i = 0; i < jsonRes.length; i++) {
                     tmpHtml += '<div class="row" id="' + i + '">';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexId' + i + '" readonly="readonly">' + jsonRes[i].id + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPetId' + i + '" readonly="readonly">' + jsonRes[i].petid + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexService' + i + '" readonly="readonly">' + jsonRes[i].service + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexName' + i + '" readonly="readonly">' + jsonRes[i].name + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexEmail' + i + '" readonly="readonly">' + jsonRes[i].email + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].phoneno + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexRequirement' + i + '" readonly="readonly">' + jsonRes[i].requirement + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexTimestamp' + i + '" readonly="readonly">' + jsonRes[i].timestamp + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexPurchaseTimestamp' + i + '" readonly="readonly">' + jsonRes[i].purchaseTimestamp + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="purchase' + i + '" readonly="readonly">' + jsonRes[i].purchase + '</textarea></div>';
@@ -314,7 +323,7 @@
                     tmpHtml += '</div>';
                 }
                 // console.log(tmpHtml);
-                document.getElementById("petorders").innerHTML = tmpHtml;
+                document.getElementById("serviceorders").innerHTML = tmpHtml;
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
@@ -322,24 +331,24 @@
         // restartJQuery();
     }
 
-    function getPetorderCreateResponse() {
+    function getServiceorderCreateResponse() {
         if (ajaxRequest.readyState != 4) return;
         else {
             if (ajaxRequest.status == 200) {
                 console.log("Create success");
-                searchPetorder();
+                searchServiceorder();
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
         }
         // restartJQuery();
     }
-    function getPetorderDeleteResponse() {
+    function getServiceorderDeleteResponse() {
         if (ajaxRequest.readyState != 4) return;
         else {
             if (ajaxRequest.status == 200) {
                 console.log("Delete success");
-                searchPetorder();
+                searchServiceorder();
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
@@ -347,12 +356,12 @@
         // restartJQuery();
     }
 
-    function getPetorderPurchaseResponse() {
+    function getServiceorderPurchaseResponse() {
         if (ajaxRequest.readyState != 4) return;
         else {
             if (ajaxRequest.status == 200) {
                 console.log("Purchase success");
-                searchPetorder();
+                searchServiceorder();
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
@@ -360,19 +369,19 @@
         // restartJQuery();
     }
 
-    function getPetorderUpdateResponse() {
+    function getServiceorderUpdateResponse() {
         if (ajaxRequest.readyState != 4) return;
         else {
             if (ajaxRequest.status == 200) {
                 console.log("Update success");
-                searchPetorder();
+                searchServiceorder();
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
         }
     }
 
-    getAllPetorderRequest();
+    getAllServiceorderRequest();
 </script>
 </body>
 </html>

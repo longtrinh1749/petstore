@@ -155,11 +155,63 @@ Itemorder.insertToItemorderList = (listItem, orderId) => {
             });
     }
 };
+// TODO: sua de
 
-Itemorder.update = (itemorder, result) => {
-    sql.query("update itemorder set name = ?, email = ?, phoneno = ? " +
-        "where id = ?", [itemorder.name,
-        itemorder.email, itemorder.phoneno, itemorder.id], (err, res) => {
+Itemorder.getAllWithList = result => {
+    sql.query("select * from itemorder, itemorderlist where itemorder.id = itemorderlist.orderid", (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+        // console.log('itemorders: ', res);
+        result(null, res);
+    });
+};
+
+Itemorder.getWithList = (itemorderlist, result) => {
+    console.log(JSON.stringify(itemorderlist));
+    itemorderlist.id = '%' + itemorderlist.id + '%';
+    itemorderlist.name = '%' + itemorderlist.name + '%';
+    itemorderlist.email = '%' + itemorderlist.email + '%';
+    itemorderlist.phoneno = '%' + itemorderlist.phoneno + '%';
+    itemorderlist.timestamp = '%' + itemorderlist.timestamp + '%';
+    itemorderlist.purchaseTimestamp = '%' + itemorderlist.purchaseTimestamp + '%';
+    itemorderlist.purchase = '%' + itemorderlist.purchase + '%';
+    itemorderlist.itemid = '%' + itemorderlist.itemid + '%';
+    itemorderlist.size = '%' + itemorderlist.size + '%';
+    itemorderlist.orderid = '%' + itemorderlist.orderid + '%';
+    itemorderlist.quantity = '%' + itemorderlist.quantity + '%';
+    sql.query("select * from itemorder, itemorderlist where itemorder.id = itemorderlist.orderid and " +
+        "id like N? and name like N? and email like N? and phoneno like N? and (timestamp like N? or timestamp is null) and (purchaseTimestamp like N? or purchaseTimestamp is null)" +
+        " and (purchase like N? or purchase is null) and itemid like N? and size like N? and quantity like N?",
+         [itemorderlist.id,itemorderlist.name,itemorderlist.email,itemorderlist.phoneno,itemorderlist.timestamp,itemorderlist.purchaseTimestamp
+             ,itemorderlist.purchase,itemorderlist.itemid,itemorderlist.size,itemorderlist.quantity],
+         (err, res) => {
+    // sql.query("select * from itemorder, itemorderlist where itemorder.id = itemorderlist.orderid and " +
+    //     "id like N? and name like N? and email like N? and phoneno like N? and itemid like N? and size like N? and quantity like N?"
+    //     ,
+    //     [itemorderlist.id,itemorderlist.name,itemorderlist.email,itemorderlist.phoneno,itemorderlist.itemid,itemorderlist.size,itemorderlist.quantity],
+    //     (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+        // console.log('itemorders: ', res);
+        result(null, res);
+    });
+};
+
+Itemorder.purchase = (itemorder, result) => {
+    purchaseTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    // sql.query("update itemorder set purchase = (select (price) from pet where id like ?), purchaseTimestamp = ? " +
+    //     "where id = ?", [itemorder.petid, purchaseTimestamp, itemorder.id], (err, res) => {
+    //     if (err) {
+    sql.query(" update itemorder set purchaseTimestamp = ?, purchase = (select sum(x.totalcost) from (select c.quantity*c.price as totalcost from " +
+        "(select item.price, itemorderlist.quantity from item, itemorderlist where item.size = itemorderlist.size and item.id = itemorderlist.itemid " +
+        "and orderid = ?) as c) as x) " +
+        "where id = ?", [purchaseTimestamp, itemorder.id, itemorder.id], (err, res) => {
         if (err) {
             console.log("Err updating itemorder: ", err);
             result(err, null);
@@ -178,6 +230,27 @@ Itemorder.update = (itemorder, result) => {
 
 Itemorder.delete = (itemorder, result) => {
     sql.query("delete from itemorder where id like N?", [itemorder.id], (err, res) => {
+        console.log(itemorder.id);
+        if (err) {
+            console.log("Err deleting itemorder: ", err);
+            result(err, null);
+            return;
+        } else if (!res.affectedRows) {
+            console.log("Err delete itemorder: Error inside database (maybe cannot find id?).");
+            result({message: "Err delete itemorder: Error inside database (maybe cannot find id?)."}, null);
+            return;
+        } else if (res.affectedRows) {
+            console.log("Deleted from table itemorder");
+            result(null, res);
+            return;
+        }
+    })
+}
+// TODO: finish confirm item order
+Itemorder.confirmOrder = (itemorder, result) => {
+    timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    sql.query("update item, itemorder set pet.sold = true, itemorder.timestamp = ? where item.id like N? and itemorder.id like N?", [timestamp, itemorder.petid, itemorder.id], (err, res) => {
+        console.log("Petid attempting to delete"+itemorder.petid);
         if (err) {
             console.log("Err deleting itemorder: ", err);
             result(err, null);

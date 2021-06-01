@@ -9,6 +9,8 @@ const adminPetRoutes = require('./admin.pet.routes');
 const adminCustomerRoutes = require('./admin.customer.routes');
 const adminItemRoutes = require('./admin.item.routes')
 const adminPetOrderRoutes = require('./admin.petorder.routes');
+const adminServiceOrderRoutes = require('./admin.serviceorder.routes');
+const adminItemOrderRoutes = require('./admin.itemorder.routes');
 
 module.exports = routes;
 
@@ -63,5 +65,7 @@ routes.use("/pets", adminPetRoutes);
 routes.use("/customers", adminCustomerRoutes);
 routes.use("/items", adminItemRoutes);
 routes.use("/petorders", adminPetOrderRoutes);
+routes.use("/serviceorders", adminServiceOrderRoutes);
+routes.use("/itemorders", adminItemOrderRoutes);
 // routes.use
 
