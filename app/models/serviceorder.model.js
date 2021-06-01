@@ -2,10 +2,12 @@ const sql = require('./db');
 
 const Serviceorder = function (serviceorder) {
     this.id = serviceorder.id;
-    this.petid = serviceorder.petid;
+    this.service = serviceorder.service;
     this.name = serviceorder.name;
     this.email = serviceorder.email;
     this.phoneno = serviceorder.phoneno;
+    this.requirement = serviceorder.requirement;
+    this.date = serviceorder.date;
 
     // this.date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
@@ -73,12 +75,14 @@ const Serviceorder = function (serviceorder) {
 // }
 
 Serviceorder.create = (serviceorder, result) => {
-    if(!serviceorder.petid) serviceorder.petid = "";
+    if(!serviceorder.service) serviceorder.service = "";
+    if(!serviceorder.requirement) serviceorder.requirement = "";
     if(!serviceorder.name) serviceorder.name = "";
     if(!serviceorder.phoneno) serviceorder.phoneno = "";
     if(!serviceorder.email) serviceorder.email = 0;
     if(!serviceorder.timestamp) serviceorder.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    sql.query("insert into serviceorder set ?;", serviceorder,
+    sql.query("insert into serviceorder (`service`, `name`, `email`, `phoneno`, `requirement`, `timestamp`) values (?,?,?,?,?,?);",
+        [serviceorder.service, serviceorder.name, serviceorder.email, serviceorder.phoneno, serviceorder.requirement, serviceorder.timestamp],
         (err, res) => {
             if (err) {
                 console.log("Err creating serviceorder: ", err);

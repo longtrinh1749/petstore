@@ -14,13 +14,13 @@
         .column {
             text-align: center;
             float: left;
-            width: 200px;
+            width: 150px;
         }
 
         .desColumn {
             text-align: center;
             float: left;
-            width: 160px;
+            width: 240px;
         }
 
         .actionColumn {
@@ -43,12 +43,12 @@
         }
 
         .ta {
-            width: 199px;
+            width: 149px;
             height: 40px
         }
 
         .taDes {
-            width: 159px;
+            width: 239px;
             height: 40px;
         }
     </style>
@@ -63,13 +63,19 @@
         Name
     </div>
     <div class="column">
-        Phoneno
+        Price
     </div>
     <div class="column">
-        Email
+        Size
     </div>
     <div class="column">
-        Address
+        Quantity
+    </div>
+    <div class="column">
+        Discount
+    </div>
+    <div class="desColumn">
+        Description
     </div>
 </div>
 <form id="searchForm">
@@ -81,26 +87,32 @@
             <input class="ta" type="text" id="searchName" value="">
         </div>
         <div class="column">
-            <input class="ta" type="text" id="searchPhoneno" value="">
+            <input class="ta" type="text" id="searchPrice" value="">
         </div>
         <div class="column">
-            <input class="ta" type="text" id="searchEmail" value="">
+            <input class="ta" type="text" id="searchSize" value="">
         </div>
         <div class="column">
-            <input class="ta" type="text" id="searchAddress" value="">
+            <input class="ta" type="text" id="searchQuantity" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchDiscount" value="">
+        </div>
+        <div class="desColumn">
+            <input class="taDes" type="text" id="searchDescription" value="">
         </div>
         <div class="actionColumn">
-            <button id="searchAllButton" type="button" value="Search" onclick="getAllCustomerRequest()">Search All</button>
-            <button id="searchButton" type="button" value="Search" onclick="searchCustomer()">Search</button>
-            <button class="createButton" id="createButton" type="button" value="Create" onclick="createCustomer()">Create</button>
+            <button id="searchAllButton" type="button" value="Search" onclick="getAllItemRequest()">Search All</button>
+            <button id="searchButton" type="button" value="Search" onclick="searchItem()">Search</button>
+            <button class="createButton" id="createButton" type="button" value="Create" onclick="createItem()">Create</button>
             <input type="reset">
         </div>
     </div>
 </form>
-<div>Your customers:</div>
+<div>Your items:</div>
 <!--dung jquery ajax how to submit form without redirect-->
 <!--https://stackoverflow.com/questions/25983603/how-to-submit-an-html-form-without-redirection-->
-<div class="row" id="customers">
+<div class="row" id="items">
 
 </div>
 <script>
@@ -125,68 +137,78 @@
 
     var ajaxRequest = getXMLHttpRequest();
 
-    function getAllCustomerRequest() {
+    function getAllItemRequest() {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getCustomerResponse;
-            ajaxRequest.open("GET", "http://localhost:3000/admin/customers/all");
+            ajaxRequest.onreadystatechange = getItemResponse;
+            ajaxRequest.open("GET", "/items/all");
             ajaxRequest.send(null);
         }
     }
 
-    function searchCustomer() {
+    function searchItem() {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getCustomerResponse;
-            ajaxRequest.open("POST", "http://localhost:3000/admin/customers/get", true);
+            ajaxRequest.onreadystatechange = getItemResponse;
+            ajaxRequest.open("POST", "/items/get", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
             let id = document.getElementById("searchId").value;
             let name = document.getElementById("searchName").value;
-            let phoneno = document.getElementById("searchPhoneno").value;
-            let email = document.getElementById("searchEmail").value;
-            let address = document.getElementById("searchAddress").value;
-            datas += '&id=' + id + '&name=' + name + '&phoneno=' + phoneno + '&email=' + email + '&address=' + address;
+            let price = document.getElementById("searchPrice").value;
+            let size = document.getElementById("searchSize").value;
+            let quantity = document.getElementById("searchQuantity").value;
+            let discount = document.getElementById("searchDiscount").value;
+            let description = document.getElementById("searchDescription").value;
+            datas += '&id=' + id + '&name=' + name + '&price=' + price + '&size=' + size + '&quantity=' + quantity +
+                '&discount=' + discount +
+                '&description=' + description;
             ajaxRequest.send(datas);
         }
     }
 
-    function createCustomer() {
+    function createItem() {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getCustomerCreateResponse;
-            ajaxRequest.open("POST", "http://localhost:3000/admin/customers/create", true);
+            ajaxRequest.onreadystatechange = getItemCreateResponse;
+            ajaxRequest.open("POST", "/admin/items/create", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             let datas = "";
             let id = document.getElementById("searchId").value;
             let name = document.getElementById("searchName").value;
-            let phoneno = document.getElementById("searchPhoneno").value;
-            let email = document.getElementById("searchEmail").value;
-            let address = document.getElementById("searchAddress").value;
-            datas += 'id=' + id + '&name=' + name + '&phoneno=' + phoneno + '&email=' + email + '&address=' + address;
+            let price = document.getElementById("searchPrice").value;
+            let size = document.getElementById("searchSize").value;
+            let quantity = document.getElementById("searchQuantity").value;
+            let discount = document.getElementById("searchDiscount").value;
+            let description = document.getElementById("searchDescription").value;
+            datas += 'id=' + id + '&name=' + name + '&price=' + price + '&size=' + size + '&quantity=' + quantity +
+                '&discount=' + discount +
+                '&description=' + description;
             ajaxRequest.send(datas);
             // ajaxRequest.send('&id=' + id);
         }
     }
 
-    function updateCustomer(customer) {
+    function updateItem(item) {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getCustomerUpdateResponse;
-            ajaxRequest.open("POST", "http://localhost:3000/admin/customers/update", true);
+            ajaxRequest.onreadystatechange = getItemUpdateResponse;
+            ajaxRequest.open("POST", "/admin/items/update", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
-            datas += '&id=' + customer.id + '&name=' + customer.name + '&phoneno=' + customer.phoneno + '&email=' + customer.email + '&address=' + customer.address;
+            datas += '&id=' + item.id + '&name=' + item.name + '&price=' + item.price + '&size=' + item.size + '&quantity=' + item.quantity +
+                '&discount=' + item.discount +
+                '&description=' + item.description;
             ajaxRequest.send(datas);
         }
     }
 
-    function deleteCustomer(customer) {
+    function deleteItem(item) {
         if (ajaxRequest) {
-            ajaxRequest.onreadystatechange = getCustomerDeleteResponse;
-            ajaxRequest.open("POST", "http://localhost:3000/admin/customers/delete", true);
+            ajaxRequest.onreadystatechange = getItemDeleteResponse;
+            ajaxRequest.open("POST", "/admin/items/delete", true);
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
-            datas += '&id=' + customer.id;
+            datas += '&id=' + item.id;
             ajaxRequest.send(datas);
         }
     }
@@ -199,23 +221,27 @@
         if (document.getElementById(buttonId).innerHTML === "Update") {
             document.getElementById(id).getElementsByClassName("ta")[1].removeAttribute("readonly");
             document.getElementById(id).getElementsByClassName("ta")[2].removeAttribute("readonly");
-            document.getElementById(id).getElementsByClassName("ta")[3].removeAttribute("readonly");
             document.getElementById(id).getElementsByClassName("ta")[4].removeAttribute("readonly");
+            document.getElementById(id).getElementsByClassName("ta")[5].removeAttribute("readonly");
+            document.getElementById(id).getElementsByClassName("taDes")[0].removeAttribute("readonly");
             document.getElementById(buttonId).innerHTML = "Confirm";
         } else {
-            var customer = {};
+            var item = {};
             // console.log(document.getElementById(id).getElementsByClassName("ta")[9].value);
-            customer.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
-            customer.name = document.getElementById(id).getElementsByClassName("ta")[1].value;
-            customer.phoneno = document.getElementById(id).getElementsByClassName("ta")[2].value;
-            customer.email = document.getElementById(id).getElementsByClassName("ta")[3].value;
-            customer.address = document.getElementById(id).getElementsByClassName("ta")[4].value;
+            item.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+            item.name = document.getElementById(id).getElementsByClassName("ta")[1].value;
+            item.price = document.getElementById(id).getElementsByClassName("ta")[2].value;
+            item.size = document.getElementById(id).getElementsByClassName("ta")[3].value;
+            item.quantity = document.getElementById(id).getElementsByClassName("ta")[4].value;
+            item.discount = document.getElementById(id).getElementsByClassName("ta")[5].value;
+            item.description = document.getElementById(id).getElementsByClassName("taDes")[0].value;
             document.getElementById(id).getElementsByClassName("ta")[1].readOnly = true;
             document.getElementById(id).getElementsByClassName("ta")[2].readOnly = true;
-            document.getElementById(id).getElementsByClassName("ta")[3].readOnly = true;
             document.getElementById(id).getElementsByClassName("ta")[4].readOnly = true;
+            document.getElementById(id).getElementsByClassName("ta")[5].readOnly = true;
+            document.getElementById(id).getElementsByClassName("taDes")[0].readOnly = true;
             document.getElementById(buttonId).innerHTML = "Update";
-            updateCustomer(customer);
+            updateItem(item);
         }
     }
 
@@ -224,12 +250,12 @@
         var buttonName = button.class;
         var buttonId = button.id;
         // console.log("onClick: button name: ", buttonName, "||id: ", id, "||button id: ", buttonId);
-        var customer = {};
-        customer.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
-        deleteCustomer(customer);
+        var item = {};
+        item.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+        deleteItem(item);
     }
 
-    function getCustomerResponse() {
+    function getItemResponse() {
         if (ajaxRequest.readyState != 4) return;
         else {
             if (ajaxRequest.status == 200) {
@@ -239,9 +265,11 @@
                     tmpHtml += '<div class="row" id="' + i + '">';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexId' + i + '" readonly="readonly">' + jsonRes[i].id + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexName' + i + '" readonly="readonly">' + jsonRes[i].name + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].phoneno + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexEmail' + i + '" readonly="readonly">' + jsonRes[i].email + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexAddress' + i + '" readonly="readonly">' + jsonRes[i].address + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPrice' + i + '" readonly="readonly">' + jsonRes[i].price + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexSize' + i + '" readonly="readonly">' + jsonRes[i].size + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexQuantity' + i + '" readonly="readonly">' + jsonRes[i].quantity + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexDiscount' + i + '" readonly="readonly">' + jsonRes[i].discount + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="taDes" id="indexDescription' + i + '" readonly="readonly">' + jsonRes[i].description + '</textarea></div>';
                     tmpHtml += '<div class="actionColumn" >\n' +
                         '        <button type="button" class="updateButton" id="updateButton' + i + '" value="Update" onclick="updateButtonPress(this)">Update</button>' +
                         '        <button type="button" class="deleteButton" id="deleteButton' + i + '" value="Delete" onclick="deleteButtonPress(this)">Delete</button>' +
@@ -249,7 +277,7 @@
                     tmpHtml += '</div>';
                 }
                 // console.log(tmpHtml);
-                document.getElementById("customers").innerHTML = tmpHtml;
+                document.getElementById("items").innerHTML = tmpHtml;
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
@@ -257,24 +285,24 @@
         // restartJQuery();
     }
 
-    function getCustomerCreateResponse() {
+    function getItemCreateResponse() {
         if (ajaxRequest.readyState != 4) return;
         else {
             if (ajaxRequest.status == 200) {
                 console.log("Create success");
-                searchCustomer();
+                searchItem();
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
         }
         // restartJQuery();
     }
-    function getCustomerDeleteResponse() {
+    function getItemDeleteResponse() {
         if (ajaxRequest.readyState != 4) return;
         else {
             if (ajaxRequest.status == 200) {
                 console.log("Delete success");
-                searchCustomer();
+                searchItem();
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
@@ -282,19 +310,19 @@
         // restartJQuery();
     }
 
-    function getCustomerUpdateResponse() {
+    function getItemUpdateResponse() {
         if (ajaxRequest.readyState != 4) return;
         else {
             if (ajaxRequest.status == 200) {
                 console.log("Update success");
-                searchCustomer();
+                searchItem();
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
             }
         }
     }
 
-    getAllCustomerRequest();
+    getAllItemRequest();
 </script>
 </body>
 </html>

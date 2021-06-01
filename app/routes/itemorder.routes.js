@@ -5,5 +5,5 @@ module.exports = router;
 
 const itemOrders = require("../controllers/itemorder.controller.js");
 
-router.post("/order", itemOrders.createItemOrder);
+router.post("/form", itemOrders.createItemOrder);
 
