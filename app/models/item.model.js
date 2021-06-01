@@ -113,6 +113,26 @@ Item.getFromId = (itemId, result) => {
     })
 }
 
+Item.getFromIdandSize = (itemId,itemSize, result) => {
+    // var id = '%' + itemId + '%';
+    var id = itemId;
+    var size = itemSize;
+    sql.query("select * from item where id like N? and size like N?", [id, size], (err, res) => {
+        if (err) {
+            console.log("Err: ", err);
+            result(err, null);
+            return;
+        }
+        if (res.length) {
+            console.log("Found items: ", res);
+            result(null, res);
+            return;
+        }
+        result({kind: "not_found"}, null);
+        return;
+    })
+}
+
 Item.create = (item, result) => {
     if(!item.name) item.name = "";
     if(!item.price) item.price = 0;
