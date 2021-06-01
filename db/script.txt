@@ -47,18 +47,19 @@ create table petorder (
     email varchar(100),
     phoneno varchar(12),
     `timestamp` date,
-    purchase boolean null,
-    FOREIGN KEY (`petid`) REFERENCES `pet` (id)
+    `purchaseTimestamp` date null,
+    purchase int null,
+    FOREIGN KEY (`petid`) REFERENCES `pet` (id) on update cascade on delete cascade
 );
 
 create table itemorder (
     id int not null auto_increment primary key,
-    total int,
     name varchar(50),
     email varchar(100),
     phoneno varchar(12),
     `timestamp` date,
-    purchase boolean null
+    `purchaseTimestamp` date null,
+    purchase int null -- so tien tra
 ); -- co the van phai sua
 
 create table serviceorder (
@@ -69,14 +70,15 @@ create table serviceorder (
     phoneno varchar(12),
     requirement text,
     `timestamp` date,
-    purchase boolean null
+    `purchaseTimestamp` date null,
+    purchase int null
 );
 
 /* create table petorderlist (
     petid varchar(10),
     orderid varchar(10),
-    FOREIGN KEY (`petid`) REFERENCES pet (id),
-    FOREIGN KEY (`orderid`) REFERENCES petorder (id),
+    FOREIGN KEY (`petid`) REFERENCES pet (id) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES petorder (id) on update cascade on delete cascade,
 	PRIMARY KEY (petid, orderid)
 ); */
 
@@ -85,16 +87,16 @@ create table itemorderlist (
     size varchar(5),
     orderid int,
     quantity int,
-    FOREIGN KEY (`itemid`) REFERENCES item (id),
-    FOREIGN KEY (`orderid`) REFERENCES itemorder (id),
-    PRIMARY KEY (itemid, orderid)
+    FOREIGN KEY (`itemid`, `size`) REFERENCES item (id, size) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES itemorder (id) on update cascade on delete cascade,
+    PRIMARY KEY (itemid, orderid, size)
 );
 
 /* create table serviceorderlist (
     serviceid varchar(10) REFERENCES service(id),
     orderid varchar(10) REFERENCES serviceorder(id),
-    FOREIGN KEY (`serviceid`) REFERENCES service (id),
-    FOREIGN KEY (`orderid`) REFERENCES serviceorder (id),
+    FOREIGN KEY (`serviceid`) REFERENCES service (id) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES serviceorder (id) on update cascade on delete cascade,
     PRIMARY KEY (serviceid, orderid)
 ); */
 
@@ -102,24 +104,24 @@ create table petpurchase (
     id int not null auto_increment primary key,
     customerid int,
     orderid int,
-    FOREIGN KEY (`customerid`) REFERENCES customer (id),
-    FOREIGN KEY (`orderid`) REFERENCES petorder (id)
+    FOREIGN KEY (`customerid`) REFERENCES customer (id) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES petorder (id) on update cascade on delete cascade
 );
 
 create table servicepurchase (
     id int not null auto_increment primary key,
     customerid int,
     orderid int,
-    FOREIGN KEY (`customerid`) REFERENCES customer (id),
-    FOREIGN KEY (`orderid`) REFERENCES serviceorder (id)
+    FOREIGN KEY (`customerid`) REFERENCES customer (id) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES serviceorder (id) on update cascade on delete cascade
 );
 
 /* create table itempurchase (
     id int primary key,
     customerid varchar(10),
     orderid varchar(10),
-    FOREIGN KEY (`customerphoneno`) REFERENCES customer (phoneno),
-    FOREIGN KEY (`orderid`) REFERENCES itemorder (id)
+    FOREIGN KEY (`customerphoneno`) REFERENCES customer (phoneno) on update cascade on delete cascade,
+    FOREIGN KEY (`orderid`) REFERENCES itemorder (id) on update cascade on delete cascade
 ); */
 
 
@@ -374,292 +376,509 @@ insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) va
 insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Lenore Murray', '0947803098', 'ZjhkBOz@gmail.com', '2020-01-15 10:10:10-08:00');
 
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '2000000', 'XS', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '2000000', 'XL', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '400000', 'S', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '400000', 'XS', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '1600000', 'XL', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '1600000', 'L', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I2','Cat Litter Box Liners, Filters & Refills', '800000', 'M', '22', '10', 'ScoopFree by PetSafe Disposable Crystal Lavender Litter Tray for Cats', ''); 
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I2','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '22', '10', 'ScoopFree by PetSafe Disposable Crystal Lavender Litter Tray for Cats', ''); 
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I2','Cat Litter Box Liners, Filters & Refills', '1600000', 'XL', '22', '10', 'ScoopFree by PetSafe Disposable Crystal Lavender Litter Tray for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I2','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '22', '10', 'ScoopFree by PetSafe Disposable Crystal Lavender Litter Tray for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I3','Cat Litter Box Liners, Filters & Refills', '1600000', 'XL', '19', '20', 'Tidy Cats Breeze Litter System Cat Pad Refills', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I3','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '19', '20', 'Tidy Cats Breeze Litter System Cat Pad Refills', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I3','Cat Litter Box Liners, Filters & Refills', '800000', 'M', '19', '20', 'Tidy Cats Breeze Litter System Cat Pad Refills', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I3','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '19', '20', 'Tidy Cats Breeze Litter System Cat Pad Refills', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '1600000', 'XL', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '1600000', 'L', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '1200000', 'L', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '1200000', 'M', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '400000', 'S', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '400000', 'XS', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '1200000', 'L', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '1200000', 'M', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '800000', 'M', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '800000', 'S', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '2000000', 'XS', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '2000000', 'XL', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '2000000', 'XS', '30', '20', 'CatIt Hooded Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '2000000', 'XL', '30', '20', 'CatIt Hooded Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '800000', 'M', '30', '20', 'CatIt Hooded Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '800000', 'S', '30', '20', 'CatIt Hooded Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '1200000', 'L', '30', '20', 'CatIt Hooded Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '1200000', 'M', '30', '20', 'CatIt Hooded Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '400000', 'S', '30', '20', 'CatIt Hooded Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '400000', 'XS', '30', '20', 'CatIt Hooded Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '2000000', 'XS', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '2000000', 'XL', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '400000', 'S', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '400000', 'XS', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '1200000', 'L', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '1200000', 'M', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '800000', 'M', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '800000', 'S', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '1200000', 'L', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '1200000', 'M', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '800000', 'M', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '800000', 'S', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '400000', 'S', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '400000', 'XS', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '1600000', 'XL', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '1600000', 'L', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I9','Cat Litter Box Liners, Filters & Refills', '400000', 'S', '26', '20', 'Tidy Cats Breeze Spring Clean Cat Pads Refill Pack', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I9','Cat Litter Box Liners, Filters & Refills', '400000', 'XS', '26', '20', 'Tidy Cats Breeze Spring Clean Cat Pads Refill Pack', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','Cat Litter Pans', '1200000', 'L', '30', '20', 'So Phresh Scatter Shield High-Back Litter Box in Navy', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','Cat Litter Pans', '1200000', 'M', '30', '20', 'So Phresh Scatter Shield High-Back Litter Box in Navy', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','Cat Litter Pans', '1600000', 'XL', '30', '20', 'So Phresh Scatter Shield High-Back Litter Box in Navy', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','Cat Litter Pans', '1600000', 'L', '30', '20', 'So Phresh Scatter Shield High-Back Litter Box in Navy', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '800000', 'M', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '800000', 'S', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '400000', 'S', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '400000', 'XS', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '1600000', 'XL', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '1600000', 'L', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '1200000', 'L', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '1200000', 'M', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '2000000', 'XS', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '2000000', 'XL', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I12','Cat Litter Box Mats', '1200000', 'L', '10', '20', 'So Phresh Litter Trapper Mat', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I12','Cat Litter Box Mats', '1200000', 'M', '10', '20', 'So Phresh Litter Trapper Mat', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I12','Cat Litter Box Mats', '800000', 'M', '10', '20', 'So Phresh Litter Trapper Mat', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I12','Cat Litter Box Mats', '800000', 'S', '10', '20', 'So Phresh Litter Trapper Mat', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I13','Cat Supplies', '800000', 'M', '34', '20', 'So Phresh Charcoal Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I13','Cat Supplies', '800000', 'S', '34', '20', 'So Phresh Charcoal Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I14','Covered Litter Boxes', '1600000', 'XL', '44', '20', 'Booda Clean Step Litter Box in Dark Grey', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I14','Covered Litter Boxes', '1600000', 'L', '44', '20', 'Booda Clean Step Litter Box in Dark Grey', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I14','Covered Litter Boxes', '800000', 'M', '44', '20', 'Booda Clean Step Litter Box in Dark Grey', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I14','Covered Litter Boxes', '800000', 'S', '44', '20', 'Booda Clean Step Litter Box in Dark Grey', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '1200000', 'L', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '1200000', 'M', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '400000', 'S', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '400000', 'XS', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '2000000', 'XS', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '2000000', 'XL', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '1600000', 'XL', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '1600000', 'L', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '800000', 'M', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '800000', 'S', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I16','Cat Litter Box Liners, Filters & Refills', '2000000', 'XS', '37', '10', 'Tidy Cats Breeze Cat Pads Refill Pack', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I16','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '37', '10', 'Tidy Cats Breeze Cat Pads Refill Pack', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '1600000', 'XL', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '1600000', 'L', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '800000', 'M', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '800000', 'S', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '1200000', 'L', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '1200000', 'M', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '400000', 'S', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '400000', 'XS', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '1200000', 'L', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '1200000', 'M', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '800000', 'M', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '800000', 'S', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '2000000', 'XS', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '2000000', 'XL', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '1600000', 'XL', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '1600000', 'L', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '2000000', 'XS', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '2000000', 'XL', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '1200000', 'L', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '1200000', 'M', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '400000', 'S', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '400000', 'XS', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '800000', 'M', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '800000', 'S', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '1200000', 'L', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '1200000', 'M', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '400000', 'S', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '400000', 'XS', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '1600000', 'XL', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '1600000', 'L', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '2000000', 'XS', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '2000000', 'XL', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '2000000', 'XS', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '2000000', 'XL', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '400000', 'S', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '400000', 'XS', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '1200000', 'L', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '1200000', 'M', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '800000', 'M', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '800000', 'S', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '1600000', 'XL', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '1600000', 'L', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '1600000', 'XL', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '2000000', 'XS', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '800000', 'M', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '400000', 'S', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '400000', 'XS', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '1200000', 'L', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '1200000', 'M', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '2000000', 'XS', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '2000000', 'XL', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '800000', 'M', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '800000', 'S', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '1600000', 'XL', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '1600000', 'L', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '1200000', 'L', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '1200000', 'M', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '400000', 'S', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '400000', 'XS', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '1600000', 'XL', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '1600000', 'L', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '2000000', 'XS', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '2000000', 'XL', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '1200000', 'L', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '1200000', 'M', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '800000', 'M', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '800000', 'S', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '400000', 'S', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '400000', 'XS', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '1600000', 'XL', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '1600000', 'L', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '1200000', 'L', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '1200000', 'M', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '2000000', 'XS', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '2000000', 'XL', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '800000', 'M', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '800000', 'S', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '400000', 'S', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '400000', 'XS', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','Cat Litter Pans', '400000', 'S', '10', '20', 'So Phresh Grey Litter Box Starter Bundle', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','Cat Litter Pans', '400000', 'XS', '10', '20', 'So Phresh Grey Litter Box Starter Bundle', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','Cat Litter Pans', '2000000', 'XS', '10', '20', 'So Phresh Grey Litter Box Starter Bundle', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','Cat Litter Pans', '2000000', 'XL', '10', '20', 'So Phresh Grey Litter Box Starter Bundle', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I27','Self-Cleaning Litter Boxes', '1600000', 'XL', '17', '20', 'Natures Miracle Multi-Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I27','Self-Cleaning Litter Boxes', '1600000', 'L', '17', '20', 'Natures Miracle Multi-Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I27','Self-Cleaning Litter Boxes', '400000', 'S', '17', '20', 'Natures Miracle Multi-Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I27','Self-Cleaning Litter Boxes', '400000', 'XS', '17', '20', 'Natures Miracle Multi-Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '1200000', 'L', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '1200000', 'M', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '800000', 'M', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '2000000', 'XS', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '400000', 'S', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '400000', 'XS', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '2000000', 'XS', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '2000000', 'XL', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '800000', 'M', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '800000', 'S', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '400000', 'S', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '400000', 'XS', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '800000', 'M', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '800000', 'S', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '1600000', 'XL', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '1600000', 'L', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I31','Self-Cleaning Litter Boxes', '800000', 'M', '30', '20', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I31','Self-Cleaning Litter Boxes', '800000', 'S', '30', '20', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '1200000', 'L', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '1200000', 'M', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '400000', 'S', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '400000', 'XS', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '2000000', 'XS', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '2000000', 'XL', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '1600000', 'XL', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '1600000', 'L', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '400000', 'S', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '400000', 'XS', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '2000000', 'XS', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '2000000', 'XL', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '1200000', 'L', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '1200000', 'M', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '2000000', 'XS', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '2000000', 'XL', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '400000', 'S', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '400000', 'XS', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '1600000', 'XL', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '1600000', 'L', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '1200000', 'L', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '1200000', 'M', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '800000', 'M', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '800000', 'S', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '1600000', 'XL', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '1600000', 'L', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '400000', 'S', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '400000', 'XS', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '2000000', 'XS', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '2000000', 'XL', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I36','Covered Litter Boxes', '1200000', 'L', '25', '10', 'So Phresh Geometric Covered Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I36','Covered Litter Boxes', '1200000', 'M', '25', '10', 'So Phresh Geometric Covered Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I36','Covered Litter Boxes', '1600000', 'XL', '25', '10', 'So Phresh Geometric Covered Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I36','Covered Litter Boxes', '1600000', 'L', '25', '10', 'So Phresh Geometric Covered Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I37','Cat Litter Box Mats', '800000', 'M', '36', '20', 'So Phresh Tan Paw-Shaped Cat Litter Trapper Mat', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I37','Cat Litter Box Mats', '800000', 'S', '36', '20', 'So Phresh Tan Paw-Shaped Cat Litter Trapper Mat', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '1600000', 'XL', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '1600000', 'L', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '800000', 'M', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '800000', 'S', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '2000000', 'XS', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '2000000', 'XL', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '1200000', 'L', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '1200000', 'M', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '1600000', 'XL', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '1600000', 'L', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '2000000', 'XS', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '2000000', 'XL', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '800000', 'M', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '800000', 'S', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '2000000', 'XS', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '2000000', 'XL', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '1200000', 'L', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '1200000', 'M', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '1600000', 'XL', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '1600000', 'L', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '800000', 'M', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '800000', 'S', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '1200000', 'L', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '1200000', 'M', '25', '20', 'So Phresh Top-Entry Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '800000', 'M', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '800000', 'S', '25', '20', 'So Phresh Top-Entry Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '2000000', 'XS', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '2000000', 'XL', '25', '20', 'So Phresh Top-Entry Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '1600000', 'XL', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '1600000', 'L', '25', '20', 'So Phresh Top-Entry Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '400000', 'S', '25', '20', 'So Phresh Top-Entry Litter Box', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '400000', 'XS', '25', '20', 'So Phresh Top-Entry Litter Box', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '1200000', 'L', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '1200000', 'M', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '2000000', 'XS', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '1600000', 'XL', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '400000', 'S', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '400000', 'XS', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '800000', 'M', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '400000', 'S', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '400000', 'XS', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '1600000', 'XL', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '1600000', 'L', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '800000', 'M', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '800000', 'S', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '1200000', 'L', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '1200000', 'M', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '2000000', 'XS', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '2000000', 'XL', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '1600000', 'XL', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '1600000', 'L', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '800000', 'M', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '800000', 'S', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
+
+
+
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Corine Laundree', 'gWsQpXb@gmail.com', '0967781834', '2020-01-21 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I32', 'M', '1', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I1', 'XL', '1', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I7', 'L', '1', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I23', 'XS', '1', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I31', 'XL', '1', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I21', 'M', '1', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'XL', '1', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Sheila Petterson', 'FGBWNQV@gmail.com', '0988576109', '2020-01-16 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I11', 'XL', '2', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I10', 'XL', '2', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I14', 'S', '2', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'XL', '2', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'L', '2', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I18', 'M', '2', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'XS', '2', '2');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Susan Kimura', 'leOBVYN@gmail.com', '0929914442', '2020-01-26 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I29', 'M', '3', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I39', 'S', '3', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I12', 'XS', '3', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'S', '3', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I32', 'XL', '3', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I5', 'M', '3', '1');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Glenn Ayers', 'iiWtNXR@gmail.com', '0994098166', '2020-01-19 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I25', 'L', '4', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I22', 'XL', '4', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I21', 'XS', '4', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I2', 'M', '4', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'M', '4', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I34', 'XL', '4', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I9', 'XS', '4', '1');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Annette Kay', 'zegAJfg@gmail.com', '0947052031', '2020-01-27 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I12', 'M', '5', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'XS', '5', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Mary Whitmore', 'jXfMtVC@gmail.com', '0920554506', '2020-01-16 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I28', 'XL', '6', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'M', '6', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I22', 'S', '6', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I6', 'XL', '6', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I39', 'L', '6', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'L', '6', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Marvin Jansson', 'SxuHfcz@gmail.com', '0929736877', '2020-01-30 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I26', 'M', '7', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I12', 'M', '7', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I2', 'XS', '7', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('John Ruhl', 'ykRnvGL@gmail.com', '0908125585', '2020-01-30 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I23', 'L', '8', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I5', 'XL', '8', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'XS', '8', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I13', 'L', '8', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I27', 'S', '8', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Philip Stryker', 'qOOCQDQ@gmail.com', '0983124323', '2020-01-26 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I25', 'L', '9', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I22', 'M', '9', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I12', 'XS', '9', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I32', 'L', '9', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'M', '9', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Robert Griffiths', 'uzeBOiC@gmail.com', '0969959647', '2020-01-25 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'XS', '10', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'XL', '10', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Anthony Barnett', 'kWrBnXG@gmail.com', '0997051157', '2020-01-24 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I6', 'L', '11', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I20', 'L', '11', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I27', 'XL', '11', '1');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Iva Johnson', 'yhqCbYm@gmail.com', '0945084558', '2020-01-17 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I1', 'L', '12', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I5', 'S', '12', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I7', 'S', '12', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I27', 'M', '12', '3');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Elizabeth Benson', 'xKFupJY@gmail.com', '0931315910', '2020-01-30 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I6', 'M', '13', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I28', 'M', '13', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I9', 'M', '13', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Xavier Baez', 'lgumkSI@gmail.com', '0948668047', '2020-01-27 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I26', 'M', '14', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I30', 'M', '14', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I34', 'L', '14', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I11', 'M', '14', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I1', 'XS', '14', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I35', 'S', '14', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Manuel Brown', 'MjvWgoJ@gmail.com', '0932015826', '2020-01-15 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I10', 'XS', '15', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I14', 'M', '15', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I36', 'XL', '15', '2');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Rebecca Hawkins', 'CbCaLvF@gmail.com', '0979905296', '2020-01-20 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I23', 'S', '16', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I15', 'L', '16', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I30', 'L', '16', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'XS', '16', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I11', 'XL', '16', '1');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Monica Pinto', 'awbwPOr@gmail.com', '0970869395', '2020-01-22 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I9', 'S', '17', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I23', 'S', '17', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I29', 'XS', '17', '4');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Edward Hallock', 'EsFZVKS@gmail.com', '0999707451', '2020-01-28 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I39', 'M', '18', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I14', 'XL', '18', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I3', 'XL', '18', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I34', 'S', '18', '2');
+
+insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Mary Mccully', 'CvwfsiP@gmail.com', '0975873024', '2020-01-23 10:10:10-08:00');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I28', 'L', '19', '4');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I4', 'S', '19', '1');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'L', '19', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I2', 'XL', '19', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I24', 'L', '19', '2');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I15', 'L', '19', '3');
+
+insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I33', 'L', '19', '1');
