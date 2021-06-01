@@ -2,15 +2,19 @@ var productList = [];
 var currentPage = 1;
 const PRODUCTS_PER_PAGE = 12;
 
-function getAllProducts() {
-	let request = new XMLHttpRequest();
-	request.open('GET', 'localhost:3000/items/all');
-	request.send(null);
-	if (request.readyState !== 4) return;
-	if (request.status === 200) {
-		console.log(request.responseText);
-	} else {
-		console.log("Request failed: " + request.statusText);
+async function getAllProducts() {
+	try {
+		const res = await fetch('http://localhost:3000/items/all');
+		if (res) {
+			data = await res.json();
+			data.forEach(item => {
+				if (productList.findIndex(product => product.name.localeCompare(item.name) === 0) === -1) {
+					productList.push(item);
+				}
+			})
+		}
+	} catch (error) {
+		console.log(error);
 	}
 }
 
@@ -18,100 +22,212 @@ function getAllSampleProducts() {
 	return (productList = [
 		{
 			id: "1",
-			img: "ImgSource/shop_img_1.jpg",
-			title: "Collapsible Dog Bowl",
+			imageurl: "ImgSource/shop_img_1.jpg",
+			name: "Collapsible Dog Bowl",
 			price: 45,
-			discount: 0.2,
+			discount: 20,
 		},
 		{
 			id: "2",
-			img: "ImgSource/shop_img_2.jpg",
-			title: "Lounger",
+			imageurl: "ImgSource/shop_img_2.jpg",
+			name: "Lounger",
 			price: 85,
-			discount: 0.1,
+			discount: 10,
 		},
 		{
 			id: "3",
-			img: "ImgSource/shop_img_3.jpg",
-			title: "Active Pet Dog Harness",
+			imageurl: "ImgSource/shop_img_3.jpg",
+			name: "Active Pet Dog Harness",
 			price: 250,
-			discount: 0.3,
+			discount: 30,
 		},
 		{
 			id: "4",
-			img: "ImgSource/shop_img_4.jpg",
-			title: "Sara's Doggie Treat",
+			imageurl: "ImgSource/shop_img_4.jpg",
+			name: "Sara's Doggie Treat",
 			price: 45,
 			discount: 0,
 		},
 		{
 			id: "5",
-			img: "ImgSource/shop_img_5.jpg",
-			title: "Little Scoop For Ultra",
+			imageurl: "ImgSource/shop_img_5.jpg",
+			name: "Little Scoop For Ultra",
 			price: 35,
 			discount: 0,
 		},
 		{
 			id: "6",
-			img: "ImgSource/shop_img_6.jpg",
-			title: "Double Feeding Bowls",
+			imageurl: "ImgSource/shop_img_6.jpg",
+			name: "Double Feeding Bowls",
 			price: 95,
 			discount: 0,
 		},
 		{
 			id: "7",
-			img: "ImgSource/shop_img_7.jpg",
-			title: "Small Pet Drink Bottle",
+			imageurl: "ImgSource/shop_img_7.jpg",
+			name: "Small Pet Drink Bottle",
 			price: 25,
 			discount: 0,
 		},
 		{
 			id: "8",
-			img: "ImgSource/shop_img_8.jpg",
-			title: "Cat Scratch Apple Toy",
+			imageurl: "ImgSource/shop_img_8.jpg",
+			name: "Cat Scratch Apple Toy",
 			price: 90,
-			discount: 0.1,
+			discount: 10,
 		},
 		{
 			id: "9",
-			img: "ImgSource/shop_img_9.jpg",
-			title: "Mouse Cat Toy 10cm",
+			imageurl: "ImgSource/shop_img_9.jpg",
+			name: "Mouse Cat Toy 10cm",
 			price: 55,
 			discount: 0,
 		},
 		{
 			id: "10",
-			img: "ImgSource/shop_img_10.jpg",
-			title: "Dogs Name Tag",
+			imageurl: "ImgSource/shop_img_10.jpg",
+			name: "Dogs Name Tag",
 			price: 70,
 			discount: 0,
 		},
 		{
 			id: "11",
-			img: "ImgSource/shop_img_11.jpg",
-			title: "Slow Feeder Bowl",
+			imageurl: "ImgSource/shop_img_11.jpg",
+			name: "Slow Feeder Bowl",
 			price: 50,
 			discount: 0,
 		},
 		{
 			id: "12",
-			img: "ImgSource/shop_img_12.jpg",
-			title: "Dog Blanket With Cushion",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
 			price: 90,
-			discount: 0.2,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
+		},
+		{
+			id: "12",
+			imageurl: "ImgSource/shop_img_12.jpg",
+			name: "Dog Blanket With Cushion",
+			price: 90,
+			discount: 20,
 		},
 	]);
 }
 
 /**
  * 
- * @param {String} title 
+ * @param {String} name 
  * @returns {Array}
  */
-function getProductsByTitle(title) {
+function getProductsByName(name) {
 	let result = productList.filter(product => {
-		const productTitle = product.title.toLowerCase();
-		return productTitle.toLowerCase().includes(title);
+		const productName = product.name.toLowerCase();
+		return productName.toLowerCase().includes(name);
 	});
 	return result
 }
@@ -138,16 +254,16 @@ function sortProductList() {
 }
 
 function compareName(productA, productB) {
-	const titleA = productA.title.toUpperCase();
-	const titleB = productB.title.toUpperCase();
-	return titleA.localeCompare(titleB);
+	const nameA = productA.name.toUpperCase();
+	const nameB = productB.name.toUpperCase();
+	return nameA.localeCompare(nameB);
 }
 
 function compareDiscount(productA, productB) {
 	const discountA = productA.discount;
 	const discountB = productB.discount;
 	return discountA === discountB
-		? productA.title.localeCompare(productB.title)
+		? productA.name.localeCompare(productB.name)
 		: discountB - discountA;
 }
 
@@ -155,7 +271,7 @@ function comparePriceAscending(productA, productB) {
 	const priceA = productA.price;
 	const priceB = productB.price;
 	return priceA === priceB
-		? productA.title.localeCompare(productB.title)
+		? productA.name.localeCompare(productB.name)
 		: priceA - priceB;
 }
 
@@ -163,7 +279,7 @@ function comparePriceDescending(productA, productB) {
 	const priceA = productA.price;
 	const priceB = productB.price;
 	return priceA === priceB
-		? productA.title.localeCompare(productB.title)
+		? productA.name.localeCompare(productB.name)
 		: priceB - priceA;
 }
 
@@ -203,7 +319,7 @@ function autocomplete(input) {
 	const limit = 5;
 	input.addEventListener("input", function (e) {
 		const val = this.value.toLowerCase();
-		const result = getProductsByTitle(val);
+		const result = getProductsByName(val);
 		closeAllLists();
 		if (!val) return false;
 		currentFocus = -1;
@@ -214,16 +330,16 @@ function autocomplete(input) {
 		let count = 0;
 		for (let i = 0; i < result.length; i++) {
 			const product = result[i];
-			const title = product.title;
-			const img = product.img;
+			const name = product.name;
+			const imageurl = product.imageurl;
 			if (count == limit) break;
-			if (title.substr(0, val.length).toLowerCase() == val.toLowerCase()) {
+			if (name.substr(0, val.length).toLowerCase() == val.toLowerCase()) {
 				let b = document.createElement("div");
-				b.innerHTML += `<img src="${img}" width="50">`;
-				b.innerHTML += `<strong>${title.substr(0, val.length)}</strong>`;
-				b.innerHTML += title.substr(val.length);
+				b.innerHTML += `<img src="${imageurl}" width="50">`;
+				b.innerHTML += `<strong>${name.substr(0, val.length)}</strong>`;
+				b.innerHTML += name.substr(val.length);
 				b.addEventListener("click", function (e) {
-					input.value = title;
+					input.value = name;
 					closeAllLists();
 					setTimeout(() => {
 						window.location.href = `product.html?id=${product.id}`
@@ -309,6 +425,7 @@ function changePage(page) {
 	if (productList.length === 0) {
 		countStart.innerText = 0;
 		countEnd.innerText = 0;
+		productQuantity.innerText = 0;
 		productListDiv.innerHTML = '<h1 style="color: red; font-weight: bold; text-align: center;">Error from server ...</h1>';
 		prevBtn.classList.add("disabled");
 		nextBtn.classList.add("disabled");
@@ -323,22 +440,21 @@ function changePage(page) {
 
 	for (let i = (page - 1) * PRODUCTS_PER_PAGE; i < page * PRODUCTS_PER_PAGE && i < productList.length; i++) {
 		let product = productList[i];
-		productListDiv
-			.innerHTML += `
+		productListDiv.innerHTML += `
         <div class="product-wrapper">
             <div class="product-grid">
                 <div class="product-image">
                     <a href="product.html?id=${product.id}" class="image">
-                        <img src="${product.img}">
+                        <img src="${product.imageurl == "" ? "./ImgSource/shop_img_1.jpg" : product.imageurl}" alt="${product.id}">
                     </a>
-                    ${product.discount ? `<span class="product-discount-label">-${product.discount * 100}%</span>` : ""}
+                    ${product.discount ? `<span class="product-discount-label">-${product.discount}%</span>` : ""}
                 </div>
                 <div class="product-content">
-                    <h3 class="title">
-                        <a href="product.html?id=${product.id}">${product.title}</a>
+                    <h3 class="name">
+                        <a href="product.html?id=${product.id}">${product.name}</a>
                     </h3>
                     <div class="price">
-                    ${product.discount > 0 ? `<span>$${product.price.toFixed(2)}</span> $${(product.price - product.price * product.discount).toFixed(2)}` : `$${product.price.toFixed(2)}`}
+                    ${product.discount > 0 ? `<span>$${product.price.toFixed(2)}</span> $${(product.price - product.price * product.discount / 100).toFixed(2)}` : `$${product.price.toFixed(2)}`}
                     </div>
                 </div>
                 <div class="add-to-cart" onclick="addToCart(${product.id})">
@@ -375,8 +491,9 @@ function numPages() {
 	return Math.ceil(productList.length / PRODUCTS_PER_PAGE);
 }
 
-window.onload = function () {
-	getAllProducts();
+window.onload = async function () {
+	// await getAllProducts();
+	getAllSampleProducts();
 	autocomplete(document.getElementById('product-to-search'));
 	changePage(1);
 };

@@ -257,19 +257,23 @@ select option {
 	position: relative;
 }
 
-.product-content .title {
+.product-content .name {
 	font-size     : 1rem;
 	font-weight   : 600;
 	text-transform: uppercase;
 	margin        : 0 0 7px;
 }
 
-.product-content .title a {
-	color     : #27304b;
-	transition: 0.3s ease 0s;
+.product-content .name a {
+	display      : block;
+	white-space  : nowrap;
+	text-overflow: ellipsis;
+	overflow     : hidden;
+	color        : #27304b;
+	transition   : 0.3s ease 0s;
 }
 
-.product-content .title a:hover {
+.product-content .name a:hover {
 	color: #98cb46;
 }
 
