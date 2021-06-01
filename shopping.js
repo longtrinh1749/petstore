@@ -3,6 +3,18 @@ var currentPage = 1;
 const PRODUCTS_PER_PAGE = 12;
 
 function getAllProducts() {
+	let request = new XMLHttpRequest();
+	request.open('GET', 'localhost:3000/items/all');
+	request.send(null);
+	if (request.readyState !== 4) return;
+	if (request.status === 200) {
+		console.log(request.responseText);
+	} else {
+		console.log("Request failed: " + request.statusText);
+	}
+}
+
+function getAllSampleProducts() {
 	return (productList = [
 		{
 			id: "1",
@@ -282,7 +294,7 @@ function nextPage() {
 }
 
 function changePage(page) {
-	let productListdiv = document.getElementsByClassName("product-list")[0];
+	let productListDiv = document.getElementsByClassName("product-list")[0];
 	let nextBtn = document.getElementsByClassName("n-pag")[0];
 	let prevBtn = document.getElementsByClassName("p-pag")[0];
 	let pagBtnList = document.getElementsByClassName("m-pag-list")[0];
@@ -294,7 +306,16 @@ function changePage(page) {
 	if (page < 1) page = 1;
 	if (page > numPages()) page = numPages();
 
-	productListdiv.innerHTML = "";
+	if (productList.length === 0) {
+		countStart.innerText = 0;
+		countEnd.innerText = 0;
+		productListDiv.innerHTML = '<h1 style="color: red; font-weight: bold; text-align: center;">Error from server ...</h1>';
+		prevBtn.classList.add("disabled");
+		nextBtn.classList.add("disabled");
+		return;
+	}
+
+	productListDiv.innerHTML = "";
 	pagBtnList.innerHTML = "";
 	currentPage = page;
 	productQuantity.innerText = productList.length;
@@ -302,7 +323,8 @@ function changePage(page) {
 
 	for (let i = (page - 1) * PRODUCTS_PER_PAGE; i < page * PRODUCTS_PER_PAGE && i < productList.length; i++) {
 		let product = productList[i];
-		productListdiv.innerHTML += `
+		productListDiv
+			.innerHTML += `
         <div class="product-wrapper">
             <div class="product-grid">
                 <div class="product-image">
