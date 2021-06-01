@@ -21,7 +21,7 @@
         <a class="btm" href="#">About us</a>
         <a class="btn" href="./tryit/newpage">Community</a>
         <a class="btn selected" href="#shop">FAQs</a>
-        <a class="btn" href="#menu">Something</a>
+        <a class="btn" href="#menu">Login</a>
         <!-- <div class="m-form-search">
             <button type="submit" class="m-form-search-button" onclick="alert('Hello world!')"></button>
             <input type="text" id="fname" name="fname" placeholder="Tim meo :>>">
@@ -43,7 +43,7 @@
             <div class="items-container flex-container">
                 <div>
                     <div class="item-wrapper" href=#>
-                        <a href="test.html">
+                        <a href="adoption.html">
                             <img src="./ImgSource/feature/adoption.jpg">
                         </a>
                         <div class="item-content">
@@ -55,7 +55,7 @@
                 </div>
                 <div>
                     <div class="item-wrapper" href=#>
-                        <a href="#">
+                        <a href="shopping.html">
                             <img src="./ImgSource/feature/shopping.jpeg">
                         </a>
                         <div class="item-content">
@@ -67,7 +67,7 @@
                 </div>
                 <div>
                     <div class="item-wrapper" href=#>
-                        <a href="#">
+                        <a href="service.html">
                             <img src="./ImgSource/feature/spa.jpg">
                         </a>
                         <div class="item-content">
@@ -79,7 +79,7 @@
                 </div>
                 <div>
                     <div class="item-wrapper" href=#>
-                        <a href="#">
+                        <a href="blog.html">
                             <img src="./ImgSource/feature/blog.jpg">
                         </a>
                         <div class="item-content">
@@ -310,15 +310,26 @@
                 <div class="footer-logo">
                     <img src="./ImgSource/logo/logo-white.png">
                 </div>
-                <div class="footer-social" >
-                    <span>We Are Social //todo: insert insta facebook blah</span>
-                    
+                <div class="footer-social">
+                    <span style="margin-right: 20px;">We Are Social: </span>
+                    <span>
+                        <div class="flex-container">
+                            <a href=# style="display: flex; padding: 0 5;">
+                                <img src="ImgSource/logo/facebook.png">
+                            </a>
+                            <a href=# style="display: flex; padding: 0 5;">
+                                <img src="ImgSource/logo/instagram.png">
+                            </a>
+                            <a href=# style="display: flex; padding: 0 5;">
+                                <img src="ImgSource/logo/twitter.png">
+                            </a>
+                        </div>
+                    </span>
+
                 </div>
                 <div class="footer-about">
-                    <h3>About CateGlory</h3>
-                    Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                    scrambled it to make a type specimen book.
+                    <h3>About CateGlory</h3><br>
+                    Such short little lives our pets have to spend with us, and they spend most of it waiting for us to come home each day. It is amazing how much love and laughter they bring into our lives and even how much closer we become with each other because of them.
                 </div>
                 <div class="footer-explore">
                     <h3>Explore</h3>
@@ -330,11 +341,11 @@
                 </div>
                 <div class="footer-link">
                     <h3>Useful Links</h3>
-                    <a href=#>&#9830 About Us</a><br>
+                    <a href=#>&#9830 Pet Adoption</a><br>
+                    <a href=#>&#9830 Shopping</a><br>
                     <a href=#>&#9830 Services</a><br>
-                    <a href=#>&#9830 Our Team</a><br>
-                    <a href=#>&#9830 Adopt Pet</a><br>
-                    <a href=#>&#9830 Gallery</a><br>
+                    <a href=#>&#9830 Blog</a><br>
+                    <a href=#>&#9830 Payment</a><br>
                 </div>
                 <div class="footer-workinghour">
                     <h3>Working Hours</h3>
@@ -422,6 +433,7 @@
     // ********top navigator**********
     var topNav = document.getElementById("top-nav");
     function adjustTopNav() {
+        console.log("here");
         if (document.body.scrollTop > window.innerHeight / 3 || document.documentElement.scrollTop > window.innerHeight / 3) {
             topNav.className = "m-navigator-bar scrolled";
         }

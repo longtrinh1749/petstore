@@ -2,6 +2,7 @@ const dotenv = require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+<<<<<<< HEAD
 const session = require('express-session');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
@@ -30,17 +31,39 @@ app.use(session({
 	cookie: {maxAge: 8*60*60*1000}, // 8 hours
 	resave: false
 }));
+=======
+
+const app = express();
+app.use(cors())
+
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({extended: true}));
+>>>>>>> f1bfea60f454884895bf761f2efba8c59a122721
 
 app.get("/", (req, res) => {
 	res.json({message: 'Hellu'});
 })
 
+<<<<<<< HEAD
 app.use("/pets", petRouter);
 app.use("/admin", adminRouter);
 app.use("/items", itemRouter);
 app.use("/items", itemOrderRouter);
 app.use("/services", serviceOrderRouter);
 app.use("/adoption", petOrderRouter);
+=======
+require("./routes/pet.routes")(app);
+
+
+const pets = require("./controllers/pet.controller.js");
+app.get("/pets", pets.findAll);
+
+
+// app.get("/pets", (req, res) => {
+// 	res.json({what:"the fuck"});
+// })
+>>>>>>> f1bfea60f454884895bf761f2efba8c59a122721
 
 const port = process.env.NODEJS_LOCAL_PORT || 3000;
 app.listen(port, () => {

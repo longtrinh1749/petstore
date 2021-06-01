@@ -4,7 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "nodemon node app.js",
+=======
+    "start": "node app.js",
+>>>>>>> f1bfea60f454884895bf761f2efba8c59a122721
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,7 +19,11 @@
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
+<<<<<<< HEAD
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.7"
+=======
+    "mysql2": "^2.2.5"
+>>>>>>> f1bfea60f454884895bf761f2efba8c59a122721
   }
 }

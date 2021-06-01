@@ -1,0 +1,191 @@
+.hide { position:absolute; top:-1px; left:-1px; width:1px; height:1px; }
+
+.adoption-wallpaper{
+    width: 100%;
+    /* min-width: 400px; */
+    height: 100%;
+    /* max-height: 300px; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0 120 60 120;
+}
+
+.adoption-container{
+    justify-content: center; 
+    align-items: center;
+    height: 100%;
+
+}
+
+.search-container{
+    height: 55px;
+}
+
+.search-container button{
+    height: 33px;
+    margin-right: 10px;
+    font-family: 'Quicksand', sans-serif;
+    border: 3px solid rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.search-container input, .search-container button{
+    float: right;
+}
+
+.search-container button:hover{
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.search-container input[type=text]{
+    border: 2px solid rgba(0, 0, 0, .5);
+    font-family: 'Quicksand', sans-serif;
+    border-radius: 15px;
+}
+
+body{
+    background-color: rgba(0, 0, 0, .1);
+}
+
+/*******************pet list*******************/
+.pet-container{
+    /* flex: 0 0 100%; */
+    flex: 0 0 48%;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, .2);
+    margin: 10 10 10 10;
+}
+
+.pet-container .flex-container{
+    border-radius: 4px;
+}
+
+.pet-container .pet-overview{
+    padding: 20 20 20 20;
+    flex: 0 0 100%;
+    /* height: 250px; */
+}
+
+.pet-container .pet-overview img{
+    height: 170px;
+    width: 170px;
+}
+
+.pet-container .pet-overview .pet-info{
+    width: calc(100% - 210px);
+    height: 200px;
+    margin: 10 10 10 10;
+    font-size: smaller;
+}
+
+.pet-container .pet-overview .pet-description{
+    width: 380px;
+    margin: 10 10 10 10;
+    font-size: smaller;
+    display: none;
+}
+
+.pet-container .pet-overview .petname{
+    flex: 0 0 100%;
+    font-weight: 900;
+    font-size: larger;
+    margin-bottom: 10px;
+}
+.pet-container .pet-overview .petgender, .pet-container .pet-overview .petorigin, .pet-container .pet-overview .petage, .pet-container .pet-overview .petweight{
+    flex: 0 0 48%;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.pet-container .pet-overview .petgender span, .pet-container .pet-overview .petorigin span, .pet-container .pet-overview .petage span, .pet-container .pet-overview .petweight span{
+    color: rosybrown;
+}
+
+#getapet{
+    border: 3px solid white; 
+    border-radius: 30px; 
+    font-size: 20px; 
+    width: 200px; 
+    height: 50px;
+    font-weight: 900; 
+    text-align: center;
+    padding-top: 6px;
+    transition: color .4s, background-color .4s;
+}
+
+#getapet:hover{
+    color: black;
+    background-color: white;
+    cursor: pointer;
+}
+
+
+/*******************pet form*******************/
+.pet-container .adoption-form{
+    padding: 20 20 20 20;
+    flex: 0 0 50%;
+    display: none;
+}
+
+.form1{
+    z-index: 0;
+    /* position: fixed; */
+    display: block;
+    width: 80%;
+    float: right;
+    height: 600px;
+    background-color: rgb(253, 241, 241);
+    padding: 40 40 40 40;
+}
+
+.form1 table{
+    color: black;
+    width: 100%;
+}
+
+.form1 input[type=text], .form1 input[type=email], .form1 input[type=tel] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-color: rgb(255, 246, 246);
+    font-family: 'Quicksand', sans-serif;
+    /* box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, .2); */
+    border: 0px;
+    border-bottom: 2px solid rgba(0, 0, 0, .5);
+}
+
+.form1 input[type=submit]{
+    border-width: 0px;
+    width: 100px;
+    height: 30px;
+    color: black;
+    background-color: white;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.form1 input[type=submit]:hover{
+    background-color: gray;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1000px) {
+    .pet-container{
+        /* flex: 0 0 100%; */
+        flex: 0 0 98%;
+    }
+    .pet-container .adoption-form{
+        flex: 0 0 98%;
+        text-align: center;
+    }
+    .pet-container .adoption-form .form1{
+        width: 380;
+        display:inline-block;
+        float: none;
+    }
+}

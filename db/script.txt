@@ -136,7 +136,6 @@ create table servicepurchase (
     author varchar(100),
     `timestamp` date
 );
-
 create table blogimages(
     blogid varchar(10), 
     imageurl varchar(200),
