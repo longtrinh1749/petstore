@@ -184,7 +184,7 @@ input[type=text]{
 }
 .section-container.section-odd{
     background-color: rgba(217, 236, 248, 0.308);
-    color: darkgrey;
+    color: #6d4e4e;
 }
 .section-container.section-even{
     background-color: rgba(255, 255, 255, 0.5);
