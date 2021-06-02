@@ -496,6 +496,12 @@ input[type='number']::-webkit-outer-spin-button {
 .footer .footer-social div a img {
 	width : 30px;
 	height: 30px;
+	transition: all 0.3s ease;
+}
+
+.footer .footer-social div a img:hover{
+	width: 35px;
+	height: 35px;
 }
 
 .footer .footer-social div a:hover {

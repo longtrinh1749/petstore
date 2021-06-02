@@ -410,9 +410,14 @@ input[type=text]{
     border-color: black;
     border-style: none;
 }
-.footer .footer-social div a img{
-    width: 30px;
-    height: 30px;
+.footer .footer-social div a img {
+	width : 30px;
+	height: 30px;
+	transition: all 0.3s ease;
+}
+.footer .footer-social div a img:hover{
+	width: 35px;
+	height: 35px;
 }
 .footer .footer-social div a:hover{
     transform: none;
