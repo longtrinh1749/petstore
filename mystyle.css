@@ -78,14 +78,16 @@ input[type=text]{
     size: auto;
 }
 .m-navigator-bar a{
-    display: block;
-    text-align: center;
-    height: inherit;
-    float: right;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 14px;
-    padding-bottom: 11px;
+    display        : flex;
+	justify-content: center;
+	align-items    : center;
+	text-align     : center;
+	height         : inherit;
+	float          : right;
+	padding-left   : 15px;
+	padding-right  : 15px;
+	padding-top    : 14px;
+	padding-bottom : 11px;
 }
 
 .m-navigator-bar a:hover{

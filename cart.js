@@ -150,7 +150,11 @@ function submitOrder() {
 				cartFormModal.style.display = 'none';
 				orderSuccessModal.style.display = 'block';
 				let closeOrderSuccessModal = document.getElementById('close-order-success-modal');
-				closeOrderSuccessModal.onclick = () => orderSuccessModal.style.display = 'none';
+				closeOrderSuccessModal.onclick = () => {
+					setCookie('cart', '', 0)
+					orderSuccessModal.style.display = 'none';
+					window.location.href = 'index.html'
+				}
 			}).catch(err => {
 				console.log(err);
 			})
