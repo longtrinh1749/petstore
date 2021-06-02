@@ -40,7 +40,7 @@ input[type=text]{
 .m-navigator-bar{
     width: 100%;
     height: 55px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.5);
     position: fixed;
     z-index: 1;
     color:black;
@@ -78,14 +78,16 @@ input[type=text]{
     size: auto;
 }
 .m-navigator-bar a{
-    display: block;
-    text-align: center;
-    height: inherit;
-    float: right;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 14px;
-    padding-bottom: 11px;
+    display        : flex;
+	justify-content: center;
+	align-items    : center;
+	text-align     : center;
+	height         : inherit;
+	float          : right;
+	padding-left   : 15px;
+	padding-right  : 15px;
+	padding-top    : 14px;
+	padding-bottom : 11px;
 }
 
 .m-navigator-bar a:hover{
@@ -406,11 +408,11 @@ input[type=text]{
     border-radius: 20px;
     border-width: 2px;
     border-color: black;
-    border-style: dotted;
+    border-style: none;
 }
 .footer .footer-social div a img{
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
 }
 .footer .footer-social div a:hover{
     transform: none;

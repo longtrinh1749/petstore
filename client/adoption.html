@@ -2,22 +2,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="mystyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+	crossorigin="anonymous" />
 <link rel="stylesheet" href="./adoption-stylesheet.css" media="screen,projection">
 
 <body>
     <iframe name="hiddenFrame" class="hide"></iframe>
     <!-- begin of html -->
-    <div class="m-navigator-bar" id="top-nav">
-        <div class="navbar-margin-left"></div>
-        <a href=./ style="padding: 0; display: block; float: left;">
-            <img src="./ImgSource/logo/logo-black.png">
-        </a>
-        <div class="navbar-margin-right"></div>
-        <a class="btn" href="#">About us</a>
-        <a class="btn" href="./tryit/newpage">Community</a>
-        <a class="btn selected" href="#shop">FAQs</a>
-        <a class="btn" href="#menu">Login</a>
-        <!-- <div class="m-form-search">
+	<div class="m-navigator-bar" id="top-nav">
+		<div class="navbar-margin-left"></div>
+		<a href="index.html" style="padding: 0; display: flex; float: left; align-items: center;">
+			<img src="./ImgSource/logo/logo-black.png">
+            <span>ateGlory</span>
+		</a>
+		<div class="navbar-margin-right"></div>
+		<a class="btn" href="cart.html" style="font-size: 1.125rem;">
+			<span><i class="fas fa-shopping-cart"></i></span>
+		</a>
+		<a class="btm" href="#">About us</a>
+		<a class="btn" href="#">Community</a>
+		<a class="btn selected" href="#">FAQs</a>
+		<a class="btn" href="#">Login</a>
+		<!-- <div class="m-form-search">
             <button type="submit" class="m-form-search-button" onclick="alert('Hello world!')"></button>
             <input type="text" id="fname" name="fname" placeholder="Tim meo :>>">
         </div> -->
@@ -44,7 +51,7 @@
             <button onclick="searchPet()">Search</button>
         </div>
         <div class="flex-container" id="petlist-container">
-            <div class="pet-container" onclick="showDetailed(1)" id="1"> 
+            <div class="pet-container" onclick="showDetailed(1)" id="1">
                 <div class="flex-container">
                     <div class="flex-container pet-overview">
                         <img src="">
@@ -156,11 +163,11 @@
             </div>
             <div class="footer-link">
                 <h3>Useful Links</h3>
-                <a href=#>&#9830 About Us</a><br>
-                <a href=#>&#9830 Services</a><br>
-                <a href=#>&#9830 Our Team</a><br>
-                <a href=#>&#9830 Adopt Pet</a><br>
-                <a href=#>&#9830 Gallery</a><br>
+                <a href="adoption.html">&#9830 Pet Adoption</a><br>
+                <a href="shopping.html">&#9830 Shopping</a><br>
+                <a href="service.html">&#9830 Services</a><br>
+                <a href="blog.html">&#9830 Blog</a><br>
+                <a href=#>&#9830 Payment</a><br>
             </div>
             <div class="footer-workinghour">
                 <h3>Working Hours</h3>
@@ -385,7 +392,7 @@
             container.querySelector(".pet-overview").style.padding = "20 20 20 20";
             container.querySelector(".pet-description").style.display = "none";
             container.querySelector(".adoption-form").style.display = "none";
-        } else { 
+        } else {
             container.style.flex = "0 0 98%";
             container.style.margin = "10 10 10 10";
             container.querySelector(".pet-overview").style.flex = "0 0 100%";

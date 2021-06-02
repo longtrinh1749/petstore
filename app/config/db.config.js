@@ -1,4 +1,5 @@
-const dotenv = require('dotenv').config({path: '../.env'});
+const dotenv = require('dotenv')
+dotenv.config({path: '../.env'});
 
 const USER = process.env.MYSQL_USERNAME || 'root';
 const PASSWORD = process.env.MYSQL_ROOT_PASSWORD || 'root';

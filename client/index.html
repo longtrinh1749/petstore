@@ -1,28 +1,35 @@
 <html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+	crossorigin="anonymous" />
 <link rel="stylesheet" href="mystyle.css">
 
 <body>
-    <!-- spawn modal for gallery -->
-    <div id="myModal" class="modal">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="img01">
-    </div>
+	<!-- spawn modal for gallery -->
+	<div id="myModal" class="modal">
+		<span class="close">&times;</span>
+		<img class="modal-content" id="img01">
+	</div>
 
 
-    <!-- begin of html -->
-    <div class="m-navigator-bar" id="top-nav">
-        <div class="navbar-margin-left"></div>
-        <a href=# style="padding: 0; display: block; float: left;">
-            <img src="./ImgSource/logo/logo-black.png">
-        </a>
-        <div class="navbar-margin-right"></div>
-        <a class="btm" href="#">About us</a>
-        <a class="btn" href="./tryit/newpage">Community</a>
-        <a class="btn selected" href="#shop">FAQs</a>
-        <a class="btn" href="#menu">Login</a>
-        <!-- <div class="m-form-search">
+	<!-- begin of html -->
+	<div class="m-navigator-bar" id="top-nav">
+		<div class="navbar-margin-left"></div>
+		<a href="index.html" style="padding: 0; display: flex; float: left; align-items: center;">
+			<img src="./ImgSource/logo/logo-black.png">
+            <span>ateGlory</span>
+		</a>
+		<div class="navbar-margin-right"></div>
+		<a class="btn" href="cart.html" style="font-size: 1.125rem;">
+			<span><i class="fas fa-shopping-cart"></i></span>
+		</a>
+		<a class="btm" href="#">About us</a>
+		<a class="btn" href="#">Community</a>
+		<a class="btn selected" href="#">FAQs</a>
+		<a class="btn" href="#">Login</a>
+		<!-- <div class="m-form-search">
             <button type="submit" class="m-form-search-button" onclick="alert('Hello world!')"></button>
             <input type="text" id="fname" name="fname" placeholder="Tim meo :>>">
         </div> -->
@@ -31,8 +38,8 @@
     <div class="main-wallpaper shop-overview" id="main-cover">
         <span >cateGlory</span><br>
         Spend your time to those who love you unconditionally...<br><br>
-        <button onclick="joinUsNow()">
-            Join us now!
+        <button onclick="joinUsNow()" style="padding: .6rem;">
+            Explore now!
         </button>
     </div>
 
@@ -335,10 +342,10 @@
                 </div>
                 <div class="footer-link">
                     <h3>Useful Links</h3>
-                    <a href=#>&#9830 Pet Adoption</a><br>
-                    <a href=#>&#9830 Shopping</a><br>
-                    <a href=#>&#9830 Services</a><br>
-                    <a href=#>&#9830 Blog</a><br>
+                    <a href="adoption.html">&#9830 Pet Adoption</a><br>
+                    <a href="shopping.html">&#9830 Shopping</a><br>
+                    <a href="service.html">&#9830 Services</a><br>
+                    <a href="blog.html">&#9830 Blog</a><br>
                     <a href=#>&#9830 Payment</a><br>
                 </div>
                 <div class="footer-workinghour">
@@ -372,23 +379,23 @@
 <!-- for client side rendering -->
 <script>
 
-    function generateGallery(i) {
-        var galleryContainer = document.getElementById("gallery-container");
-        for (var i = 0; i < 4; i++) {
-            for (var j = 0; j < 6; j++) {
-                var curNode = document.createElement("a");
-                curNode.href = "#";
-                curNode.style.position = "absolute";
-                curNode.style.width = 100 / 6 + "%";
-                curNode.style.height = "100px";
+	function generateGallery(i) {
+		var galleryContainer = document.getElementById("gallery-container");
+		for (var i = 0; i < 4; i++) {
+			for (var j = 0; j < 6; j++) {
+				var curNode = document.createElement("a");
+				curNode.href = "#";
+				curNode.style.position = "absolute";
+				curNode.style.width = 100 / 6 + "%";
+				curNode.style.height = "100px";
 
-                curNode.style.left = 100 / 6 * j + "%";
-                curNode.style.top = 100 * i + "px";
-                galleryContainer.appendChild(curNode);
-            }
-        }
+				curNode.style.left = 100 / 6 * j + "%";
+				curNode.style.top = 100 * i + "px";
+				galleryContainer.appendChild(curNode);
+			}
+		}
 
-    }
+	}
 </script>
 
 
@@ -476,26 +483,26 @@
 
 <!-- gallery script -->
 <script>
-    function toggleshow(item) {
-        var modal = document.getElementById('myModal');
+	function toggleshow(item) {
+		var modal = document.getElementById('myModal');
 
-        // Get the image and insert it inside the modal - use its "alt" text as a caption
-        var img = document.getElementById('myImg');
-        var modalImg = document.getElementById("img01");
-        modal.style.display = "flex";
-        modal.style.alignItems = "center";
-        modal.style.justifyContent = "center";
-        modal.style.zIndex = "100";
-        modalImg.src = item.getAttribute("href");
+		// Get the image and insert it inside the modal - use its "alt" text as a caption
+		var img = document.getElementById('myImg');
+		var modalImg = document.getElementById("img01");
+		modal.style.display = "flex";
+		modal.style.alignItems = "center";
+		modal.style.justifyContent = "center";
+		modal.style.zIndex = "100";
+		modalImg.src = item.getAttribute("href");
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-        return false;
-    }
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+		return false;
+	}
 </script>
 
 
