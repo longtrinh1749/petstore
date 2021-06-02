@@ -116,25 +116,51 @@ input[type=text]{
     background-image: url("./ImgSource/background/wallpaper2.jpg");
 }
 .shop-overview{
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    display: block;
+    /* flex-direction: column; */
     height: 100%;
     width: 100%;
-    justify-content: center;
-    padding-left: 70px;
-    align-items:flex-start;
+    /* justify-content: center; */
+    padding-left: 15%;
+    padding-top: 220px;
+    /* align-items:flex-start; */
+    font-size: 20px;
 }
 .shop-overview span{
     /* position: absolute;
     top: 50%;
     transform: translateY(-50%); */
-    font-size: 60px;
+    font-size: 70px;
     font-weight:900;
     font-family: 'Quicksand', sans-serif;
-    background-color: black;
-    opacity: 70%;
-    font: white;
-    padding: 40px;
+    /* background-color: black;
+    opacity: 70%; */
+    
+}
+
+.shop-overview button{
+    /* position: absolute;
+    top: 50%;
+    transform: translateY(-50%); */
+    font-size: 30px;
+    font-weight:400;
+    font-family: 'Quicksand', sans-serif;
+    border: 3px solid white;
+    border-radius: 40px;
+    /* background-color: black;
+    opacity: 70%; */
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 1s;
+}
+
+.shop-overview button:hover{
+    /* position: absolute;
+    top: 50%;
+    transform: translateY(-50%); */
+    background-color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
 }
 .main-page{
     width: 100%;
