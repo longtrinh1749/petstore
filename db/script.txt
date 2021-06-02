@@ -25,12 +25,12 @@ create table pet (
 -- id, name, price, size, quantity, discount, image, description
 create table item (
     id varchar(10), 
-    name varchar(50),
-    price int,
+    name varchar(100),
+    price double(5,2),
     size varchar(5),
     quantity int,
     discount int,
-    description varchar(200),
+    description varchar(500),
     imageurl varchar(200),
     primary key (`id`, `size`)
 ); -- size: M, L, XL
@@ -367,299 +367,55 @@ insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) va
 insert into serviceorder (`service`, `name`, `phoneno`, `email`, `timestamp`) values ('2', 'Lenore Murray', '0947803098', 'ZjhkBOz@gmail.com', '2020-01-15 10:10:10-08:00');
 
 
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '2000000', 'XL', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '400000', 'XS', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','Cat Litter Pans', '1600000', 'L', '27', '10', 'So Phresh Navy Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I2','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '22', '10', 'ScoopFree by PetSafe Disposable Crystal Lavender Litter Tray for Cats', ''); 
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I2','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '22', '10', 'ScoopFree by PetSafe Disposable Crystal Lavender Litter Tray for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I3','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '19', '20', 'Tidy Cats Breeze Litter System Cat Pad Refills', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I3','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '19', '20', 'Tidy Cats Breeze Litter System Cat Pad Refills', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '1600000', 'L', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '1200000', 'M', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Covered Litter Boxes', '400000', 'XS', '49', '10', 'So Phresh Jumbo Enclosed  Litter Box in Navy', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '1200000', 'M', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '800000', 'S', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Self-Cleaning Litter Boxes', '2000000', 'XL', '11', '10', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '2000000', 'XL', '30', '20', 'CatIt Hooded Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '800000', 'S', '30', '20', 'CatIt Hooded Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '1200000', 'M', '30', '20', 'CatIt Hooded Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Covered Litter Boxes', '400000', 'XS', '30', '20', 'CatIt Hooded Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '2000000', 'XL', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '400000', 'XS', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '1200000', 'M', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','Cat Litter Pans', '800000', 'S', '22', '20', 'So Phresh Scatter Shield High-Back Litter Box in Gray', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '1200000', 'M', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '800000', 'S', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '400000', 'XS', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Self-Cleaning Litter Boxes', '1600000', 'L', '32', '10', 'ScoopFree by PetSafe Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I9','Cat Litter Box Liners, Filters & Refills', '400000', 'XS', '26', '20', 'Tidy Cats Breeze Spring Clean Cat Pads Refill Pack', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','Cat Litter Pans', '1200000', 'M', '30', '20', 'So Phresh Scatter Shield High-Back Litter Box in Navy', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','Cat Litter Pans', '1600000', 'L', '30', '20', 'So Phresh Scatter Shield High-Back Litter Box in Navy', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '800000', 'S', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '400000', 'XS', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '1600000', 'L', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '1200000', 'M', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Covered Litter Boxes', '2000000', 'XL', '39', '20', 'Omega Paw Roll n Clean Self Cleaning Litter Box for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I12','Cat Litter Box Mats', '1200000', 'M', '10', '20', 'So Phresh Litter Trapper Mat', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I12','Cat Litter Box Mats', '800000', 'S', '10', '20', 'So Phresh Litter Trapper Mat', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I13','Cat Supplies', '800000', 'S', '34', '20', 'So Phresh Charcoal Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I14','Covered Litter Boxes', '1600000', 'L', '44', '20', 'Booda Clean Step Litter Box in Dark Grey', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I14','Covered Litter Boxes', '800000', 'S', '44', '20', 'Booda Clean Step Litter Box in Dark Grey', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '1200000', 'M', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '400000', 'XS', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '2000000', 'XL', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '1600000', 'L', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Cat Litter Pans', '800000', 'S', '40', '10', 'ScoopFree by PetSafe Deluxe Crystal Litter Box System for Cats', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I16','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '37', '10', 'Tidy Cats Breeze Cat Pads Refill Pack', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '1600000', 'L', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '800000', 'S', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17','Self-Cleaning Litter Boxes', '1200000', 'M', '14', '20', 'Tidy Cats Original Breeze Litter Box System Starter Kit With Pellets & Pads', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '400000', 'XS', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '1200000', 'M', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '800000', 'S', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '2000000', 'XL', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Self-Cleaning Litter Boxes', '1600000', 'L', '48', '20', 'ScoopFree by PetSafe Top-Entry Ultra Self-Cleaning Cat Litter Box with Automatic Disposable Tray', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '2000000', 'XL', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '1200000', 'M', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '400000', 'XS', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Cat Supplies', '800000', 'S', '37', '20', 'So Phresh Corner Privacy Hood & Cat Litter Pan', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '1200000', 'M', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '400000', 'XS', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '1600000', 'L', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Cat Litter Box Covers', '2000000', 'XL', '21', '20', 'So Phresh Look At Meow Cat Litter Box Privacy Hood', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '2000000', 'XL', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '400000', 'XS', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '1200000', 'M', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '800000', 'S', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Cat Litter Pans', '1600000', 'L', '35', '20', 'Tidy Cats Breeze Litter Box System Starter Kit With Pellets & Pads', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '400000', 'XS', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Cat Litter Box Liners, Filters & Refills', '1200000', 'M', '48', '10', 'Tidy Cats Breeze Multi-Cat Pads Refill Pack', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '2000000', 'XL', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '800000', 'S', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '1600000', 'L', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '1200000', 'M', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Self-Cleaning Litter Boxes', '400000', 'XS', '22', '10', 'LitterMaid 3rd Edition Multi-Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '1600000', 'L', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '2000000', 'XL', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '1200000', 'M', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '800000', 'S', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Self-Cleaning Litter Boxes', '400000', 'XS', '28', '20', 'ScoopFree by PetSafe Smart Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '1600000', 'L', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '1200000', 'M', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '2000000', 'XL', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '800000', 'S', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Cat Litter Pans', '400000', 'XS', '40', '10', 'So Phresh Warm Taupe Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','Cat Litter Pans', '400000', 'XS', '10', '20', 'So Phresh Grey Litter Box Starter Bundle', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','Cat Litter Pans', '2000000', 'XL', '10', '20', 'So Phresh Grey Litter Box Starter Bundle', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I27','Self-Cleaning Litter Boxes', '1600000', 'L', '17', '20', 'Natures Miracle Multi-Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I27','Self-Cleaning Litter Boxes', '400000', 'XS', '17', '20', 'Natures Miracle Multi-Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '1200000', 'M', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '22', '20', 'Tidy Cats Breeze Odor Control Litter Pellet Refills & Cat Pads Multi Cat Litter Box Accessories-7.91 lbs.', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '400000', 'XS', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '2000000', 'XL', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Cat Litter Box Mats', '800000', 'S', '44', '10', 'So Phresh Flexible Cat Litter Mat in Navy', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '400000', 'XS', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '800000', 'S', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Cat Litter Scoops', '1600000', 'L', '32', '20', 'So Phresh Heavy Duty Litter Scoop', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I31','Self-Cleaning Litter Boxes', '800000', 'S', '30', '20', 'ScoopFree by PetSafe Ultra Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '1200000', 'M', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '400000', 'XS', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I32','Self-Cleaning Litter Boxes', '2000000', 'XL', '14', '10', 'LitterMaid 3rd Edition Single Cat Self-Cleaning Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '1600000', 'L', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '400000', 'XS', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '2000000', 'XL', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I33','Covered Litter Boxes', '1200000', 'M', '41', '20', 'Noba Cateco Odor Elimination Starter Kit Gray Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '2000000', 'XL', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '400000', 'XS', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '1600000', 'L', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '1200000', 'M', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I34','Self-Cleaning Litter Boxes', '800000', 'S', '11', '10', 'ScoopFree by PetSafe Covered Self-Cleaning Second Generation Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '1600000', 'L', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '400000', 'XS', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I35','Cat Litter Box Covers', '2000000', 'XL', '41', '20', 'So Phresh Lovey-Dovey Cat Litter Box Privacy Hood', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I36','Covered Litter Boxes', '1200000', 'M', '25', '10', 'So Phresh Geometric Covered Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I36','Covered Litter Boxes', '1600000', 'L', '25', '10', 'So Phresh Geometric Covered Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I37','Cat Litter Box Mats', '800000', 'S', '36', '20', 'So Phresh Tan Paw-Shaped Cat Litter Trapper Mat', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '1600000', 'L', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '800000', 'S', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '2000000', 'XL', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I38','Cat Litter Pans', '1200000', 'M', '38', '10', 'So Phresh Gray Open Cat Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '1600000', 'L', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '2000000', 'XL', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I39','Corner Litter Boxes', '800000', 'S', '22', '10', 'Natures Miracle Hooded Corner Litter Box With Odor Control Charcoal Filter', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '2000000', 'XL', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '1200000', 'M', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '1600000', 'L', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I40','Cat Litter Scoops', '800000', 'S', '40', '20', 'So Phresh Comfort Grip Metal Litter Scoop', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '1200000', 'M', '25', '20', 'So Phresh Top-Entry Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '800000', 'S', '25', '20', 'So Phresh Top-Entry Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '2000000', 'XL', '25', '20', 'So Phresh Top-Entry Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '1600000', 'L', '25', '20', 'So Phresh Top-Entry Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I41','Covered Litter Boxes', '400000', 'XS', '25', '20', 'So Phresh Top-Entry Litter Box', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '1200000', 'M', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '2000000', 'XL', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '1600000', 'L', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '400000', 'XS', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I42','Cat Litter Box Liners, Filters & Refills', '800000', 'S', '36', '10', 'Litter Genie Standard Refill Cartridge for Cat Litter Disposal System', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '400000', 'XS', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '1600000', 'L', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '800000', 'S', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I43','Cat Litter Box Mats', '1200000', 'M', '17', '20', 'So Phresh Flexible Cat Litter Mat in Grey', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '2000000', 'XL', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '1600000', 'L', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
-
-insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '800000', 'S', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
-
-update item set imageurl = './ImgSource/item/item.jpg';
-
-
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','So Phresh Navy Open Cat Litter Box', '9.99', 'L', '27', '25', 'The So Phresh Navy Open Cat Litter Box features a robust design and cool hue that can fit into almost any home decor. You can also customize your feline potty experience with a matching So Phresh Open Litter Box Rim or Hood.', './ImgSource/item/I1.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I1','So Phresh Navy Open Cat Litter Box', '7.44', 'XL', '30', '25', 'The So Phresh Navy Open Cat Litter Box features a robust design and cool hue that can fit into almost any home decor. You can also customize your feline potty experience with a matching So Phresh Open Litter Box Rim or Hood.', './ImgSource/item/I1.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I2','Meowijuana Get Blitzed Refillable Reindeer', '7.99', 'M', '30', '0', 'Meowijuana Get Blitzed Reindeer Refillable Toy - Getting blitzed is a pawsome way to break the winter blues for your cat. What cat wouldnt love to roll around with a refillable ultra soft reindeer catnip toy, and our dope nip. Whether your cat has been naughty or nice this year, playing reindeer games is certain to bring cheer all season long. Up, up, and away!', './ImgSource/item/I2.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I3','JW Telescopic Felt Crawler Wand', '12.99', 'M', '30', '0', 'Get your cat active during playtime with JWs Wool-ee Crawler Telescopic Cat Wand! This deluxe wand features an upgraded telescopic design that extends up to 4 feet for play; and then easily contracts for compact; organized storage. The segmented felt crawler attachment at the end of the wand gives your cat a life-like capture experience as you make it slither across the floor. Give your cat something to chase with the JW Wool-ee Crawler Cat Wand.', './ImgSource/item/I3.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Coastal Pet Products Turbo Life-like Black Fish', '6.99', 'S', '20', '0', 'Bring out the inner hunter in your cat with the Turbo Life-like Cat Toys! From scaly fish to furry squirrels, your cat will love the realistic look and feel of these toy creatures.', './ImgSource/item/I4.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I4','Coastal Pet Products Turbo Life-like Black Fish', '9.99', 'M', '20', '0', 'Bring out the inner hunter in your cat with the Turbo Life-like Cat Toys! From scaly fish to furry squirrels, your cat will love the realistic look and feel of these toy creatures.', './ImgSource/item/I4.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Meowijuana Cigar Catnip', '6.99', 'S', '50', '10', 'Finally, a freshly-fired cigar just for the furry friend in your life! Makes a GREAT gift to pass to the left paw side! Do you guys feel like you are floating?' , './ImgSource/item/I5.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Meowijuana Cigar Catnip', '7.99', 'M', '50', '10', 'Finally, a freshly-fired cigar just for the furry friend in your life! Makes a GREAT gift to pass to the left paw side! Do you guys feel like you are floating?' , './ImgSource/item/I5.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I5','Meowijuana Cigar Catnip', '9.99', 'L', '50', '10', 'Finally, a freshly-fired cigar just for the furry friend in your life! Makes a GREAT gift to pass to the left paw side! Do you guys feel like you are floating?' , './ImgSource/item/I5.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I6','Petlinks Lil Creepers with Catnip', '9.99', 'S', '20', '0', 'Petlinks Lil Creepers set of three refillable plush catnip toys allow you to extend the fun and keep the catnip fresh! Cute and soft plush trio of mice are irresistible and perfect for a multi cat household.', './ImgSource/item/I6.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I7','YOULY The Proudest Rainbow Cat Teaser Toy', '6.99', 'S', '10', '0', 'Love who you want to love, celebrate your pride, and chase all the rainbows with Youly Pride Collection. From toys, home goods, apparel, and more, you will find everything you need to rise and shine in your true colors.', './ImgSource/item/I7.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I8','Petlinks Dream Curl Denim', '18.23', 'All', '40', '40', 'The Dream Curl from Petlinks offers multi-surface scratch satisfaction for your cat with both sisal and carpet surfaces. The curved angles provide further stimulation and also provide rest and hang-out nooks for your kitty.', './ImgSource/item/I8.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I9','Surface Cardboard Couch Cat Scratcher', '100.00', 'M', '5', '50', 'Surface Cardboard Couch Cat Scratcher lets your kitty get comfy on their own couch. Now you can go about your day or take a quick catnap knowing they will be busy scratching away at carboard crafted from 100% recycled paper.', './ImgSource/item/I9.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I9','Surface Cardboard Couch Cat Scratcher', '120.00', 'XL', '3', '50', 'Surface Cardboard Couch Cat Scratcher lets your kitty get comfy on their own couch. Now you can go about your day or take a quick catnap knowing they will be busy scratching away at carboard crafted from 100% recycled paper.', './ImgSource/item/I9.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','KONG Wild Tails', '5.99', 'M', '30', '0', 'Your cat will find it hard to resist the movement of KONG Wild Tails skittering across the floor or flying through the air. The extra-long, light feathery tails will dance and tease your cat as they attempt to pounce on the ball. A rattle sound adds extra excitement to stimulate play.', './ImgSource/item/I10.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','KONG Wild Tails', '7.99', 'L', '30', '0', 'Your cat will find it hard to resist the movement of KONG Wild Tails skittering across the floor or flying through the air. The extra-long, light feathery tails will dance and tease your cat as they attempt to pounce on the ball. A rattle sound adds extra excitement to stimulate play.', './ImgSource/item/I10.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I10','KONG Wild Tails', '9.99', 'XL', '30', '0', 'Your cat will find it hard to resist the movement of KONG Wild Tails skittering across the floor or flying through the air. The extra-long, light feathery tails will dance and tease your cat as they attempt to pounce on the ball. A rattle sound adds extra excitement to stimulate play.', './ImgSource/item/I10.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Coastal Pet Products Turbo Transform It! Tower & Bed', '27.49', 'S', '35', '0', 'Satisfy your cats urge to scratch with the Turbo Corrugated Cat Toys. Its natural texture offers the perfect scratching material, keeping your furniture scratch-free.', './ImgSource/item/I11.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I11','Coastal Pet Products Turbo Transform It! Tower & Bed', '32.89', 'M', '35', '0', 'Satisfy your cats urge to scratch with the Turbo Corrugated Cat Toys. Its natural texture offers the perfect scratching material, keeping your furniture scratch-free.', './ImgSource/item/I11.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I12','Coastal Pet Products Turbo Catnip Grinder', '8.99', 'S', '45', '0', 'Boost the effects of catnip during playtime with the Turbo Catnip Grinder! The grinder activates the natural oils within catnip to enhance its potency. The twist cap makes it easy to grind the catnip pellets.', './ImgSource/item/I12.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I13','JW Cataction Rattle Ball', '5.99', 'M', '30', '0', 'The JW Rattle Ball Cat Toy is sure to be a favorite new addition to your cats stash of toys. This multi-textured cat toy features a durable, non-toxic rubber outer shell that is gentle on your cats mouth.' ,'./ImgSource/item/I13.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I13','JW Cataction Rattle Ball', '7.99', 'L', '30', '0', 'The JW Rattle Ball Cat Toy is sure to be a favorite new addition to your cats stash of toys. This multi-textured cat toy features a durable, non-toxic rubber outer shell that is gentle on your cats mouth.' ,'./ImgSource/item/I13.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I14','Reinvented Earth Day Tennis Ball & Rope Monkey Fist', '9.99', 'M', '30', '0', 'These toys started from humble beginnings as plastic bottles, collected and processed into pellets that make up the fibers in each toys fabric.', './ImgSource/item/I14.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I15','Playology Bacon Scent Dual Layer Bone', '9.99', 'S', '40', '0', 'Playology Dual Layer Bone Dog Toy with Encapsiscent Technology - millions of microbeads of all-natural bacon scent are embedded directly into the toys rubber material.', './ImgSource/item/I15.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I16', 'Nerf Tough Bone', '12.99', 'S', '30', '45', 'Our Nerf Dog toys include optimized design by Introducing special materials to the product line that are both durable and functional.', './ImgSource/item/I16.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I16', 'Nerf Tough Bone', '14.99', 'L', '30', '45', 'Our Nerf Dog toys include optimized design by Introducing special materials to the product line that are both durable and functional.', './ImgSource/item/I16.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I17', 'BARK Chewniversal Remote Dog Toy', '14.99', 'XL', '45', '0', 'This jumbo remote control dog toy if perfect for pups on a play binge. Chewniversal Remote is a extra large toy made with a medley of materials that are great for biting, gnawing, and that little nibbling thing dogs do with their front teeth. Switch back and forth between the two different types of squeakers and be sure to press pause for a photo op!', './ImgSource/item/I17.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Leaps & Bounds Toss & Tug Tire Dual Rope','17.99','M','20','0','The Leaps & Bounds Toss & Tug Tire Dual Rope Dog Toy is expertly designed to give your pup the best of both worlds with a stimulating blend of textures. A hardy rubber tire challenges their jaw while two knotted, red and blue braids gently massage their teeth and gums as they chew.','./ImgSource/item/I18.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I18','Leaps & Bounds Toss & Tug Tire Dual Rope','22.99','L','20','0','The Leaps & Bounds Toss & Tug Tire Dual Rope Dog Toy is expertly designed to give your pup the best of both worlds with a stimulating blend of textures. A hardy rubber tire challenges their jaw while two knotted, red and blue braids gently massage their teeth and gums as they chew.','./ImgSource/item/I18.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Territory BBQ Chicken-Scented','6.99','S','50','0','Infused with the alluring chicken barbeque scent that dogs cant resist, your pup will be kept busy as if it just came off the grill!','./ImgSource/item/I19.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Territory BBQ Chicken-Scented','8.99','M','50','0','Infused with the alluring chicken barbeque scent that dogs cant resist, your pup will be kept busy as if it just came off the grill!','./ImgSource/item/I19.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I19','Territory BBQ Chicken-Scented','10.99','L','50','0','Infused with the alluring chicken barbeque scent that dogs cant resist, your pup will be kept busy as if it just came off the grill!','./ImgSource/item/I19.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I20','Leaps & Bounds Romp & Run Glow-In-The-Dark Bouncy Ball','7.99','XS','50','0','Brighten up their days-and nights-with the Leaps & Bounds Romp & Run Glow-In-The-Dark Bouncy Ball Dog Toy. This toy catches your pups attention as it gets playtime lit with a fun target to fetch.','./ImgSource/item/I20.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Starmark Everlasting Chicken Dog Dental Chew','4.99','S','50','35','Starmark Everlasting Chicken Dog Dental Chew. Great for active chewers! Cleans teeth and gums! Long lasting flavor!','./ImgSource/item/I21.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Starmark Everlasting Chicken Dog Dental Chew','8.49','M','50','35','Starmark Everlasting Chicken Dog Dental Chew. Great for active chewers! Cleans teeth and gums! Long lasting flavor!','./ImgSource/item/I21.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I21','Starmark Everlasting Chicken Dog Dental Chew','10.69','L','50','35','Starmark Everlasting Chicken Dog Dental Chew. Great for active chewers! Cleans teeth and gums! Long lasting flavor!','./ImgSource/item/I21.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I22','Nerf Dog Tennis Ball Blaster with 3 Reload','29.99','M','60','40','Take aim with the new hand-held Nerf Dog Tennis Ball Blaster! High-powered blasting action launches your dogs favorite fetching tennis ball over 50ft in the air.','./ImgSource/item/I22.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I23','Leaps & Bounds Beef-Scented Steak Dog Chew Toy','9.99','S','30','0','The Leaps & Bounds Beef-Scented Steak Chew Dog Toy dishes out a fun time flavored just right. This dog toys key ingredient is a savory scent your four-legged meat lover will go wild for as they dig into hours of sensorial play.','./ImgSource/item/I23.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I24','Tuffest Hammer Tough Plush','9.99','M','45','0','Tuffest Hammer Tough Plush Dog Toy with Kevlar Stitching is built to bring long-lasting fun so your four-legged friend can play to their strengths. Featuring a robust design of 2-layer ultra-strong oxford-weave fabric bound by durable, Kevlar yarn and reinforced seams, this dog toy up for the challenge of their resilient romps.','./ImgSource/item/I24.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I25','Petsport Laser Chase II','4.99','S','20','0','Laser pet toy drives dogs, cats, birds and even fish wild with excitement!','./ImgSource/item/I25.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','KONG Marathon Chicken Chew','5.49','S','30','30','The KONG Marathon treat provides a mentally occupying chew solution. Ideally sized to fit within KONG Classic rubber toys, this convenient, mess free treat is packed full of fun.','./ImgSource/item/I26.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','KONG Marathon Chicken Chew','7.49','M','30','30','The KONG Marathon treat provides a mentally occupying chew solution. Ideally sized to fit within KONG Classic rubber toys, this convenient, mess free treat is packed full of fun.','./ImgSource/item/I26.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I26','KONG Marathon Chicken Chew','9.49','L','30','30','The KONG Marathon treat provides a mentally occupying chew solution. Ideally sized to fit within KONG Classic rubber toys, this convenient, mess free treat is packed full of fun.','./ImgSource/item/I26.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I27','Trixie Activity Poker Box Level 2 for Dogs','47.99','L','32','60','Trixie Dog Activity Poker Box 2 has 4 compartments that can be that must be opened using a different method','./ImgSource/item/I27.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Chuckit! Paraflight Dog Toy','9.99','S','30','10','Floats through the air, high on the water. Soft but rugged construction. Unsinkable.','./ImgSource/item/I28.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I28','Chuckit! Paraflight Dog Toy','14.99','L','30','10','Floats through the air, high on the water. Soft but rugged construction. Unsinkable.','./ImgSource/item/I28.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Tumbo Outdoor Tugger Hanging Bungee Powered Interactive','28.99','S','47','0','This is a simple to hang interactive outdoor toy that you can attach to a fixed overhead object like a tree branch or a second story deck beam.','./ImgSource/item/I29.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I29','Tumbo Outdoor Tugger Hanging Bungee Powered Interactive','30.99','L','47','0','This is a simple to hang interactive outdoor toy that you can attach to a fixed overhead object like a tree branch or a second story deck beam.','./ImgSource/item/I29.jpg');
+insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I30','Petlou Squeak N Grunters Gorilla','9.09','S','45','0','Your dog will love to snuggle up to this super-sized, grunting plush dog toy. Super-soft toy features four squeaky feet in this plush dog toy add to the fun. Durable construction. Machine washable.','./ImgSource/item/I30.jpg');
 
 
 
