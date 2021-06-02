@@ -259,6 +259,15 @@ insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weig
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P49', 'Roscoe', 'Corgi', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description49', '../../db/images/pet/husky.jpg');
 
+update pet set imageurl = './ImgSource/pet/samoyed.jpg' where breed like '%samoyed%';
+update pet set imageurl = './ImgSource/pet/poodle.jpg' where breed like '%poodle%';
+update pet set imageurl = './ImgSource/pet/pomer.jpg' where breed like '%pomer%';
+update pet set imageurl = './ImgSource/pet/husky.jpg' where breed like '%husky%';
+update pet set imageurl = './ImgSource/pet/golden.jpg' where breed like '%golden%';
+update pet set imageurl = './ImgSource/pet/corgi.jpg' where breed like '%corgi%';
+update pet set imageurl = './ImgSource/pet/beagle.jpg' where breed like '%beagle%';
+update pet set imageurl = './ImgSource/pet/alaska.jpg' where breed like '%alaska%';
+
 
 
 insert into customer (`name`, `phoneno`, `email`, `address`) values ('Elizabeth Lewis', '0971596631', 'uVIVBuN@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
@@ -647,6 +656,9 @@ insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `descri
 insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '1600000', 'L', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
 
 insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `description`, `imageurl`) values ('I44','Cat Litter Disposal', '800000', 'S', '48', '10', 'So Phresh Bag-Dispensing Cat Litter Scoop with Refill Roll', '');
+
+update item set imageurl = './ImgSource/item/item.jpg';
+
 
 
 

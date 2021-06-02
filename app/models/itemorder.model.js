@@ -157,7 +157,6 @@ Itemorder.insertToItemorderList = (listItem, orderId) => {
             });
     }
 };
-// TODO: sua de
 
 Itemorder.getAllWithList = result => {
     sql.query("select * from itemorder, itemorderlist where itemorder.id = itemorderlist.orderid", (err, res) => {
