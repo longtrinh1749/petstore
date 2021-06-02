@@ -82,6 +82,7 @@ Pet.getFromKeyword = (keyword, result) => {
 
 Pet.getFromDescription = (petDescription, result) => {
     var description = '%' + petDescription + '%';
+    console.log(description);
     sql.query("select * from pet where description like N?", [description], (err, res) => {
         if (err) {
             console.log("Err: ", err);
