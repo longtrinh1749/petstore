@@ -650,7 +650,7 @@ insert into item (`id`, `name`, `price`, `size`, `quantity`, `discount`, `descri
 
 
 
-insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Corine Laundree', 'gWsQpXb@gmail.com', '0967781834', '2020-01-21 10:10:10-08:00');
+insert into itemorder (`name`, `email`, `phoneno`) values ('Corine Laundree', 'gWsQpXb@gmail.com', '0967781834');
 
 insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I32', 'M', '1', '3');
 
@@ -666,7 +666,7 @@ insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I21
 
 insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I37', 'XL', '1', '4');
 
-insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Sheila Petterson', 'FGBWNQV@gmail.com', '0988576109', '2020-01-16 10:10:10-08:00');
+insert into itemorder (`name`, `email`, `phoneno`) values ('Sheila Petterson', 'FGBWNQV@gmail.com', '0988576109');
 
 insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I11', 'XL', '2', '2');
 
@@ -682,7 +682,7 @@ insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I18
 
 insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I19', 'XS', '2', '2');
 
-insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values ('Susan Kimura', 'leOBVYN@gmail.com', '0929914442', '2020-01-26 10:10:10-08:00');
+insert into itemorder (`name`, `email`, `phoneno`) values ('Susan Kimura', 'leOBVYN@gmail.com', '0929914442');
 
 insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I29', 'M', '3', '3');
 
