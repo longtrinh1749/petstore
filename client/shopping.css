@@ -516,7 +516,7 @@ select option {
 }
 
 .footer .footer-logo {
-	flex      : 0 0 60%;
+	flex      : 0 0 70%;
 	height    : 100px;
 	text-align: left;
 }
@@ -526,7 +526,7 @@ select option {
 }
 
 .footer .footer-social {
-	flex       : 0 0 40%;
+	flex       : 0 0 30%;
 	height     : 100px;
 	display    : flex;
 	align-items: center;
@@ -539,6 +539,10 @@ select option {
 	border-width : 2px;
 	border-color : black;
 	border-style : none;
+}
+
+.footer-social div a{
+	margin-bottom: 5px;
 }
 
 .footer .footer-social div a img {
