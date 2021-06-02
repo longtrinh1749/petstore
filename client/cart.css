@@ -82,9 +82,12 @@ select option {
 }
 
 .table-wrapper {
-	display   : block;
-	width     : 100%;
-	overflow-x: auto;
+	display        : flex;
+	flex-direction : column;
+	justify-content: center;
+	align-items    : center;
+	width          : 100%;
+	overflow-x     : auto;
 }
 
 .cart-table {

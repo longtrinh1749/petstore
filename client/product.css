@@ -103,7 +103,7 @@ a:focus {
 
 .breadcrumbs-page {
 	background         : #27304b;
-	background-image   : url(ImgSource/breadcrumbs_bg3.jpg);
+	background-image   : url(ImgSource/breadcrumb/breadcrumbs_bg3.jpg);
 	background-repeat  : no-repeat;
 	padding            : 10rem 0;
 	background-position: bottom center !important;

@@ -31,17 +31,11 @@ async function getProductsById(id) {
 }
 
 async function getProductsByName(name) {
-	let productList = []
 	try {
 		const res = await fetch(`http://localhost:3000/items/getByName?itemName=${name}`);
 		if (res) {
 			data = await res.json();
-			data.forEach(item => {
-				if (productList.findIndex(product => product.name.localeCompare(item.name) === 0) === -1) {
-					productList.push(item);
-				}
-			})
-			return productList;
+			return data.filter(item => item.name.localeCompare(name) === 0);
 		}
 		return []
 	} catch (error) {

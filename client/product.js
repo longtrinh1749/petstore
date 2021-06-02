@@ -54,7 +54,18 @@ function addToCart(productId, productSize) {
 function showProducts() {
 	let productContainer = document.getElementsByClassName('product-container')[0];
 	if (products.length === 0) {
-		productContainer.innerHTML = '<h1 style="color: red; font-weight: bold; text-align: center;">Error from server ...</h1>';
+		let errorAlert = document.createElement('h1');
+		errorAlert.style.color = "red";
+		errorAlert.style.fontWeight = "bold";
+		errorAlert.style.textAlign = "center";
+		errorAlert.innerText = "Product not found ...";
+		let errorImg = document.createElement('img');
+		errorImg.src = "ImgSource/test_img/product_not_found.gif";
+		productContainer.appendChild(errorImg);
+		productContainer.appendChild(errorAlert);
+		productContainer.style.flexDirection = "column";
+		productContainer.style.justifyContent = "center";
+		productContainer.style.alignItems = "center";
 		return;
 	}
 	productContainer.innerHTML = "";
@@ -108,6 +119,8 @@ function showProducts() {
 	addToCartBtn.addEventListener('click', function () {
 		addToCart(products[0].id, products[0].size)
 	})
+
+	showSlides(slideIndex);
 }
 
 function changeSize(index) {
@@ -144,8 +157,12 @@ window.onload = async function () {
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 	const id = urlParams.get('id');
-	products = await getProductsById(id);
+	const name = urlParams.get('name');
+	if (id) {
+		products = await getProductsById(id);
+	} else if (name) {
+		products = await getProductsByName(name);
+	}
 	// products = getSampleProducts();
 	showProducts();
-	showSlides(slideIndex);
 }

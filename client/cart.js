@@ -20,8 +20,13 @@ async function printCart(cart) {
 	if (cart.length === 0) {
 		let errorAlert = document.createElement('h1');
 		errorAlert.setAttribute('style', 'color: red; font-weight: bold; text-align: center;')
-		errorAlert.innerText = 'Your cart is empty ...'
-		itemList.parentElement.parentElement.appendChild(errorAlert)
+		errorAlert.innerText = 'Your cart is empty ...';
+		let errorImg = document.createElement('img');
+		errorImg.src = "ImgSource/test_img/memeconmeo.jpg"
+		itemList.parentElement.parentElement.appendChild(errorAlert);
+		itemList.parentElement.parentElement.appendChild(errorImg);
+		subTotalSpan.innerHTML = "$0.00";
+		totalSpan.innerHTML = "$0.00"
 		document.getElementById('checkout-btn').disabled = true;
 		return;
 	}
@@ -118,6 +123,11 @@ function updateCart() {
 		const itemTotalPrice = parseFloat(item.querySelector('.item-total').innerHTML.substring(1));
 		subTotal += parseFloat(itemTotalPrice);
 		newCart.push({ itemid, size, quantity })
+	}
+
+	if (newCart.length === 0){
+		printCart(newCart);
+		return;
 	}
 
 	subTotalSpan.innerText = `$${subTotal.toFixed(2)}`;

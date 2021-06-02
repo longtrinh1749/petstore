@@ -81,15 +81,16 @@ function addToCart(productId, productSize) {
 function searchProducts() {
 	let input = document.getElementById("product-to-search");
 	let value = input.value.trim();
+	if (value === "") return;
 	window.location.href = `product.html?name=${value}`
 }
 
 function autocomplete(input) {
 	var currentFocus;
 	const limit = 5;
-	input.addEventListener("input", async function (e) {
+	input.addEventListener("input", function (e) {
 		const val = this.value.toLowerCase();
-		const result = await getProductsByName(val);
+		const result = productList.filter(product => product.name.toLowerCase().includes(val));
 		closeAllLists();
 		if (!val) return false;
 		currentFocus = -1;
@@ -257,7 +258,7 @@ function changePage(page) {
 	const addToCartBtns = document.getElementsByClassName('add-to-cart');
 	for (let i = 0; i < addToCartBtns.length; i++) {
 		const addToCartBtn = addToCartBtns[i];
-		addToCartBtn.addEventListener('click', function(){
+		addToCartBtn.addEventListener('click', function () {
 			addToCart(productList[i].id, productList[i].size)
 		})
 	}
@@ -269,7 +270,6 @@ function numPages() {
 
 window.onload = async function () {
 	productList = await getAllProducts();
-	console.log(productList);
 	// productList = getAllSampleProducts();
 	autocomplete(document.getElementById('product-to-search'));
 	changePage(1);
