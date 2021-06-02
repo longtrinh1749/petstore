@@ -125,14 +125,14 @@ function updateCart() {
 		newCart.push({ itemid, size, quantity })
 	}
 
-	if (newCart.length === 0){
+	setCookie("cart", JSON.stringify(newCart), 1);
+	if (newCart.length === 0) {
 		printCart(newCart);
 		return;
 	}
 
 	subTotalSpan.innerText = `$${subTotal.toFixed(2)}`;
 	totalSpan.innerText = `$${(subTotal + TAX).toFixed(2)}`;
-	setCookie("cart", JSON.stringify(newCart), 1);
 }
 
 function checkout() {

@@ -110,15 +110,27 @@ function showProducts() {
 	let customSizeDiv = productContainer.querySelector('.custom-choose');
 	for (let i = 0; i < products.length; i++) {
 		let p = products[i];
-		customSizeDiv.innerHTML += `
-			<input type="radio" id="${i}" value="${p.size}" name="size" onclick="changeSize(${i})" ${i == 0 ? "checked" : ""}>
-			<label for="${i}">${p.size}</label>
-		`
+		let sizeRadioInput = document.createElement('input');
+		sizeRadioInput.type = "radio";
+		sizeRadioInput.id = i;
+		sizeRadioInput.value = p.size;
+		sizeRadioInput.name = "size";
+		sizeRadioInput.addEventListener('click', function () {
+			changeSize(i);
+		})
+		if (i == 0) sizeRadioInput.checked = "true";
+
+		let sizeLabel = document.createElement('label');
+		sizeLabel.setAttribute('for', i);
+		sizeLabel.innerText = p.size;
+
+		customSizeDiv.appendChild(sizeRadioInput);
+		customSizeDiv.appendChild(sizeLabel);
 	}
 	let addToCartBtn = document.querySelector('.product-description .product-quantity .add-to-cart')
-	addToCartBtn.addEventListener('click', function () {
+	addToCartBtn.onclick = function () {
 		addToCart(products[0].id, products[0].size)
-	})
+	}
 
 	showSlides(slideIndex);
 }
@@ -138,9 +150,9 @@ function changeSize(index) {
 		checkQuantity(products[index].quantity)
 	})
 	quantityInput.value = 1;
-	addToCartBtn.addEventListener('click', function () {
+	addToCartBtn.onclick = function () {
 		addToCart(products[index].id, products[index].size)
-	})
+	}
 }
 
 function checkQuantity(quantity) {
