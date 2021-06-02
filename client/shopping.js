@@ -107,8 +107,11 @@ function autocomplete(input) {
 			if (name.substr(0, val.length).toLowerCase() == val.toLowerCase()) {
 				let b = document.createElement("div");
 				b.innerHTML += `<img src="${imageurl == "" ? "ImgSource/logo/logo-black.png" : imageurl}" width="50">`;
-				b.innerHTML += `<strong>${name.substr(0, val.length)}</strong>`;
-				b.innerHTML += name.substr(val.length);
+				let productNameText = document.createElement('p');
+				productNameText.style.whiteSpace = "pre";
+				productNameText.innerHTML += `<strong>${name.substr(0, val.length)}</strong>`;
+				productNameText.innerHTML += name.substr(val.length);
+				b.appendChild(productNameText);
 				b.addEventListener("click", function (e) {
 					input.value = name;
 					closeAllLists();
