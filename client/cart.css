@@ -18,7 +18,7 @@ html {
 a,
 a:active,
 a:focus {
-	color           : #949494;
+	color           : #8c8282;
 	text-decoration : none;
 	background-color: transparent;
 }
@@ -39,7 +39,7 @@ select option {
 
 .breadcrumbs-page {
 	background         : #27304b;
-	background-image   : url(ImgSource/breadcrumbs_bg2.jpg);
+	background-image   : url(ImgSource/breadcrumb/breadcrumbs_bg4.jpg);
 	background-repeat  : no-repeat;
 	padding            : 10rem 0;
 	background-position: center center !important;
@@ -386,6 +386,7 @@ input[type='number']::-webkit-outer-spin-button {
 	padding-right  : 15px;
 	padding-top    : 14px;
 	padding-bottom : 11px;
+	transition     : 0.4s ease;
 }
 
 .m-navigator-bar a:hover {
