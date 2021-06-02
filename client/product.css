@@ -589,12 +589,12 @@ input[type='number']::-webkit-outer-spin-button {
 	border-radius: 20px;
 	border-width : 2px;
 	border-color : black;
-	border-style : dotted;
+	border-style : none;
 }
 
 .footer .footer-social div a img {
-	width : 20px;
-	height: 20px;
+	width : 30px;
+	height: 30px;
 }
 
 .footer .footer-social div a:hover {
