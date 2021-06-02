@@ -6,6 +6,7 @@ const Itemorder = function (itemorder) {
     this.name = itemorder.name;
     this.email = itemorder.email;
     this.phoneno = itemorder.phoneno;
+    this.note = itemorder.note;
 
     // this.date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
@@ -99,11 +100,12 @@ Itemorder.create = (itemorder, result) => {
     if(!itemorder.itemIdList) itemorder.itemIdList = [];
     if(!itemorder.name) itemorder.name = "";
     if(!itemorder.phoneno) itemorder.phoneno = "";
-    if(!itemorder.email) itemorder.email = 0;
+    if(!itemorder.note) itemorder.note = "";
+    if(!itemorder.email) itemorder.email = "";
     if(!itemorder.timestamp) itemorder.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     console.log("ItemIdList: " + itemorder.itemIdList + "\nName: " + itemorder.name + "\nPhoneno: " + itemorder.phoneno + "\nEmail: " + itemorder.email);
-    sql.query("insert into itemorder (`name`, `email`, `phoneno`, `timestamp`) values (?, ?, ?, ?);",
-        [itemorder.name, itemorder.email, itemorder.phoneno, itemorder.timestamp] ,
+    sql.query("insert into itemorder (`name`, `email`, `phoneno`, `note`, `timestamp`) values (?, ?, ?, ?, ?);",
+        [itemorder.name, itemorder.email, itemorder.phoneno, itemorder.note, itemorder.timestamp] ,
         (err, res) => {
             if (err) {
                 console.log("Err creating itemorder: ", err);

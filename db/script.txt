@@ -62,6 +62,7 @@ create table itemorder (
     name varchar(50),
     email varchar(100),
     phoneno varchar(12),
+    note varchar(400),
     `timestamp` date,
     `purchaseTimestamp` date null,
     purchase int null -- so tien tra

@@ -11,7 +11,8 @@ exports.createItemOrder = (req, res) => {
         name: data.name,
         email: data.email,
         phoneno: data.phoneno,
-        itemIdList: data.itemIdList
+        itemIdList: data.itemIdList,
+        note: data.note
     });
 
     ItemOrder.create(itemOrder, (err, data) => {

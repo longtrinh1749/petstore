@@ -26,7 +26,7 @@
         .actionColumn {
             text-align: center;
             float: right;
-            width: 15%;
+            width: 8%;
         }
 
         .row {
@@ -78,6 +78,9 @@
         Phoneno
     </div>
     <div class="column">
+        Note
+    </div>
+    <div class="column">
         Date created
     </div>
     <div class="column">
@@ -109,6 +112,9 @@
         </div>
         <div class="column">
             <input class="ta" type="text" id="searchPhoneno" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchNote" value="">
         </div>
         <div class="column">
             <input class="ta" type="text" id="searchTimestamp" value="">
@@ -177,11 +183,12 @@
             let name = document.getElementById("searchName").value;
             let email = document.getElementById("searchEmail").value;
             let phoneno = document.getElementById("searchPhoneno").value;
+            let note = document.getElementById("searchNote").value;
             let timestamp = document.getElementById("searchTimestamp").value;
             let purchaseTimestamp = document.getElementById("searchPurchaseTimestamp").value;
             let purchase = document.getElementById("searchPurchase").value;
             datas += '&id=' + id + '&itemid=' + itemid + '&size=' + size + '&quantity=' + quantity + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno
-                + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
+                + '&note=' + note + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
             ajaxRequest.send(datas);
         }
     }
@@ -197,11 +204,12 @@
             let name = document.getElementById("searchName").value;
             let email = document.getElementById("searchEmail").value;
             let phoneno = document.getElementById("searchPhoneno").value;
+            let note = document.getElementById("searchNote").value;
             let timestamp = document.getElementById("searchTimestamp").value;
             let purchaseTimestamp = document.getElementById("searchPurchaseTimestamp").value;
             let purchase = document.getElementById("searchPurchase").value;
             datas += 'id=' + id + '&itemid=' + itemid + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno
-                + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
+                + '&note=' + note + + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
             ajaxRequest.send(datas);
             // ajaxRequest.send('&id=' + id);
         }
@@ -319,9 +327,13 @@
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexName' + i + '" readonly="readonly">' + jsonRes[i].name + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexEmail' + i + '" readonly="readonly">' + jsonRes[i].email + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].phoneno + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexTimestamp' + i + '" readonly="readonly">' + jsonRes[i].timestamp + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPurchaseTimestamp' + i + '" readonly="readonly">' + jsonRes[i].purchaseTimestamp + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="purchase' + i + '" readonly="readonly">' + jsonRes[i].purchase + '</textarea></div>';
+                    if((i > 1 && jsonRes[i].id != jsonRes[i-1].id) || i == 0) {
+                        tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].note + '</textarea></div>';
+
+                        tmpHtml += '<div class="column"><textarea class="ta" id="indexTimestamp' + i + '" readonly="readonly">' + jsonRes[i].timestamp + '</textarea></div>';
+                        tmpHtml += '<div class="column"><textarea class="ta" id="indexPurchaseTimestamp' + i + '" readonly="readonly">' + jsonRes[i].purchaseTimestamp + '</textarea></div>';
+                        tmpHtml += '<div class="column"><textarea class="ta" id="purchase' + i + '" readonly="readonly">' + jsonRes[i].purchase + '</textarea></div>';
+                    }
                     if((i > 0 && jsonRes[i].id != jsonRes[i-1].id) || i == 0) {
                         tmpHtml += '<div class="actionColumn" >\n' +
                             '        <button type="button" class="updateButton" id="updateButton' + i + '" value="Confirm" onclick="updateButtonPress(this)">Confirm</button>' +
