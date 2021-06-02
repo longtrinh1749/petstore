@@ -137,7 +137,7 @@ function checkout() {
 function submitOrder() {
 	if (checkInputOrder()) {
 		let cartFormModal = document.getElementById('cart-form-modal');
-		let orderSuccessAlert = document.getElementById('order-success-alert');
+		let orderSuccessModal = document.getElementById('order-success-modal');
 		const name = document.getElementById('cart-name').value.trim();
 		const email = document.getElementById('cart-email').value.trim();
 		const phoneno = document.getElementById('cart-phonenumber').value.trim();
@@ -147,8 +147,10 @@ function submitOrder() {
 		postOrder(order)
 			.then(res => {
 				console.log(res);
-				setTimeout(() => { cartFormModal.style.display = 'none'; }, 2000);
-				orderSuccessAlert.style.display = 'block';
+				cartFormModal.style.display = 'none';
+				orderSuccessModal.style.display = 'block';
+				let closeOrderSuccessModal = document.getElementById('close-order-success-modal');
+				closeOrderSuccessModal.onclick = () => orderSuccessModal.style.display = 'none';
 			}).catch(err => {
 				console.log(err);
 			})
