@@ -7,6 +7,8 @@ exports.createPetOrder = (req, res) => {
     // else res.status(400).send({message: "Request content cannot be empty."});
     data = req.body;
 
+    console.log(JSON.stringify(req.body))
+
     const itemOrder = new Petorder({
         name: data.name,
         email: data.email,

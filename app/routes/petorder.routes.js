@@ -5,5 +5,5 @@ module.exports = router;
 
 const petOrders = require("../controllers/petorder.controller.js");
 
-router.post("/", petOrders.createPetOrder);
+router.post("/form", petOrders.createPetOrder);
 
