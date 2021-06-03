@@ -268,6 +268,11 @@ update pet set imageurl = './ImgSource/pet/corgi.jpg' where breed like '%corgi%'
 update pet set imageurl = './ImgSource/pet/beagle.jpg' where breed like '%beagle%';
 update pet set imageurl = './ImgSource/pet/alaska.jpg' where breed like '%alaska%';
 
+update pet set origin = 'Japan';
+update pet set origin = 'Viet Nam' where price > 20000000;
+update pet set origin = 'Germany' where price > 10000000 and price < 20000000;
+update pet set origin = 'Thailand' where price < 10000000;
+
 
 
 insert into customer (`name`, `phoneno`, `email`, `address`) values ('Elizabeth Lewis', '0971596631', 'uVIVBuN@gmail.com', '1 Dai Co Viet Ha Noi Viet Nam');
