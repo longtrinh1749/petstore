@@ -65,7 +65,7 @@ create table itemorder (
     note varchar(400),
     `timestamp` date,
     `purchaseTimestamp` date null,
-    purchase int null -- so tien tra
+    purchase double(5,2) null -- so tien tra
 ); -- co the van phai sua
 
 create table serviceorder (

@@ -159,7 +159,7 @@ Itemorder.insertToItemorderList = (listItem, orderId) => {
 };
 
 Itemorder.getAllWithList = result => {
-    sql.query("select * from itemorder, itemorderlist where itemorder.id = itemorderlist.orderid", (err, res) => {
+    sql.query("select * from itemorder, itemorderlist where itemorder.id = itemorderlist.orderid order by itemorder.id asc", (err, res) => {
         if (err) {
             console.log('Error: ', err);
             result(err, null);
