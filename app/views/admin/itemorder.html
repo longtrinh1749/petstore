@@ -133,7 +133,7 @@
         </div>
     </div>
 </form>
-<div>Your pet orders:</div>
+<div>Your item orders:</div>
 <!--dung jquery ajax how to submit form without redirect-->
 <!--https://stackoverflow.com/questions/25983603/how-to-submit-an-html-form-without-redirection-->
 <div class="row" id="itemorders">
@@ -222,9 +222,7 @@
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
-            datas += '&id=' + itemorder.id + '&itemid=' + itemorder.itemid + '&size=' + size + '&quantity=' + quantity + '&name=' +
-                itemorder.name + '&email=' + itemorder.email + '&phoneno=' + itemorder.phoneno + '&timestamp=' + itemorder.timestamp +
-                '&purchaseTimestamp=' + itemorder.purchaseTimestamp + '&purchase=' + itemorder.purchase;
+            datas += '&id=' + itemorder.id;
             ajaxRequest.send(datas);
         }
     }
@@ -254,7 +252,6 @@
     }
 
     function updateButtonPress(button) {
-        console.log("asdasd");
         var id = button.id.replace("updateButton", "");
         var buttonItemId = button.class;
         var buttonId = button.id;
@@ -272,7 +269,7 @@
         var itemorder = {};
         // console.log(document.getElementById(id).getElementsByClassItemId("ta")[9].value);
         itemorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
-        itemorder.itemid = document.getElementById(id).getElementsByClassName("ta")[1].value;
+        // itemorder.itemid = document.getElementById(id).getElementsByClassName("ta")[1].value;
         // itemorder.name = document.getElementById(id).getElementsByClassName("ta")[2].value;
         // itemorder.email = document.getElementById(id).getElementsByClassName("ta")[3].value;
         // itemorder.phoneno = document.getElementById(id).getElementsByClassName("ta")[4].value;

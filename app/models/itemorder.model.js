@@ -250,7 +250,10 @@ Itemorder.delete = (itemorder, result) => {
 // TODO: finish confirm item order
 Itemorder.confirmOrder = (itemorder, result) => {
     timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    sql.query("update item, itemorder set pet.sold = true, itemorder.timestamp = ? where item.id like N? and itemorder.id like N?", [timestamp, itemorder.petid, itemorder.id], (err, res) => {
+    // sql.query("update item, itemorder set pet.sold = true, itemorder.timestamp = ? where item.id like N? and itemorder.id like N?", [timestamp, itemorder.petid, itemorder.id], (err, res) => {
+    sql.query("update item as i inner join itemorder as io inner join itemorderlist as iol on i.id = iol.itemid and i.size = iol.size and io.id = iol.orderid set i.quantity =\n" +
+        "i.quantity - iol.quantity, io.timestamp = ? where io.id = ?;",
+        [timestamp, itemorder.id], (err, res) => {
         console.log("Petid attempting to delete"+itemorder.petid);
         if (err) {
             console.log("Err deleting itemorder: ", err);
@@ -266,6 +269,27 @@ Itemorder.confirmOrder = (itemorder, result) => {
             return;
         }
     })
+}
+
+Itemorder.confirmOrder2 = (itemorder, result) => {
+//     timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+//     sql.query("update item, itemorder set pet.sold = true, itemorder.timestamp = ? where item.id like N? and itemorder.id like N?", [timestamp, itemorder.petid, itemorder.id], (err, res) => {
+//         console.log("Petid attempting to delete"+itemorder.petid);
+//         if (err) {
+//             console.log("Err deleting itemorder: ", err);
+//             result(err, null);
+//             return;
+//         } else if (!res.affectedRows) {
+//             console.log("Err delete itemorder: Error inside database (maybe cannot find id?).");
+//             result({message: "Err delete itemorder: Error inside database (maybe cannot find id?)."}, null);
+//             return;
+//         } else if (res.affectedRows) {
+//             console.log("Deleted from table itemorder");
+//             result(null, res);
+//             return;
+//         }
+//     })
+    result(null, {asd:"asd"});
 }
 
 const callback = function (err, res) {

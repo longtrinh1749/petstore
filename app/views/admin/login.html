@@ -5,10 +5,26 @@
     <title>Title</title>
 </head>
 <body>
+<h1>PetStore</h1>
+<h2>Admin Login</h2>
 <form action="/admin/login" method="post">
-    <input type="text" name="username"/>
-    <input type="text" name="password"/>
-    <input type="submit" value="Submit"/>
+    Username:<br>
+    <input type="text" name="username"/><br>
+    Password:<br>
+    <input type="password" name="password"/><br>
+    <input type="checkbox" onclick="myFunction()">Show Password<br>
+    <input type="submit" value="Login"/>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
 </form>
 </body>
 </html>

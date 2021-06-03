@@ -632,3 +632,5 @@ insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I24
 insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I15', 'L', '19', '3');
 
 insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values ('I33', 'L', '19', '1');
+
+update itemorder set timestamp = null;

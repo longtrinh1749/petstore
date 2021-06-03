@@ -6,7 +6,7 @@ const Admin = function (admin) {
 };
 
 Admin.getUser = (username, password, result) => {
-    sql.query("select * from admin where admin.id = ?", [username], (err, res) => {
+    sql.query("select * from admin", [username], (err, res) => {
         if(err) {
             console.log("Err: ", err);
             result(err, null);
@@ -32,6 +32,7 @@ Admin.getUser = (username, password, result) => {
         }
     })
 }
+
 
 module.exports = Admin;
 

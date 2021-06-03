@@ -135,6 +135,7 @@ routes.post("/delete", (req, res) => {
 routes.post("/confirm", (req, res) => {
     if(req.session.admin) {
         itemorder = req.body;
+        // console.log(JSON.stringify(itemorder));
         Itemorder.confirmOrder(itemorder, (err, data) => {
             if(err) {
                 if (err.kind === "not_found") {
