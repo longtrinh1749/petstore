@@ -78,7 +78,8 @@ async function printCart(cart) {
 			row.appendChild(itemSizeData);
 
 			let itemPriceData = document.createElement('td');
-			itemPriceData.innerHTML = `<strong class="item-price">$${product.price.toFixed(2)}</strong>`;
+			itemPriceData.innerHTML = `<strong class="item-price">$${(product.price - product.price * product.discount / 100).toFixed(2)}</strong>`;
+			console.log(product.price, product.discount);
 			row.appendChild(itemPriceData);
 
 			let itemQuantityData = document.createElement('td');
@@ -91,14 +92,14 @@ async function printCart(cart) {
 			itemQuantityInput.value = item.quantity;
 			itemQuantityInput.addEventListener('input', function () {
 				const newQuantity = itemQuantityInput.value;
-				itemPriceTotalData.innerHTML = `<strong class="item-total">$${(product.price * newQuantity).toFixed(2)}`
+				itemPriceTotalData.innerHTML = `<strong class="item-total">$${((product.price - product.price * product.discount / 100) * newQuantity).toFixed(2)}`
 				updateCart();
 			})
 			itemQuantityData.appendChild(itemQuantityInput);
 			row.appendChild(itemQuantityData)
 
 			let itemPriceTotalData = document.createElement('td');
-			itemPriceTotalData.innerHTML = `<strong class="item-total">$${(product.price * item.quantity).toFixed(2)}</strong>`;
+			itemPriceTotalData.innerHTML = `<strong class="item-total">$${((product.price - product.price * product.discount / 100) * item.quantity).toFixed(2)}</strong>`;
 			row.appendChild(itemPriceTotalData);
 
 			itemList.appendChild(row);
