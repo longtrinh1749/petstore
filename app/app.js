@@ -41,7 +41,7 @@ app.use("/admin", adminRouter);
 app.use("/items", itemRouter);
 app.use("/items", itemOrderRouter);
 app.use("/services", serviceOrderRouter);
-app.use("/adoption", petOrderRouter);
+app.use("/pets", petOrderRouter);
 
 const port = process.env.NODEJS_LOCAL_PORT || 3000;
 app.listen(port, () => {

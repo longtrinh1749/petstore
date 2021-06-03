@@ -7,6 +7,8 @@ exports.createServiceorder = (req, res) => {
     // else res.status(400).send({message: "Request content cannot be empty."});
     data = req.body;
 
+    console.log(JSON.stringify(req.body))
+    
     const serviceOrder = new Serviceorder({
         service: data.service,
         name: data.name,
