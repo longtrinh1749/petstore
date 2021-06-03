@@ -1,3 +1,3 @@
-.idea/
-diagram/*.asta.lock
+.idea/*
 diagram/*.asta
+diagram/*.asta.lock
