@@ -90,6 +90,7 @@ select option {
 	padding-right  : 15px;
 	padding-top    : 14px;
 	padding-bottom : 11px;
+	transition     : 0.4s ease;
 }
 
 .m-navigator-bar a:hover {
