@@ -186,7 +186,10 @@ select option {
 	color             : #131313;
 	background-color  : #fff;
 	height            : auto;
-	padding           : 1rem;
+	padding-top       : 1rem;
+	padding-bottom    : 1rem;
+	padding-left      : 1rem;
+	padding-right     : 2rem;
 	border-radius     : 5px;
 	box-shadow        : none;
 	border            : none;
@@ -541,18 +544,18 @@ select option {
 	border-style : none;
 }
 
-.footer-social div a{
+.footer-social div a {
 	margin-bottom: 5px;
 }
 
 .footer .footer-social div a img {
-	width : 30px;
-	height: 30px;
+	width     : 30px;
+	height    : 30px;
 	transition: all 0.3s ease;
 }
 
-.footer .footer-social div a img:hover{
-	width: 35px;
+.footer .footer-social div a img:hover {
+	width : 35px;
 	height: 35px;
 }
 
