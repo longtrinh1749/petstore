@@ -234,7 +234,7 @@
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
-            datas += '&id=' + serviceorder.id + '&service=' +serviceorder.service;
+            datas += '&id=' + serviceorder.id + '&service=' +serviceorder.service + '&name=' +serviceorder.name + '&phoneno=' +serviceorder.phoneno + '&email=' +serviceorder.email;
             ajaxRequest.send(datas);
         }
     }
@@ -295,6 +295,9 @@
         var serviceorder = {};
         serviceorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
         serviceorder.service = document.getElementById(id).getElementsByClassName("ta")[1].value;
+        serviceorder.name = document.getElementById(id).getElementsByClassName("ta")[2].value;
+        serviceorder.email = document.getElementById(id).getElementsByClassName("ta")[3].value;
+        serviceorder.phoneno = document.getElementById(id).getElementsByClassName("ta")[4].value;
         purchaseServiceorder(serviceorder);
     }
 

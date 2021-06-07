@@ -42,7 +42,8 @@ create table customer (
     name varchar(50),
     phoneno varchar(12), 
     email varchar(100),
-    address varchar(200)
+    address varchar(200),
+    totalPurchase double(10,2) default 0
 );
 
 create table petorder (
@@ -160,112 +161,112 @@ insert into admin(`id`, `pw`, `role`, `online`) values ('employee1', '1', 'EMPLO
 insert into admin(`id`, `pw`, `role`, `online`) values ('employee2', '1', 'EMPLOYEE', false);
 insert into admin(`id`, `pw`, `role`, `online`) values ('employee3', '1', 'EMPLOYEE', false);
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P1', 'Brady', 'Golden Retriever', 17000000, 0, 'origin-origin-origin', 5, 10, 'Description1', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P1', 'Brady', 'Golden Retriever', 1700, 0, 'origin-origin-origin', 5, 10, 'Description1', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P2', 'Teddy', 'Beagle', 
-9500000, 0, 'origin-origin-origin', 5, 10, 'Description2', '../../db/images/pet/husky.jpg');
+950, 0, 'origin-origin-origin', 5, 10, 'Description2', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P3', 'Frankie', 'Golden 
-Retriever', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description3', '../../db/images/pet/husky.jpg');
+Retriever', 850, 0, 'origin-origin-origin', 5, 10, 'Description3', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P4', 'Benji', 'Beagle', 
-18000000, 0, 'origin-origin-origin', 5, 10, 'Description4', '../../db/images/pet/husky.jpg');
+1800, 0, 'origin-origin-origin', 5, 10, 'Description4', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P5', 'Bandit', 'Poodle', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description5', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P5', 'Bandit', 'Poodle', 2500, 0, 'origin-origin-origin', 5, 10, 'Description5', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P6', 'Walter', 'Husky Siberian', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description6', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P6', 'Walter', 'Husky Siberian', 850, 0, 'origin-origin-origin', 5, 10, 'Description6', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P7', 'Milo', 'Golden Retriever', 9000000, 0, 'origin-origin-origin', 5, 10, 'Description7', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P7', 'Milo', 'Golden Retriever', 900, 0, 'origin-origin-origin', 5, 10, 'Description7', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P8', 'Toby', 'Pomeranian', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description8', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P8', 'Toby', 'Pomeranian', 950, 0, 'origin-origin-origin', 5, 10, 'Description8', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P9', 'Scout', 'Samoyed', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description9', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P9', 'Scout', 'Samoyed', 2500, 0, 'origin-origin-origin', 5, 10, 'Description9', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P10', 'Rocco', 'Samoyed', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description10', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P10', 'Rocco', 'Samoyed', 1800, 0, 'origin-origin-origin', 5, 10, 'Description10', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P11', 'Frankie', 'Samoyed', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description11', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P11', 'Frankie', 'Samoyed', 1600, 0, 'origin-origin-origin', 5, 10, 'Description11', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P12', 'Ollie', 'Corgi', 
-10000000, 0, 'origin-origin-origin', 5, 10, 'Description12', '../../db/images/pet/husky.jpg');
+1000, 0, 'origin-origin-origin', 5, 10, 'Description12', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P13', 'Brody', 'Samoyed', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description13', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P13', 'Brody', 'Samoyed', 950, 0, 'origin-origin-origin', 5, 10, 'Description13', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P14', 'Scout', 'Beagle', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description14', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P14', 'Scout', 'Beagle', 850, 0, 'origin-origin-origin', 5, 10, 'Description14', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P15', 'Loki', 'Golden Retriever', 17000000, 0, 'origin-origin-origin', 5, 10, 'Description15', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P15', 'Loki', 'Golden Retriever', 1700, 0, 'origin-origin-origin', 5, 10, 'Description15', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P16', 'Shadow', 'Corgi', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description16', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P16', 'Shadow', 'Corgi', 2000, 0, 'origin-origin-origin', 5, 10, 'Description16', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P17', 'Joey', 'Golden Retriever', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description17', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P17', 'Joey', 'Golden Retriever', 1200, 0, 'origin-origin-origin', 5, 10, 'Description17', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P18', 'Rufus', 'Golden Retriever', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description18', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P18', 'Rufus', 'Golden Retriever', 1800, 0, 'origin-origin-origin', 5, 10, 'Description18', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P19', 'Rudy', 'Alaska Malamute', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description19', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P19', 'Rudy', 'Alaska Malamute', 1000, 0, 'origin-origin-origin', 5, 10, 'Description19', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P20', 'Champ', 'Poodle', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description20', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P20', 'Champ', 'Poodle', 1800, 0, 'origin-origin-origin', 5, 10, 'Description20', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P21', 'Teddy', 'Husky Siberian', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description21', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P21', 'Teddy', 'Husky Siberian', 1000, 0, 'origin-origin-origin', 5, 10, 'Description21', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P22', 'Coco', 'Poodle', 
-12000000, 0, 'origin-origin-origin', 5, 10, 'Description22', '../../db/images/pet/husky.jpg');
+1200, 0, 'origin-origin-origin', 5, 10, 'Description22', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P23', 'Luke', 'Alaska Malamute', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description23', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P23', 'Luke', 'Alaska Malamute', 1800, 0, 'origin-origin-origin', 5, 10, 'Description23', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P24', 'Buster', 'Golden 
-Retriever', 15000000, 0, 'origin-origin-origin', 5, 10, 'Description24', '../../db/images/pet/husky.jpg');
+Retriever', 1500, 0, 'origin-origin-origin', 5, 10, 'Description24', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P25', 'Gus', 'Beagle', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description25', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P25', 'Gus', 'Beagle', 1200, 0, 'origin-origin-origin', 5, 10, 'Description25', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P26', 'Coco', 'Corgi', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description26', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P26', 'Coco', 'Corgi', 2500, 0, 'origin-origin-origin', 5, 10, 'Description26', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P27', 'Max', 'Golden Retriever', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description27', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P27', 'Max', 'Golden Retriever', 1800, 0, 'origin-origin-origin', 5, 10, 'Description27', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P28', 'Boomer', 'Pomeranian', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description28', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P28', 'Boomer', 'Pomeranian', 1200, 0, 'origin-origin-origin', 5, 10, 'Description28', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P29', 'Bailey', 'Alaska 
-Malamute', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description29', '../../db/images/pet/husky.jpg');
+Malamute', 1600, 0, 'origin-origin-origin', 5, 10, 'Description29', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P30', 'Frankie', 'Golden Retriever', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description30', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P30', 'Frankie', 'Golden Retriever', 1200, 0, 'origin-origin-origin', 5, 10, 'Description30', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P31', 'Bo', 'Poodle', 11000000, 0, 'origin-origin-origin', 5, 10, 'Description31', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P31', 'Bo', 'Poodle', 1100, 0, 'origin-origin-origin', 5, 10, 'Description31', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P32', 'Archie', 'Pomeranian', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description32', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P32', 'Archie', 'Pomeranian', 1800, 0, 'origin-origin-origin', 5, 10, 'Description32', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P33', 'Bailey', 'Corgi', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description33', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P33', 'Bailey', 'Corgi', 850, 0, 'origin-origin-origin', 5, 10, 'Description33', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P34', 'Zeus', 'Golden Retriever', 25000000, 0, 'origin-origin-origin', 5, 10, 'Description34', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P34', 'Zeus', 'Golden Retriever', 2500, 0, 'origin-origin-origin', 5, 10, 'Description34', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P35', 'Blue', 'Golden Retriever', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description35', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P35', 'Blue', 'Golden Retriever', 850, 0, 'origin-origin-origin', 5, 10, 'Description35', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P36', 'Hank', 'Beagle', 
-9500000, 0, 'origin-origin-origin', 5, 10, 'Description36', '../../db/images/pet/husky.jpg');
+950, 0, 'origin-origin-origin', 5, 10, 'Description36', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P37', 'Hank', 'Alaska Malamute', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description37', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P37', 'Hank', 'Alaska Malamute', 2000, 0, 'origin-origin-origin', 5, 10, 'Description37', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P38', 'Finn', 'Golden Retriever', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description38', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P38', 'Finn', 'Golden Retriever', 1600, 0, 'origin-origin-origin', 5, 10, 'Description38', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P39', 'Lucky', 'Alaska Malamute', 14000000, 0, 'origin-origin-origin', 5, 10, 'Description39', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P39', 'Lucky', 'Alaska Malamute', 1400, 0, 'origin-origin-origin', 5, 10, 'Description39', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P40', 'Mac', 'Poodle', 12000000, 0, 'origin-origin-origin', 5, 10, 'Description40', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P40', 'Mac', 'Poodle', 1200, 0, 'origin-origin-origin', 5, 10, 'Description40', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P41', 'Winston', 'Husky 
-Siberian', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description41', '../../db/images/pet/husky.jpg');
+Siberian', 2000, 0, 'origin-origin-origin', 5, 10, 'Description41', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P42', 'Oscar', 'Alaska Malamute', 16000000, 0, 'origin-origin-origin', 5, 10, 'Description42', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P42', 'Oscar', 'Alaska Malamute', 1600, 0, 'origin-origin-origin', 5, 10, 'Description42', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P43', 'Benny', 'Pomeranian', 9500000, 0, 'origin-origin-origin', 5, 10, 'Description43', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P43', 'Benny', 'Pomeranian', 950, 0, 'origin-origin-origin', 5, 10, 'Description43', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P44', 'Benji', 'Husky Siberian', 18000000, 0, 'origin-origin-origin', 5, 10, 'Description44', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P44', 'Benji', 'Husky Siberian', 1800, 0, 'origin-origin-origin', 5, 10, 'Description44', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P45', 'Lucky', 'Pomeranian', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description45', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P45', 'Lucky', 'Pomeranian', 850, 0, 'origin-origin-origin', 5, 10, 'Description45', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P46', 'Duke', 'Pomeranian', 10000000, 0, 'origin-origin-origin', 5, 10, 'Description46', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P46', 'Duke', 'Pomeranian', 1000, 0, 'origin-origin-origin', 5, 10, 'Description46', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P47', 'Jax', 'Pomeranian', 19000000, 0, 'origin-origin-origin', 5, 10, 'Description47', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P47', 'Jax', 'Pomeranian', 1900, 0, 'origin-origin-origin', 5, 10, 'Description47', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P48', 'Frankie', 'Beagle', 20000000, 0, 'origin-origin-origin', 5, 10, 'Description48', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P48', 'Frankie', 'Beagle', 2000, 0, 'origin-origin-origin', 5, 10, 'Description48', '../../db/images/pet/husky.jpg');
 
-insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P49', 'Roscoe', 'Corgi', 8500000, 0, 'origin-origin-origin', 5, 10, 'Description49', '../../db/images/pet/husky.jpg');
+insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P49', 'Roscoe', 'Corgi', 850, 0, 'origin-origin-origin', 5, 10, 'Description49', '../../db/images/pet/husky.jpg');
 
 update pet set imageurl = './ImgSource/pet/samoyed.jpg' where breed like '%samoyed%';
 update pet set imageurl = './ImgSource/pet/poodle.jpg' where breed like '%poodle%';
@@ -277,9 +278,9 @@ update pet set imageurl = './ImgSource/pet/beagle.jpg' where breed like '%beagle
 update pet set imageurl = './ImgSource/pet/alaska.jpg' where breed like '%alaska%';
 
 update pet set origin = 'Japan';
-update pet set origin = 'Viet Nam' where price > 20000000;
-update pet set origin = 'Germany' where price > 10000000 and price < 20000000;
-update pet set origin = 'Thailand' where price < 10000000;
+update pet set origin = 'Viet Nam' where price > 2000;
+update pet set origin = 'Germany' where price > 1000 and price < 2000;
+update pet set origin = 'Thailand' where price < 1000;
 
 
 

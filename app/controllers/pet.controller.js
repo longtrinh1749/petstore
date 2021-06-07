@@ -11,7 +11,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.findByDescription = (req, res) => {
-    Pet.getFromDescription(req.params.petDescription, (err, data) => {
+    Pet.getFromKeyword(req.params.petDescription, (err, data) => {
         if(err) {
             if (err.kind === "not_found") {
                 // res.status(404).send({
@@ -30,7 +30,7 @@ exports.findByDescription = (req, res) => {
 };
 
 exports.getByDescription = (req, res) => {
-    Pet.getFromDescription(req.query.petDescription, (err, data) => {
+    Pet.getFromKeyword(req.query.petDescription, (err, data) => {
         if(err) {
             if (err.kind === "not_found") {
                 // res.status(404).send({

@@ -51,7 +51,7 @@ routes.post("/create", (req, res) => {
                 }
             } else {
                 res.send();
-                console.log("Update success");
+                console.log("Create success");
             }
         })
     }

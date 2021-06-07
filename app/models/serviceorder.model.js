@@ -210,8 +210,9 @@ Serviceorder.getFromKeyword = (keyword, result) => {
 
 Serviceorder.purchase = (serviceorder, result) => {
     purchaseTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    sql.query("update serviceorder set purchase = 100000, purchaseTimestamp = ? " +
-        "where id = ? and serviceorder.timestamp is not null and serviceorder.purchaseTimestamp is null and serviceorder.purchase is null;", [purchaseTimestamp, serviceorder.id], (err, res) => {
+    sql.query("update serviceorder set purchase = 25, purchaseTimestamp = ?" +
+        "where id = ? and serviceorder.timestamp is not null and serviceorder.purchaseTimestamp is null and serviceorder.purchase is null;",
+        [purchaseTimestamp, serviceorder.id], (err, res) => {
         if (err) {
             console.log("Err updating serviceorder: ", err);
             result(err, null);
@@ -222,6 +223,12 @@ Serviceorder.purchase = (serviceorder, result) => {
             return;
         } else if (res.affectedRows) {
             console.log("Updated table serviceorder");
+            console.log("Service Order: " + JSON.stringify(serviceorder));
+            serviceorder.purchase = 25;
+            sql.query("insert into customer (`name`, `phoneno`, `email`) select * from (select ?, ?, ?) as tmp where not exists (select `phoneno` from customer where phoneno = ? ) limit 1;",
+            [serviceorder.name, serviceorder.phoneno, serviceorder.email, serviceorder.phoneno]);
+            sql.query("update customer c set c.name = ?, c.email = ?, c.totalPurchase = c.totalPurchase + ? where c.phoneno = ?",
+            [serviceorder.name, serviceorder.email, serviceorder.purchase, serviceorder.phoneno]);
             result(null, res);
             return;
         }

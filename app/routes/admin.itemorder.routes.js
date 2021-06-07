@@ -62,6 +62,7 @@ routes.get("/allwithlist", (req, res) => {
 
 routes.post("/create", (req, res) => {
     console.log("Creating");
+    console.log(JSON.stringify(req.body));
     if(req.session.admin) {
         itemorder = req.body;
         Itemorder.create(itemorder, (err, data) => {

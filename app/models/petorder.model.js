@@ -83,7 +83,8 @@ Petorder.create = (petorder, result) => {
     if(!petorder.phoneno) petorder.phoneno = "";
     if(!petorder.email) petorder.email = 0;
     // if(!petorder.timestamp) petorder.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    sql.query("insert into petorder set ?;", petorder,
+    sql.query("insert into petorder (`petid`, `name`, `email`, `phoneno`) values (?, ?, ?, ?);", 
+        [petorder.petid, petorder.name, petorder.email, petorder.phoneno],
         (err, res) => {
             if (err) {
                 console.log("Err creating petorder: ", err);
@@ -104,7 +105,8 @@ Petorder.create = (petorder, result) => {
 Petorder.purchase = (petorder, result) => {
     purchaseTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     sql.query("update petorder set purchase = (select (price) from pet where id like ?), purchaseTimestamp = ? " +
-        "where id = ? and petorder.timestamp is not null and petorder.purchaseTimestamp is null and petorder.purchase is null", [petorder.petid, purchaseTimestamp, petorder.id], (err, res) => {
+        "where id = ? and petorder.timestamp is not null and petorder.purchaseTimestamp is null and petorder.purchase is null", 
+        [petorder.petid, purchaseTimestamp, petorder.id], (err, res) => {
         if (err) {
             console.log("Err updating petorder: ", err);
             result(err, null);
@@ -115,6 +117,10 @@ Petorder.purchase = (petorder, result) => {
             return;
         } else if (res.affectedRows) {
             console.log("Updated table petorder");
+            sql.query("insert into customer (`name`, `phoneno`, `email`) select * from (select ?, ?, ?) as tmp where not exists (select `phoneno` from customer where phoneno = ? ) limit 1;",
+            [petorder.name, petorder.phoneno, petorder.email, petorder.phoneno]);
+            sql.query("update customer c set c.name = ?, c.email = ?, c.totalPurchase = c.totalPurchase + (select (price) from pet where id like ?) where c.phoneno = ?",
+            [petorder.name, petorder.email, petorder.petid, petorder.phoneno]);
             result(null, res);
             return;
         }

@@ -14,7 +14,7 @@
         .column {
             text-align: center;
             float: left;
-            width: 200px;
+            width: 180px;
         }
 
         .desColumn {
@@ -43,7 +43,7 @@
         }
 
         .ta {
-            width: 199px;
+            width: 179px;
             height: 40px
         }
 
@@ -71,6 +71,9 @@
     <div class="column">
         Address
     </div>
+    <div class="column">
+        Total Cash Purchased
+    </div>
 </div>
 <form id="searchForm">
     <div class="row">
@@ -88,6 +91,9 @@
         </div>
         <div class="column">
             <input class="ta" type="text" id="searchAddress" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchTotalPurchase" value="">
         </div>
         <div class="actionColumn">
             <button id="searchAllButton" type="button" value="Search" onclick="getAllCustomerRequest()">Search All</button>
@@ -198,7 +204,6 @@
         // console.log("onClick: button name: ", buttonName, "||id: ", id, "||button id: ", buttonId);
         if (document.getElementById(buttonId).innerHTML === "Update") {
             document.getElementById(id).getElementsByClassName("ta")[1].removeAttribute("readonly");
-            document.getElementById(id).getElementsByClassName("ta")[2].removeAttribute("readonly");
             document.getElementById(id).getElementsByClassName("ta")[3].removeAttribute("readonly");
             document.getElementById(id).getElementsByClassName("ta")[4].removeAttribute("readonly");
             document.getElementById(buttonId).innerHTML = "Confirm";
@@ -211,7 +216,6 @@
             customer.email = document.getElementById(id).getElementsByClassName("ta")[3].value;
             customer.address = document.getElementById(id).getElementsByClassName("ta")[4].value;
             document.getElementById(id).getElementsByClassName("ta")[1].readOnly = true;
-            document.getElementById(id).getElementsByClassName("ta")[2].readOnly = true;
             document.getElementById(id).getElementsByClassName("ta")[3].readOnly = true;
             document.getElementById(id).getElementsByClassName("ta")[4].readOnly = true;
             document.getElementById(buttonId).innerHTML = "Update";
@@ -242,6 +246,7 @@
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].phoneno + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexEmail' + i + '" readonly="readonly">' + jsonRes[i].email + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexAddress' + i + '" readonly="readonly">' + jsonRes[i].address + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexTotalPurchase' + i + '" readonly="readonly">' + jsonRes[i].totalPurchase + '</textarea></div>';
                     tmpHtml += '<div class="actionColumn" >\n' +
                         '        <button type="button" class="updateButton" id="updateButton' + i + '" value="Update" onclick="updateButtonPress(this)">Update</button>' +
                         '        <button type="button" class="deleteButton" id="deleteButton' + i + '" value="Delete" onclick="deleteButtonPress(this)">Delete</button>' +

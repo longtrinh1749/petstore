@@ -3,6 +3,9 @@ const sql = require('./db');
 const Itemorder = function (itemorder) {
     this.id = itemorder.id;
     this.itemIdList = itemorder.itemIdList; // include array of object {itemid, size, quantity}
+    this.itemid = itemorder.itemid;
+    this.size = itemorder.size;
+    this.quantity = itemorder.quantity;
     this.name = itemorder.name;
     this.email = itemorder.email;
     this.phoneno = itemorder.phoneno;
@@ -99,13 +102,19 @@ Itemorder.getFromKeyword = (keyword, result) => {
 Itemorder.create = (itemorder, result) => {
     if(!itemorder.itemIdList) itemorder.itemIdList = [];
     if(!itemorder.name) itemorder.name = "";
+    if(!itemorder.itemid) itemorder.itemid = "";
     if(!itemorder.phoneno) itemorder.phoneno = "";
     if(!itemorder.note) itemorder.note = "";
     if(!itemorder.email) itemorder.email = "";
-    if(!itemorder.timestamp) itemorder.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    if(!itemorder.size) itemorder.size = "";
+    if(!itemorder.quantity) itemorder.quantity = 0;
+    // if(!itemorder.timestamp) itemorder.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     console.log("ItemIdList: " + itemorder.itemIdList + "\nName: " + itemorder.name + "\nPhoneno: " + itemorder.phoneno + "\nEmail: " + itemorder.email);
-    sql.query("insert into itemorder (`name`, `email`, `phoneno`, `note`, `timestamp`) values (?, ?, ?, ?, ?);",
-        [itemorder.name, itemorder.email, itemorder.phoneno, itemorder.note, itemorder.timestamp] ,
+    console.log(JSON.stringify(itemorder));
+    sql.query("insert into itemorder (`id`, `name`, `phoneno`, `email`, `note`) select * from (select ?, ?, ?, ?, ?) as tmp where not exists (select `id` from itemorder where id = ?) limit 1;",
+        [itemorder.id, itemorder.name, itemorder.phoneno, itemorder.email, itemorder.note, itemorder.id]);
+    sql.query("insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values (?, ?, ?, ?);",
+        [itemorder.itemid, itemorder.size, itemorder.id, itemorder.quantity] ,
         (err, res) => {
             if (err) {
                 console.log("Err creating itemorder: ", err);
@@ -212,7 +221,8 @@ Itemorder.purchase = (itemorder, result) => {
     sql.query(" update itemorder set purchaseTimestamp = ?, purchase = (select sum(x.totalcost) from (select c.quantity*c.price as totalcost from " +
         "(select item.price, itemorderlist.quantity from item, itemorderlist where item.size = itemorderlist.size and item.id = itemorderlist.itemid " +
         "and orderid = ?) as c) as x) " +
-        "where id = ? and itemorder.timestamp is not null and itemorder.purchaseTimestamp is null and itemorder.purchase is null;", [purchaseTimestamp, itemorder.id, itemorder.id], (err, res) => {
+        "where id = ? and itemorder.timestamp is not null and itemorder.purchaseTimestamp is null and itemorder.purchase is null;",
+         [purchaseTimestamp, itemorder.id, itemorder.id], (err, res) => {
         if (err) {
             console.log("Err updating itemorder: ", err);
             result(err, null);
@@ -223,6 +233,12 @@ Itemorder.purchase = (itemorder, result) => {
             return;
         } else if (res.affectedRows) {
             console.log("Updated table itemorder");
+            sql.query("insert into customer (`name`, `phoneno`, `email`) select * from (select ?, ?, ?) as tmp where not exists (select `phoneno` from customer where phoneno = ? ) limit 1;",
+            [itemorder.name, itemorder.phoneno, itemorder.email, itemorder.phoneno]);
+            sql.query("update customer c set c.name = ?, c.email = ?, c.totalPurchase = c.totalPurchase + (select sum(x.totalcost) from (select c.quantity*c.price as totalcost from " +
+            "(select item.price, itemorderlist.quantity from item, itemorderlist where item.size = itemorderlist.size and item.id = itemorderlist.itemid " +
+            "and orderid = ?) as c) as x) where c.phoneno = ?",
+            [itemorder.name, itemorder.email, itemorder.id, itemorder.phoneno]);
             result(null, res);
             return;
         }

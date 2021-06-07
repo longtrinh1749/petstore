@@ -6,6 +6,7 @@ const Customer = function (customer) {
     this.phoneno = customer.phoneno;
     this.email = customer.email;
     this.address = customer.address;
+    this.totalPurchase = customer.totalPurchase;
 };
 
 Customer.getAll = result => {
@@ -53,7 +54,9 @@ Customer.create = (customer, result) => {
     if(!customer.phoneno) customer.phoneno = "";
     if(!customer.email) customer.email = 0;
     if(!customer.address) customer.address = "";
-    sql.query("insert into customer set ?;", customer,
+    customer.totalPurchase = 0;
+    sql.query("insert into customer (`name`, `phoneno`, `email`, `address`, `totalPurchase`) values (?, ?, ?, ?, ?) ;", 
+        [customer.name, customer.phoneno, customer.email, customer.address, customer.totalPurchase],
         (err, res) => {
             if (err) {
                 console.log("Err creating customer: ", err);

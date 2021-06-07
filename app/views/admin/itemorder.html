@@ -201,6 +201,8 @@
             let datas = "";
             let id = document.getElementById("searchId").value;
             let itemid = document.getElementById("searchItemId").value;
+            let size = document.getElementById("searchSize").value;
+            let quantity = document.getElementById("searchQuantity").value;
             let name = document.getElementById("searchName").value;
             let email = document.getElementById("searchEmail").value;
             let phoneno = document.getElementById("searchPhoneno").value;
@@ -208,8 +210,8 @@
             let timestamp = document.getElementById("searchTimestamp").value;
             let purchaseTimestamp = document.getElementById("searchPurchaseTimestamp").value;
             let purchase = document.getElementById("searchPurchase").value;
-            datas += 'id=' + id + '&itemid=' + itemid + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno
-                + '&note=' + note + + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
+            datas += 'id=' + id + '&itemid=' + itemid + '&size=' + size + '&quantity=' + quantity + '&name=' + name + '&email=' + email + '&phoneno=' + phoneno
+                + '&note=' + note + '&timestamp=' + timestamp + '&purchaseTimestamp=' + purchaseTimestamp + '&purchase=' + purchase;
             ajaxRequest.send(datas);
             // ajaxRequest.send('&id=' + id);
         }
@@ -246,7 +248,7 @@
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
-            datas += '&id=' + itemorder.id + '&itemid=' +itemorder.itemid;
+            datas += '&id=' + itemorder.id + '&itemid=' +itemorder.itemid + '&name=' +itemorder.name + '&phoneno=' +itemorder.phoneno + '&email=' +itemorder.email;
             ajaxRequest.send(datas);
         }
     }
@@ -306,6 +308,9 @@
         var itemorder = {};
         itemorder.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
         itemorder.itemid = document.getElementById(id).getElementsByClassName("ta")[1].value;
+        itemorder.name = document.getElementById(id).getElementsByClassName("ta")[4].value;
+        itemorder.email = document.getElementById(id).getElementsByClassName("ta")[5].value;
+        itemorder.phoneno = document.getElementById(id).getElementsByClassName("ta")[6].value;
         purchaseItemorder(itemorder);
     }
 

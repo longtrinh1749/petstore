@@ -41,7 +41,7 @@ Admin.logout = (username) => {
 }
 
 Admin.getAll = result => {
-    sql.query("select * from admin", (err, res) => {
+    sql.query("select * from admin where role != 'ADMIN'", (err, res) => {
         if (err) {
             console.log('Error: ', err);
             result(err, null);
@@ -55,10 +55,10 @@ Admin.getAll = result => {
 Admin.get = (admin, result) => {
     admin.username = '%' + admin.username + '%';
     admin.password = '%' + admin.password + '%';
-    if(admin.role !== "ADMIN" && admin.role !== "EMPLOYEE") admin.role = "";
+    if(admin.role !== "EMPLOYEE") admin.role = "";
     admin.role = '%' + admin.role + '%';
     admin.online = '%' + admin.online + '%';
-    sql.query("select * from admin where id like N? and pw like N? and role like N? and online like N?;",
+    sql.query("select * from admin where id like N? and pw like N? and role like N? and online like N? and role != 'ADMIN';",
         [admin.username, admin.password, admin.role, admin.online],
         (err, res) => {
             if (err) {
@@ -78,7 +78,7 @@ Admin.get = (admin, result) => {
 }
 
 Admin.create = (admin, result) => {
-    if(admin.role !== "ADMIN" && admin.role !== "EMPLOYEE") admin.role = "";
+    if(admin.role !== "EMPLOYEE") admin.role = "EMPLOYEE";
     if(!admin.password) admin.password = "";
     if(!admin.role) admin.role = "";
     admin.online = false;
@@ -102,6 +102,7 @@ Admin.create = (admin, result) => {
 }
 
 Admin.update = (admin, result) => {
+    if(admin.role !== "EMPLOYEE") admin.role = "";
     sql.query("update admin set pw = ?, role = ?, online = ?" +
         "where id = ?", [admin.password, admin.role,
         admin.online, admin.username], (err, res) => {

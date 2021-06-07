@@ -190,8 +190,6 @@
         // console.log("onClick: button password: ", buttonPassword, "||id: ", id, "||button id: ", buttonId);
         if (document.getElementById(buttonId).innerHTML === "Update") {
             document.getElementById(id).getElementsByClassName("ta")[1].removeAttribute("readonly");
-            document.getElementById(id).getElementsByClassName("ta")[2].removeAttribute("readonly");
-            document.getElementById(id).getElementsByClassName("ta")[3].removeAttribute("readonly");
             document.getElementById(buttonId).innerHTML = "Confirm";
         } else {
             var customer = {};
@@ -201,8 +199,6 @@
             customer.role = document.getElementById(id).getElementsByClassName("ta")[2].value;
             customer.online = document.getElementById(id).getElementsByClassName("ta")[3].value;
             document.getElementById(id).getElementsByClassName("ta")[1].readOnly = true;
-            document.getElementById(id).getElementsByClassName("ta")[2].readOnly = true;
-            document.getElementById(id).getElementsByClassName("ta")[3].readOnly = true;
             document.getElementById(buttonId).innerHTML = "Update";
             updateCustomer(customer);
         }
