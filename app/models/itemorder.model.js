@@ -212,7 +212,7 @@ Itemorder.purchase = (itemorder, result) => {
     sql.query(" update itemorder set purchaseTimestamp = ?, purchase = (select sum(x.totalcost) from (select c.quantity*c.price as totalcost from " +
         "(select item.price, itemorderlist.quantity from item, itemorderlist where item.size = itemorderlist.size and item.id = itemorderlist.itemid " +
         "and orderid = ?) as c) as x) " +
-        "where id = ?", [purchaseTimestamp, itemorder.id, itemorder.id], (err, res) => {
+        "where id = ? and itemorder.timestamp is not null and itemorder.purchaseTimestamp is null and itemorder.purchase is null;", [purchaseTimestamp, itemorder.id, itemorder.id], (err, res) => {
         if (err) {
             console.log("Err updating itemorder: ", err);
             result(err, null);
@@ -252,7 +252,7 @@ Itemorder.confirmOrder = (itemorder, result) => {
     timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     // sql.query("update item, itemorder set pet.sold = true, itemorder.timestamp = ? where item.id like N? and itemorder.id like N?", [timestamp, itemorder.petid, itemorder.id], (err, res) => {
     sql.query("update item as i inner join itemorder as io inner join itemorderlist as iol on i.id = iol.itemid and i.size = iol.size and io.id = iol.orderid set i.quantity =\n" +
-        "i.quantity - iol.quantity, io.timestamp = ? where io.id = ?;",
+        "i.quantity - iol.quantity, io.timestamp = ? where io.id = ? and io.timestamp is null;",
         [timestamp, itemorder.id], (err, res) => {
         console.log("Petid attempting to delete"+itemorder.petid);
         if (err) {

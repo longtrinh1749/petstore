@@ -6,6 +6,26 @@
 </head>
 <body>
 <a href="/admin/logout"><h2>Logout</h2></a><br><br>
+<div id="accountDiv"></div>
+<script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return null;
+    }
+    if(getCookie('role') === 'ADMIN') document.getElementById("accountDiv").innerHTML = '<a href="/admin/accounts">Acceses account database</a><br><br>';
+    // document.getElementById("accountDiv").innerHTML = document.cookie;
+</script>
 <a href="/admin/pets">Access pet database</a><br><br>
 <a href="/admin/items">Access item database</a><br><br>
 <a href="/admin/customers">Access customer database</a><br><br>

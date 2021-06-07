@@ -104,7 +104,7 @@ Petorder.create = (petorder, result) => {
 Petorder.purchase = (petorder, result) => {
     purchaseTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     sql.query("update petorder set purchase = (select (price) from pet where id like ?), purchaseTimestamp = ? " +
-        "where id = ?", [petorder.petid, purchaseTimestamp, petorder.id], (err, res) => {
+        "where id = ? and petorder.timestamp is not null and petorder.purchaseTimestamp is null and petorder.purchase is null", [petorder.petid, purchaseTimestamp, petorder.id], (err, res) => {
         if (err) {
             console.log("Err updating petorder: ", err);
             result(err, null);
@@ -142,7 +142,7 @@ Petorder.delete = (petorder, result) => {
 
 Petorder.confirmOrder = (petorder, result) => {
     timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    sql.query("update pet, petorder set pet.sold = true, petorder.timestamp = ? where pet.id like N? and petorder.id like N?", [timestamp, petorder.petid, petorder.id], (err, res) => {
+    sql.query("update pet, petorder set pet.sold = true, petorder.timestamp = ? where pet.id like N? and petorder.id like N? and petorder.timestamp is null;", [timestamp, petorder.petid, petorder.id], (err, res) => {
         console.log("Petid attempting to delete"+petorder.petid);
         if (err) {
             console.log("Err deleting petorder: ", err);

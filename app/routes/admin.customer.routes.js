@@ -57,8 +57,7 @@ routes.post("/create", (req, res) => {
         })
     }
     else {
-        res.redirect("/admin")
-        console.log("Lay file customer bang cach d nao co ?? :D ??");
+        res.redirect("/admin");
     }
 });
 

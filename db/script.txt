@@ -144,14 +144,22 @@ create table blogimages(
 ); */
 
 create table admin (
-    id varchar(100) PRIMARY KEY,
-    pw varchar(100)
+    id varchar(100) not null PRIMARY KEY,
+    pw varchar(100) not null,
+    role varchar(10) not null,
+    online boolean not null
 );	
 
 
 # INSERT QUERY
 
-insert into admin(`id`, `pw`) values ('root', 'root');
+insert into admin(`id`, `pw`, `role`, `online`) values ('root', 'root', 'ADMIN', false);
+insert into admin(`id`, `pw`, `role`, `online`) values ('root1', 'root', 'ADMIN', false);
+insert into admin(`id`, `pw`, `role`, `online`) values ('employee', '1', 'EMPLOYEE', false);
+insert into admin(`id`, `pw`, `role`, `online`) values ('employee1', '1', 'EMPLOYEE', false);
+insert into admin(`id`, `pw`, `role`, `online`) values ('employee2', '1', 'EMPLOYEE', false);
+insert into admin(`id`, `pw`, `role`, `online`) values ('employee3', '1', 'EMPLOYEE', false);
+
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P1', 'Brady', 'Golden Retriever', 17000000, 0, 'origin-origin-origin', 5, 10, 'Description1', '../../db/images/pet/husky.jpg');
 
 insert into pet (`id`, `name`, `breed`,`price`, `female`, `origin`, `age`, `weight`, `description`, `imageurl`) values ('P2', 'Teddy', 'Beagle', 

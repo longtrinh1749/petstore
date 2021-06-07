@@ -11,6 +11,7 @@ const adminItemRoutes = require('./admin.item.routes')
 const adminPetOrderRoutes = require('./admin.petorder.routes');
 const adminServiceOrderRoutes = require('./admin.serviceorder.routes');
 const adminItemOrderRoutes = require('./admin.itemorder.routes');
+const adminAccountsRoutes = require('./admin.account.routes');
 
 module.exports = routes;
 
@@ -34,7 +35,7 @@ routes.get('/login',(req,res) => {
 });
 
 routes.post('/login', (req, res) => {
-    Admin.getUser(req.body.username, req.body.password, (err, data) => {
+    Admin.login(req.body.username, req.body.password, (err, data) => {
         if(req.session.admin) {
             console.log("Co session ma");
             res.redirect("/admin")
@@ -45,13 +46,18 @@ routes.post('/login', (req, res) => {
             } else {
                 console.log("Success");
                 req.session.admin = req.body.username;
-                res.redirect(req.baseUrl)
+                req.session.role = data[0].role;
+                // console.log('Role' + req.session.role);
+                // console.log(data[0].role);
+                res.cookie('role', data[0].role, { maxAge: 3600000})
+                res.redirect(req.baseUrl);
             }
         }
     });
 });
 
 routes.get('/logout',(req,res) => {
+    Admin.logout(req.session.admin);
     req.session.destroy((err) => {
         if(err) {
             res.redirect(req.baseUrl)
@@ -67,5 +73,6 @@ routes.use("/items", adminItemRoutes);
 routes.use("/petorders", adminPetOrderRoutes);
 routes.use("/serviceorders", adminServiceOrderRoutes);
 routes.use("/itemorders", adminItemOrderRoutes);
+routes.use("/accounts", adminAccountsRoutes);
 // routes.use
 

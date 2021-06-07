@@ -211,7 +211,7 @@ Serviceorder.getFromKeyword = (keyword, result) => {
 Serviceorder.purchase = (serviceorder, result) => {
     purchaseTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     sql.query("update serviceorder set purchase = 100000, purchaseTimestamp = ? " +
-        "where id = ?", [purchaseTimestamp, serviceorder.id], (err, res) => {
+        "where id = ? and serviceorder.timestamp is not null and serviceorder.purchaseTimestamp is null and serviceorder.purchase is null;", [purchaseTimestamp, serviceorder.id], (err, res) => {
         if (err) {
             console.log("Err updating serviceorder: ", err);
             result(err, null);
@@ -249,7 +249,7 @@ Serviceorder.delete = (serviceorder, result) => {
 
 Serviceorder.confirmOrder = (serviceorder, result) => {
     timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    sql.query("update serviceorder set serviceorder.timestamp = ? where serviceorder.id like N?", [timestamp, serviceorder.id], (err, res) => {
+    sql.query("update serviceorder set serviceorder.timestamp = ? where serviceorder.id like N? and serviceorder.timestamp is null;", [timestamp, serviceorder.id], (err, res) => {
         if (err) {
             console.log("Err deleting serviceorder: ", err);
             result(err, null);
