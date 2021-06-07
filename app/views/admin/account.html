@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Create two equal columns that floats next to each other */
+        .column {
+            text-align: center;
+            float: left;
+            width: 200px;
+        }
+
+        .desColumn {
+            text-align: center;
+            float: left;
+            width: 160px;
+        }
+
+        .actionColumn {
+            text-align: center;
+            float: right;
+            width: 12%;
+        }
+
+        .row {
+            /*border-style: solid;*/
+            /*border-width: thin;*/
+            /*border-color: black;*/
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .ta {
+            width: 199px;
+            height: 40px
+        }
+
+        .taDes {
+            width: 159px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+<a href="/admin">Return to Home</a>
+<div class="row">
+    <div class="column">
+        ID
+    </div>
+    <div class="column">
+        Password
+    </div>
+    <div class="column">
+        Role
+    </div>
+    <div class="column">
+        Online
+    </div>
+</div>
+<form id="searchForm">
+    <div class="row">
+        <div class="column">
+            <input class="ta" type="text" id="searchUsername" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchPassword" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchRole" value="">
+        </div>
+        <div class="column">
+            <input class="ta" type="text" id="searchOnline" value="">
+        </div>
+        <div class="actionColumn">
+            <button id="searchAllButton" type="button" value="Search" onclick="getAllCustomerRequest()">Search All</button>
+            <button id="searchButton" type="button" value="Search" onclick="searchCustomer()">Search</button>
+            <button class="createButton" id="createButton" type="button" value="Create" onclick="createCustomer()">Create</button>
+            <input type="reset">
+        </div>
+    </div>
+</form>
+<div>Your accounts:</div>
+<!--dung jquery ajax how to submit form without redirect-->
+<!--https://stackoverflow.com/questions/25983603/how-to-submit-an-html-form-without-redirection-->
+<div class="row" id="accounts">
+
+</div>
+<script>
+
+    function getXMLHttpRequest() {
+        var req, err;
+        try {
+            req = new XMLHttpRequest();
+        } catch (err) {
+            try {
+                req = new ActiveXObject("MSXML2.XMLHttp.6.0");
+            } catch (err) {
+                try {
+                    req = new ActiveXObject("MSXML2.XMLHttp.3.0");
+                } catch (err) {
+                    req = false;
+                }
+            }
+        }
+        return req;
+    }
+
+    var ajaxRequest = getXMLHttpRequest();
+
+    function getAllCustomerRequest() {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getCustomerResponse;
+            ajaxRequest.open("GET", "http://localhost:3000/admin/accounts/all");
+            ajaxRequest.send(null);
+        }
+    }
+
+    function searchCustomer() {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getCustomerResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/accounts/get", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            let username = document.getElementById("searchUsername").value;
+            let password = document.getElementById("searchPassword").value;
+            let role = document.getElementById("searchRole").value;
+            let online = document.getElementById("searchOnline").value;
+            datas += '&username=' + username + '&password=' + password + '&role=' + role + '&online=' + online;
+            ajaxRequest.send(datas);
+        }
+    }
+
+    function createCustomer() {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getCustomerCreateResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/accounts/create", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            let datas = "";
+            let username = document.getElementById("searchUsername").value;
+            let password = document.getElementById("searchPassword").value;
+            let role = document.getElementById("searchRole").value;
+            let online = document.getElementById("searchOnline").value;
+            datas += 'username=' + username + '&password=' + password + '&role=' + role + '&online=' + online;
+            ajaxRequest.send(datas);
+            // ajaxRequest.send('&id=' + id);
+        }
+    }
+
+    function updateCustomer(customer) {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getCustomerUpdateResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/accounts/update", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            datas += '&username=' + customer.username + '&password=' + customer.password + '&role=' + customer.role + '&online=' + customer.online;
+            ajaxRequest.send(datas);
+        }
+    }
+
+    function deleteCustomer(customer) {
+        if (ajaxRequest) {
+            ajaxRequest.onreadystatechange = getCustomerDeleteResponse;
+            ajaxRequest.open("POST", "http://localhost:3000/admin/accounts/delete", true);
+            ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            let datas = "";
+            datas += '&username=' + customer.username;
+            ajaxRequest.send(datas);
+        }
+    }
+
+    function updateButtonPress(button) {
+        var id = button.id.replace("updateButton", "");
+        var buttonPassword = button.class;
+        var buttonId = button.id;
+        // console.log("onClick: button password: ", buttonPassword, "||id: ", id, "||button id: ", buttonId);
+        if (document.getElementById(buttonId).innerHTML === "Update") {
+            document.getElementById(id).getElementsByClassName("ta")[1].removeAttribute("readonly");
+            document.getElementById(id).getElementsByClassName("ta")[2].removeAttribute("readonly");
+            document.getElementById(id).getElementsByClassName("ta")[3].removeAttribute("readonly");
+            document.getElementById(buttonId).innerHTML = "Confirm";
+        } else {
+            var customer = {};
+            // console.log(document.getElementById(id).getElementsByClassName("ta")[9].value);
+            customer.username = document.getElementById(id).getElementsByClassName("ta")[0].value;
+            customer.password = document.getElementById(id).getElementsByClassName("ta")[1].value;
+            customer.role = document.getElementById(id).getElementsByClassName("ta")[2].value;
+            customer.online = document.getElementById(id).getElementsByClassName("ta")[3].value;
+            document.getElementById(id).getElementsByClassName("ta")[1].readOnly = true;
+            document.getElementById(id).getElementsByClassName("ta")[2].readOnly = true;
+            document.getElementById(id).getElementsByClassName("ta")[3].readOnly = true;
+            document.getElementById(buttonId).innerHTML = "Update";
+            updateCustomer(customer);
+        }
+    }
+
+    function deleteButtonPress(button) {
+        var id = button.id.replace("deleteButton", "");
+        var buttonPassword = button.class;
+        var buttonId = button.id;
+        // console.log("onClick: button password: ", buttonPassword, "||id: ", id, "||button id: ", buttonId);
+        var customer = {};
+        customer.username = document.getElementById(id).getElementsByClassName("ta")[0].value;
+        deleteCustomer(customer);
+    }
+
+    function getCustomerResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                var jsonRes = JSON.parse(ajaxRequest.responseText);
+                var tmpHtml = "";
+                console.log(JSON.stringify(jsonRes[0]));
+                for (var i = 0; i < jsonRes.length; i++) {
+                    tmpHtml += '<div class="row" id="' + i + '">';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexUsername' + i + '" readonly="readonly">' + jsonRes[i].id + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPassword' + i + '" readonly="readonly">' + jsonRes[i].pw + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexRole' + i + '" readonly="readonly">' + jsonRes[i].role + '</textarea></div>';
+                    tmpHtml += '<div class="column"><textarea class="ta" id="indexOnline' + i + '" readonly="readonly">' + jsonRes[i].online + '</textarea></div>';
+                    tmpHtml += '<div class="actionColumn" >\n' +
+                        '        <button type="button" class="updateButton" id="updateButton' + i + '" value="Update" onclick="updateButtonPress(this)">Update</button>' +
+                        '        <button type="button" class="deleteButton" id="deleteButton' + i + '" value="Delete" onclick="deleteButtonPress(this)">Delete</button>' +
+                        '    </div>';
+                    tmpHtml += '</div>';
+                }
+                // console.log(tmpHtml);
+                document.getElementById("accounts").innerHTML = tmpHtml;
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+        // restartJQuery();
+    }
+
+    function getCustomerCreateResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                console.log("Create success");
+                searchCustomer();
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+        // restartJQuery();
+    }
+    function getCustomerDeleteResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                console.log("Delete success");
+                searchCustomer();
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+        // restartJQuery();
+    }
+
+    function getCustomerUpdateResponse() {
+        if (ajaxRequest.readyState != 4) return;
+        else {
+            if (ajaxRequest.status == 200) {
+                console.log("Update success");
+                searchCustomer();
+            } else {
+                alert("Request failed: ", ajaxRequest.statusText);
+            }
+        }
+    }
+
+    getAllCustomerRequest();
+</script>
+</body>
+</html>
