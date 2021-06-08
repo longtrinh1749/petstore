@@ -3,37 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-<a href="/admin/logout"><h2>Logout</h2></a><br><br>
-<div id="accountDiv"></div>
-<script>
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
+    <div class="upper-bar" id="top-nav">
+		<div class="upper-bar-left"></div>
+		<a style="padding: 0; display: flex; float: left; align-items: center;">
+			<img src="/img/logo-black.png">
+            <span>ateGlory</span>
+		</a>
+		<a class="btn" href="/admin/logout">Logout</a>
+        <a class="btn">root</a>
+        <a class="btn">Admin: </a>
+    </div>
+
+    <div id="mySidenav" class="sidenav">
+        <div id="manager" class="sidenav-element">
+            <span>
+                <h2 class="catergory" id="manager-product"></h2>
+            </span>
+            <ul id="manager-dropdown-product">
+            </ul>
+        </div>
+        <div id="manager" class="sidenav-element">
+            <span>
+                <h2 class="catergory" id="manager-order">Order</h2>
+            </span>
+            <ul id="manager-dropdown-order">
+                <li><a href="/admin/petorders" class="sub-category">Pet Order</a></li>
+                <li><a href="/admin/itemorders" class="sub-category">Item Order</a></li>
+                <li><a href="/admin/serviceorders" class="sub-category">Service Order</a></li>
+            </ul>
+        </div>
+        <div id="manager" class="sidenav-element">
+            <span>
+                <h2 class="catergory" id="manager-store">Store</h2>
+            </span>
+            <ul id="manager-dropdown-store">
+                <li><a href="/admin/customers" class="sub-category">Customer</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="dashboard">
+        <div id="new-order-info" class="info-box">
+            <header>
+                <b>Order</b>
+            </header>
+            <div class="content">
+                <div id="item-order" class="content-element">
+                    <span>New Item Orders: </span>
+                    <span id="item-order-value"></span>
+                </div>
+                <div id="pet-order">
+                    <span> New Pet Orders: </span>
+                    <span id="pet-order-value"></span>
+                </div>
+                <div id="service-order">
+                    <span> New Service Orders: </span>
+                    <span id="service-order-value"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="revenue-info" class="info-box">
+            <header>
+                <b>Revenue</b>
+            </header>
+            <div class="content">
+                <div id="total-order" class="content-element">
+                    <span>Total Orders: </span>
+                    <span id="total-order-value"></span>
+                </div>
+                <div id="total-revenue" class="content-element">
+                    <span>Total Revenue: </span>
+                    <span id="total-revenue-value"></span>
+                </div>
+                
+                <div id="total-customer" class="content-element">
+                    <span>Total Customers: </span>
+                    <span id="total-customer-value"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getXMLHttpRequest() {
+            var req, err;
+            try {
+                req = new XMLHttpRequest();
+            } catch (err) {
+                try {
+                    req = new ActiveXObject("MSXML2.XMLHttp.6.0");
+                } catch (err) {
+                    try {
+                        req = new ActiveXObject("MSXML2.XMLHttp.3.0");
+                    } catch (err) {
+                        req = false;
+                    }
+                }
             }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
+            return req;
+        }
+    
+        var ajaxRequest = getXMLHttpRequest();
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return null;
+        }
+
+        if(getCookie('role') === 'ADMIN') {
+            var tmp = "Product";
+            document.getElementById("manager-product").innerHTML = tmp;
+            var tmpProductHtml = '<li><a href="/admin/pets" class="sub-category">Pet</a></li>';
+            tmpProductHtml += '<li><a href="/admin/items" class="sub-category">Item</a></li>';
+            var tmpStoreHtml = '<li><a href="/admin/accounts" class="sub-category">Employee</a></li>';
+            tmpStoreHtml += '<li><a href="/admin/customers" class="sub-category">Customer</a></li>';
+            document.getElementById("manager-dropdown-product").innerHTML = tmpProductHtml;
+            document.getElementById("manager-dropdown-store").innerHTML = tmpStoreHtml;
+        }
+
+        function getNewItemOrder() {
+            if (ajaxRequest) {
+                ajaxRequest.onreadystatechange = getNewItemOrderResponse;
+                ajaxRequest.open("GET", "http://localhost:3000/admin/itemorders/getNewOrderNumber", true);
+                ajaxRequest.send(null);
             }
         }
-        return null;
-    }
-    if(getCookie('role') === 'ADMIN') {
-        var tmpHtml = '<a href="/admin/accounts">Acceses account database</a><br><br>';
-        // tmpHtml += '<a href="/admin/customers">Access customer database</a><br><br>';
-        tmpHtml += '<a href="/admin/pets">Access pet database</a><br><br>';
-        tmpHtml += '<a href="/admin/items">Access item database</a><br><br>';
-        document.getElementById("accountDiv").innerHTML = tmpHtml;
-    }
-</script>
-<a href="/admin/customers">Access customer database</a><br><br>
-<a href="/admin/petorders">Access pet order database</a><br><br>
-<a href="/admin/serviceorders">Access service order database</a><br><br>
-<a href="/admin/itemorders">Access item order database</a><br><br>
+
+        function getNewItemOrderResponse() {
+            if (ajaxRequest.readyState != 4) return;
+            else {
+                if (ajaxRequest.status == 200) {
+                    var jsonRes = JSON.parse(ajaxRequest.responseText);
+                    var tmpHtml = jsonRes[0].total;
+                    console.log(JSON.stringify(jsonRes[0]));
+                    document.getElementById("item-order-value").innerHTML = tmpHtml;
+                } else {
+                    alert("Request failed: ", ajaxRequest.statusText);
+                }
+            }
+        }
+
+        function getNewPetOrder() {
+            if (ajaxRequest) {
+                ajaxRequest.onreadystatechange = getNewPetOrderResponse;
+                ajaxRequest.open("GET", "http://localhost:3000/admin/petorders/getNewOrderNumber", true);
+                ajaxRequest.send(null);
+            }
+        }
+
+        function getNewPetOrderResponse() {
+            if (ajaxRequest.readyState != 4) return;
+            else {
+                if (ajaxRequest.status == 200) {
+                    var jsonRes = JSON.parse(ajaxRequest.responseText);
+                    var tmpHtml = jsonRes[0].total;
+                    document.getElementById("pet-order-value").innerHTML = tmpHtml;
+                } else {
+                    alert("Request failed: ", ajaxRequest.statusText);
+                }
+            }
+        }
+
+        function getNewServiceOrder() {
+            if (ajaxRequest) {
+                ajaxRequest.onreadystatechange = getNewServiceOrderResponse;
+                ajaxRequest.open("GET", "http://localhost:3000/admin/serviceorders/getNewOrderNumber", true);
+                ajaxRequest.send(null);
+            }
+        }
+
+        function getNewServiceOrderResponse() {
+            if (ajaxRequest.readyState != 4) return;
+            else {
+                if (ajaxRequest.status == 200) {
+                    var jsonRes = JSON.parse(ajaxRequest.responseText);
+                    var tmpHtml = jsonRes[0].total;
+                    document.getElementById("service-order-value").innerHTML = tmpHtml;
+                } else {
+                    alert("Request failed: ", ajaxRequest.statusText);
+                }
+            }
+        }
+
+        function getCustomerNumber() {
+            if (ajaxRequest) {
+                ajaxRequest.onreadystatechange = getCustomerNumberResponse;
+                ajaxRequest.open("GET", "http://localhost:3000/admin/customers/getCustomerNumber", true);
+                ajaxRequest.send(null);
+            }
+        }
+
+        function getCustomerNumberResponse() {
+            if (ajaxRequest.readyState != 4) return;
+            else {
+                if (ajaxRequest.status == 200) {
+                    var jsonRes = JSON.parse(ajaxRequest.responseText);
+                    var tmpHtml = jsonRes[0].total;
+                    document.getElementById("total-customer-value").innerHTML = tmpHtml;
+                } else {
+                    alert("Request failed: ", ajaxRequest.statusText);
+                }
+            }
+        }
+
+        function getTotalRevenue() {
+            if (ajaxRequest) {
+                ajaxRequest.onreadystatechange = getTotalRevenueResponse;
+                ajaxRequest.open("GET", "http://localhost:3000/admin/customers/getTotalPurchase", true);
+                ajaxRequest.send(null);
+            }
+        }
+
+        function getTotalRevenueResponse() {
+            if (ajaxRequest.readyState != 4) return;
+            else {
+                if (ajaxRequest.status == 200) {
+                    var jsonRes = JSON.parse(ajaxRequest.responseText);
+                    var tmpHtml = jsonRes[0].total + '$';
+                    document.getElementById("total-revenue-value").innerHTML = tmpHtml;
+                } else {
+                    alert("Request failed: ", ajaxRequest.statusText);
+                }
+            }
+        }
+
+        function getTotalOrder() {
+            if (ajaxRequest) {
+                ajaxRequest.onreadystatechange = getTotalOrderResponse;
+                ajaxRequest.open("GET", "http://localhost:3000/admin/itemorders/getTotalOrders", true);
+                ajaxRequest.send(null);
+            }
+        }
+
+        function getTotalOrderResponse() {
+            if (ajaxRequest.readyState != 4) return;
+            else {
+                if (ajaxRequest.status == 200) {
+                    var jsonRes = JSON.parse(ajaxRequest.responseText);
+                    var tmpHtml = jsonRes[0].total1 + jsonRes[0].total2 + jsonRes[0].total3;
+                    document.getElementById("total-order-value").innerHTML = tmpHtml;
+                } else {
+                    alert("Request failed: ", ajaxRequest.statusText);
+                }
+            }
+        }
+        getNewItemOrder();
+        setTimeout(function(){
+            getNewPetOrder();
+        }, 100);
+        setTimeout(function(){
+            getNewServiceOrder();
+        }, 200);
+        setTimeout(function(){
+            getTotalOrder();
+        }, 300);
+        setTimeout(function(){
+            getTotalRevenue();
+        }, 400);
+        setTimeout(function(){
+            getCustomerNumber();
+        }, 500);
+    </script>
 </body>
 </html>

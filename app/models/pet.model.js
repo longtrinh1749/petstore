@@ -14,7 +14,7 @@ const Pet = function (pet) {
 };
 
 Pet.getAll = result => {
-    sql.query("select * from pet", (err, res) => {
+    sql.query("select * from pet where sold = 0;", (err, res) => {
         if (err) {
             console.log('Error: ', err);
             result(err, null);
@@ -58,8 +58,8 @@ Pet.get = (pet, result) => {
 }
 Pet.getFromKeyword = (keyword, result) => {
     keyword = '%' + keyword + '%';
-    sql.query("select * from pet where id like N? or name like N? or breed like N? or female like N? or " +
-        "origin like N? or age like N? or weight like N? or price like N? or description like N?",
+    sql.query("select * from pet where (id like N? or name like N? or breed like N? or female like N? or " +
+        "origin like N? or age like N? or weight like N? or price like N? or description like N?) and sold = 0",
         [keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword],
         (err, res) => {
             console.log(err, " and ", res.length);

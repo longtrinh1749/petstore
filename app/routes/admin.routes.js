@@ -17,7 +17,6 @@ module.exports = routes;
 
 routes.get('/',(req,res) => {
     if(req.session.admin) {
-        console.log("wtf Success");
         res.sendFile(path.views + "/admin/index.html");
     }
     else {

@@ -21,6 +21,30 @@ Customer.getAll = result => {
     });
 };
 
+Customer.getTotal = result => {
+    sql.query("select count(id) as total from customer where totalPurchase > 0;", (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+        // console.log('itemorders: ', res);
+        result(null, res);
+    });
+};
+
+Customer.getTotalPurchase = result => {
+    sql.query("select sum(totalPurchase) as total from customer;", (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+        // console.log('itemorders: ', res);
+        result(null, res);
+    });
+};
+
 Customer.get = (customer, result) => {
     customer.id = '%' + customer.id + '%';
     customer.name = '%' + customer.name + '%';

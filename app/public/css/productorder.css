@@ -1,0 +1,7 @@
+* {
+    background-color: white;
+}
+
+.column:nth-child(even) {
+    background-color: #dddddd;
+}

@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Item Order Management</title>
+    <link rel="stylesheet" href="/css/productorder.css">
     <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
     <style>
 
@@ -26,7 +27,15 @@
         .actionColumn {
             text-align: center;
             float: right;
-            width: 8%;
+            width: 20%;
+        }
+
+        .actionColumn input {
+            margin-top: 10px;
+        }
+
+        .actionColumn button {
+            margin-top: 10px;
         }
 
         .row {
@@ -54,24 +63,25 @@
     </style>
 </head>
 <body>
-<a href="/admin">Return to Home</a>
+<!-- <a href="/admin">Return to Home</a> -->
+<a href="/admin"><img src="/img/home-button.png" alt="Home" id="home" style="width: 40px; margin-left: 10px;"></a>
 <div class="row">
-    <div class="column">
+    <div class="column" style="width: 40px">
         ID
     </div>
-    <div class="column">
+    <div class="column" style="width: 60px">
         ItemId
     </div>
-    <div class="column">
+    <div class="column" style="width: 60px">
         Size
     </div>
-    <div class="column">
+    <div class="column" style="width: 40px">
         Quantity
     </div>
     <div class="column">
         Name
     </div>
-    <div class="column">
+    <div class="column" style="width: 200px">
         Email
     </div>
     <div class="column">
@@ -92,23 +102,23 @@
 </div>
 <form id="searchForm">
     <div class="row">
-        <div class="column">
-            <input class="ta" type="text" id="searchId" value="">
+        <div class="column" style="width: 40px">
+            <input class="ta" type="text" id="searchId" value="" style="width: 39px">
         </div>
-        <div class="column">
-            <input class="ta" type="text" id="searchItemId" value="">
+        <div class="column" style="width: 60px">
+            <input class="ta" type="text" id="searchItemId" value="" style="width: 59px">
         </div>
-        <div class="column">
-            <input class="ta" type="text" id="searchSize" value="">
+        <div class="column" style="width: 60px">
+            <input class="ta" type="text" id="searchSize" value="" style="width: 59px">
         </div>
-        <div class="column">
-            <input class="ta" type="text" id="searchQuantity" value="">
+        <div class="column" style="width: 40px">
+            <input class="ta" type="text" id="searchQuantity" value="" style="width: 39px">
         </div>
         <div class="column">
             <input class="ta" type="text" id="searchName" value="">
         </div>
-        <div class="column">
-            <input class="ta" type="text" id="searchEmail" value="">
+        <div class="column" style="width: 200px">
+            <input class="ta" type="text" id="searchEmail" value="" style="width: 199px">
         </div>
         <div class="column">
             <input class="ta" type="text" id="searchPhoneno" value="">
@@ -322,16 +332,15 @@
                 var tmpHtml = "";
                 for (var i = 0; i < jsonRes.length; i++) {
                     tmpHtml += '<div class="row" id="' + i + '">';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexId' + i + '" readonly="readonly">' + jsonRes[i].id + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexItemId' + i + '" readonly="readonly">' + jsonRes[i].itemid + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexItemSize' + i + '" readonly="readonly">' + jsonRes[i].size + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexItemQuantity' + i + '" readonly="readonly">' + jsonRes[i].quantity + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexName' + i + '" readonly="readonly">' + jsonRes[i].name + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexEmail' + i + '" readonly="readonly">' + jsonRes[i].email + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].phoneno + '</textarea></div>';
+                    tmpHtml += '<div class="column" style="width: 40px"><textarea class="ta" id="indexId' + i + '" readonly="readonly" style="width: 39px">' + jsonRes[i].id + '</textarea></div>';
+                    tmpHtml += '<div class="column" style="width: 60px"><textarea class="ta" id="indexItemId' + i + '" readonly="readonly" style="width: 59px">' + jsonRes[i].itemid + '</textarea></div>';
+                    tmpHtml += '<div class="column" style="width: 60px"><textarea class="ta" id="indexItemSize' + i + '" readonly="readonly" style="width: 59px">' + jsonRes[i].size + '</textarea></div>';
+                    tmpHtml += '<div class="column" style="width: 40px"><textarea class="ta" id="indexItemQuantity' + i + '" readonly="readonly" style="width: 39px">' + jsonRes[i].quantity + '</textarea></div>';
                     if((i > 1 && jsonRes[i].id != jsonRes[i-1].id) || i == 0) {
-                        tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].note + '</textarea></div>';
-
+                        tmpHtml += '<div class="column"><textarea class="ta" id="indexName' + i + '" readonly="readonly">' + jsonRes[i].name + '</textarea></div>';
+                        tmpHtml += '<div class="column" style="width: 200px"><textarea class="ta" id="indexEmail' + i + '" readonly="readonly" style="width: 199px">' + jsonRes[i].email + '</textarea></div>';
+                        tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].phoneno + '</textarea></div>';
+                        tmpHtml += '<div class="column"><textarea class="ta" id="indexNote' + i + '" readonly="readonly">' + jsonRes[i].note + '</textarea></div>';
                         tmpHtml += '<div class="column"><textarea class="ta" id="indexTimestamp' + i + '" readonly="readonly">' + jsonRes[i].timestamp + '</textarea></div>';
                         tmpHtml += '<div class="column"><textarea class="ta" id="indexPurchaseTimestamp' + i + '" readonly="readonly">' + jsonRes[i].purchaseTimestamp + '</textarea></div>';
                         tmpHtml += '<div class="column"><textarea class="ta" id="purchase' + i + '" readonly="readonly">' + jsonRes[i].purchase + '</textarea></div>';

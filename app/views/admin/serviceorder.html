@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Service Order Management</title>
+    <link rel="stylesheet" href="/css/productorder.css">
     <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
     <style>
 
@@ -27,6 +28,14 @@
             text-align: center;
             float: right;
             width: 20%;
+        }
+
+        .actionColumn input {
+            margin-top: 10px;
+        }
+
+        .actionColumn button {
+            margin-top: 10px;
         }
 
         .row {
@@ -54,7 +63,8 @@
     </style>
 </head>
 <body>
-<a href="/admin">Return to Home</a>
+<!-- <a href="/admin">Return to Home</a> -->
+<a href="/admin"><img src="/img/home-button.png" alt="Home" id="home" style="width: 40px; margin-left: 10px;"></a>
 <div class="row">
     <div class="column">
         ID
@@ -65,7 +75,7 @@
     <div class="column">
         Name
     </div>
-    <div class="column">
+    <div class="column" style="width: 200px">
         Email
     </div>
     <div class="column">
@@ -95,8 +105,8 @@
         <div class="column">
             <input class="ta" type="text" id="searchName" value="">
         </div>
-        <div class="column">
-            <input class="ta" type="text" id="searchEmail" value="">
+        <div class="column" style="width: 200px">
+            <input class="ta" type="text" id="searchEmail" value="" style="width: 199px">
         </div>
         <div class="column">
             <input class="ta" type="text" id="searchPhoneno" value="">
@@ -312,7 +322,7 @@
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexId' + i + '" readonly="readonly">' + jsonRes[i].id + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexService' + i + '" readonly="readonly">' + jsonRes[i].service + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexName' + i + '" readonly="readonly">' + jsonRes[i].name + '</textarea></div>';
-                    tmpHtml += '<div class="column"><textarea class="ta" id="indexEmail' + i + '" readonly="readonly">' + jsonRes[i].email + '</textarea></div>';
+                    tmpHtml += '<div class="column" style="width: 200px"><textarea class="ta" id="indexEmail' + i + '" readonly="readonly" style="width: 199px">' + jsonRes[i].email + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexPhoneno' + i + '" readonly="readonly">' + jsonRes[i].phoneno + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexRequirement' + i + '" readonly="readonly">' + jsonRes[i].requirement + '</textarea></div>';
                     tmpHtml += '<div class="column"><textarea class="ta" id="indexTimestamp' + i + '" readonly="readonly">' + jsonRes[i].timestamp + '</textarea></div>';

@@ -151,6 +151,18 @@ Serviceorder.getAll = result => {
     });
 };
 
+Serviceorder.getTotalNew = result => {
+    sql.query("select count(id) as total from serviceorder where timestamp is null;", (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+        // console.log('itemorders: ', res);
+        result(null, res);
+    });
+};
+
 Serviceorder.get = (serviceorder, result) => {
     serviceorder.id = '%' + serviceorder.id + '%';
     serviceorder.service = '%' + serviceorder.service + '%';

@@ -37,6 +37,17 @@ routes.get("/all", (req, res) => {
     });
 });
 
+routes.get("/getNewOrderNumber", (req, res) => {
+    Serviceorder.getTotalNew((err, data) => {
+        if(err) {
+            res.status(500).send({
+                message: err.message || "Some error occurred while get all item."
+            });
+        }
+        else res.send(data);
+    });
+});
+
 routes.post("/create", (req, res) => {
     console.log("Creating");
     if(req.session.admin) {

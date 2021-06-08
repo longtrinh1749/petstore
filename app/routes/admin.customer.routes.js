@@ -30,6 +30,32 @@ routes.post("/get", (req, res) => {
     });
 });
 
+routes.get("/getCustomerNumber", (req, res) => {
+    Customer.getTotal((err, data) => {
+        if(err) {
+            res.status(500).send({
+                message: err.message || "Some error occurred while get all item."
+            });
+        }
+        else {
+            res.send(data);
+        }
+    });
+});
+
+routes.get("/getTotalPurchase", (req, res) => {
+    Customer.getTotalPurchase((err, data) => {
+        if(err) {
+            res.status(500).send({
+                message: err.message || "Some error occurred while get all item."
+            });
+        }
+        else {
+            res.send(data);
+        }
+    });
+});
+
 routes.get("/", (req, res) => {
     if(req.session.admin) res.sendFile(path.views + "/admin/customer.html");
     else {

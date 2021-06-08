@@ -14,6 +14,12 @@ const Itemorder = function (itemorder) {
     // this.date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
 
+const callback = function (err, res) {
+    if (err) console.log("Err: ", err);
+    else console.log("Result: ", res);
+    return;
+}
+
 Itemorder.getAll = result => {
     sql.query("select * from itemorder", (err, res) => {
         if (err) {
@@ -25,6 +31,32 @@ Itemorder.getAll = result => {
         result(null, res);
     });
 };
+
+Itemorder.getTotalNew = result => {
+    sql.query("select count(id) as total from itemorder where timestamp is null;", (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+        // console.log('itemorders: ', res);
+        result(null, res);
+    });
+};
+
+Itemorder.getTotalOrder = result => {
+    sql.query("select * from (select count(id) as total1 from itemorder where purchase is not null) as io, (select count(id) as total2 from petorder where purchase is not null) as po, (select count(id) as total3 from serviceorder where purchase is not null) as so;", (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+        // console.log('itemorders: ', res);
+        result(null, res);
+    });
+};
+
+Itemorder.getTotalNew(callback);
 
 Itemorder.get = (itemorder, result) => {
     itemorder.id = '%' + itemorder.id + '%';
@@ -306,12 +338,6 @@ Itemorder.confirmOrder2 = (itemorder, result) => {
 //         }
 //     })
     result(null, {asd:"asd"});
-}
-
-const callback = function (err, res) {
-    if (err) console.log("Err: ", err);
-    else console.log("Result: ", res);
-    return;
 }
 
 // itemorderTmp = {};

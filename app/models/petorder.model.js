@@ -22,6 +22,18 @@ Petorder.getAll = result => {
     });
 };
 
+Petorder.getTotalNew = result => {
+    sql.query("select count(id) as total from petorder where timestamp is null;", (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+        // console.log('itemorders: ', res);
+        result(null, res);
+    });
+};
+
 Petorder.get = (petorder, result) => {
     petorder.id = '%' + petorder.id + '%';
     petorder.petid = '%' + petorder.petid + '%';
