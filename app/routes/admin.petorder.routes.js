@@ -119,6 +119,7 @@ routes.post("/confirm", (req, res) => {
                 } else {
                     res.status(500).send({
                         message: err.message || "Some error occurred while updating petorder."
+                        // message: "Some error occurred while updating petorder."
                     });
                 }
             } else {

@@ -3,28 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <!-- <link rel="icon" href="/img/logo.png"> -->
 </head>
 <body>
-<h1>PetStore</h1>
-<h2>Admin Login</h2>
-<form action="/admin/login" method="post">
-    Username:<br>
-    <input type="text" name="username"/><br>
-    Password:<br>
-    <input id="myInput" type="password" name="password"/><br>
-    <input type="checkbox" onclick="myFunction()">Show Password<br>
-    <input type="submit" value="Login"/>
+<div class="wrapper fadeInDown">
+    <img style="height:55px" src="/img/logo-black.png">
+            <span>ateGlory</span>
+    <h2>Admin Login</h2>
+    <form action="/admin/login" method="post">
+        Username:<br>
+        <input type="text" name="username"/><br>
+        Password:<br>
+        <input id="myInput" type="password" name="password"/><br>
+        <input type="checkbox" onclick="myFunction()">Show Password<br>
+        <input type="submit" value="Login"/>
 
-    <script>
-        function myFunction() {
-            var x = document.getElementById("myInput");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
+        <script>
+            function myFunction() {
+                var x = document.getElementById("myInput");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
             }
-        }
-    </script>
-</form>
+        </script>
+    </form>
+</div>
+
 </body>
 </html>

@@ -149,5 +149,5 @@ const callback = function (err, res) {
     return;
 }
 //
-// Admin.getUser("root", "root", callback);
+// Admin.logout("root", callback);
 // Admin.getRole("root", callback);

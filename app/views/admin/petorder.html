@@ -371,6 +371,9 @@
                 searchPetorder();
             } else {
                 alert("Request failed: ", ajaxRequest.statusText);
+                // alert("Request failed: ", JSON.parse(ajaxRequest.responseText).message);
+                // alert("Request failed: ", JSON.stringify(ajaxRequest));
+                // console.log(JSON.stringify(ajaxRequest));
             }
         }
     }
