@@ -218,7 +218,7 @@
             ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             // ajaxRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             let datas = "";
-            datas += '&id=' + item.id;
+            datas += '&id=' + item.id + '&size=' + item.size;
             ajaxRequest.send(datas);
         }
     }
@@ -262,6 +262,7 @@
         // console.log("onClick: button name: ", buttonName, "||id: ", id, "||button id: ", buttonId);
         var item = {};
         item.id = document.getElementById(id).getElementsByClassName("ta")[0].value;
+        item.size = document.getElementById(id).getElementsByClassName("ta")[3].value;
         deleteItem(item);
     }
 

@@ -26,6 +26,18 @@ routes.post("/get", (req, res) => {
     });
 });
 
+routes.post("/adminCreate", (req, res) => {
+    itemorder = req.body;
+    Itemorder.adminCreate(itemorder, (err, data) => {
+        if(err) {
+            res.status(500).send({
+                message: err.message || "Some error occurred while get all item."
+            });
+        }
+        else res.send(data);
+    });
+});
+
 routes.post("/getwithlist", (req, res) => {
     itemorder = req.body;
     Itemorder.getWithList(itemorder, (err, data) => {
@@ -91,7 +103,7 @@ routes.post("/create", (req, res) => {
     console.log(JSON.stringify(req.body));
     if(req.session.admin) {
         itemorder = req.body;
-        Itemorder.create(itemorder, (err, data) => {
+        Itemorder.adminCreate(itemorder, (err, data) => {
             if(err) {
                 if (err.kind === "not_found") {
                     res.send({});

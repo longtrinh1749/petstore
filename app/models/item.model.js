@@ -187,7 +187,7 @@ Item.update = (item, result) => {
 }
 
 Item.delete = (item, result) => {
-    sql.query("delete from item where id like N?", [item.id], (err, res) => {
+    sql.query("delete from item where id like N? and size like N?", [item.id, item.size], (err, res) => {
         console.log(item.id);
         if (err) {
             console.log("Err deleting item: ", err);

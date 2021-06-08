@@ -131,7 +131,7 @@ Itemorder.getFromKeyword = (keyword, result) => {
         })
 }
 
-Itemorder.create = (itemorder, result) => {
+Itemorder.adminCreate = (itemorder, result) => {
     if(!itemorder.itemIdList) itemorder.itemIdList = [];
     if(!itemorder.name) itemorder.name = "";
     if(!itemorder.itemid) itemorder.itemid = "";
@@ -143,8 +143,10 @@ Itemorder.create = (itemorder, result) => {
     // if(!itemorder.timestamp) itemorder.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     console.log("ItemIdList: " + itemorder.itemIdList + "\nName: " + itemorder.name + "\nPhoneno: " + itemorder.phoneno + "\nEmail: " + itemorder.email);
     console.log(JSON.stringify(itemorder));
-    sql.query("insert into itemorder (`id`, `name`, `phoneno`, `email`, `note`) select * from (select ?, ?, ?, ?, ?) as tmp where not exists (select `id` from itemorder where id = ?) limit 1;",
-        [itemorder.id, itemorder.name, itemorder.phoneno, itemorder.email, itemorder.note, itemorder.id]);
+    sql.query("insert into itemorder (`id`, `name`, `phoneno`, `email`, `note`) select * from (select ?, ?, ?, ?, ?) as tmp where not exists (select `phoneno` from itemorder where phoneno = ? and timestamp is null and purchase is null) limit 1;",
+        [itemorder.id, itemorder.name, itemorder.phoneno, itemorder.email, itemorder.note, itemorder.id], (err, res) => {
+            
+        });
     sql.query("insert into itemorderlist (`itemid`, `size`, `orderid`, `quantity`) values (?, ?, ?, ?);",
         [itemorder.itemid, itemorder.size, itemorder.id, itemorder.quantity] ,
         (err, res) => {
@@ -178,6 +180,48 @@ Itemorder.create = (itemorder, result) => {
             }
         });
 }
+
+Itemorder.create = (itemorder, result) => {
+    if(!itemorder.itemIdList) itemorder.itemIdList = [];
+    if(!itemorder.name) itemorder.name = "";
+    if(!itemorder.phoneno) itemorder.phoneno = "";
+    if(!itemorder.note) itemorder.note = "";
+    if(!itemorder.email) itemorder.email = "";
+    console.log("ItemIdList: " + itemorder.itemIdList + "\nName: " + itemorder.name + "\nPhoneno: " + itemorder.phoneno + "\nEmail: " + itemorder.email);
+    sql.query("insert into itemorder (`name`, `email`, `phoneno`, `note`) values (?, ?, ?, ?);",
+        [itemorder.name, itemorder.email, itemorder.phoneno, itemorder.note] ,
+        (err, res) => {
+            if (err) {
+                console.log("Err creating itemorder: ", err);
+                result(err, null);
+                return;
+            } else if (!res.affectedRows) {
+                console.log("Err create itemorder: Error inside database (maybe duplicate id?).");
+                result({message: "Err create itemorder: Error inside database (maybe duplicate id?)."}, null);
+                return;
+            } else if (res.affectedRows) {
+                console.log("Inserted itemorder into table");
+                // // result(null, res);
+                // var itemorderTmp = Itemorder.getWithoutId(itemorder);
+                // console.log("\nId: " + JSON.stringify(itemorderTmp));
+                var asd = sql.query("SELECT LAST_INSERT_ID()", function (err, result, fields) {
+                    if (err) throw err;
+                    // console.log(itemorder.itemIdList);
+                    let first = result[0];
+                    let orderid = first[Object.keys(first)[0]];
+                    Itemorder.insertToItemorderList(itemorder.itemIdList, orderid, (err) => {
+                        if(err) {
+                            Itemorder.delete(orderid);
+                        }
+                    });
+                });
+                result(null, res);
+                // listItem = itemorder.itemIdList;
+                return;
+            }
+        });
+}
+
 
 Itemorder.insertToItemorderList = (listItem, orderId) => {
     for(i = 0; i < listItem.length; i++) {
@@ -226,7 +270,7 @@ Itemorder.getWithList = (itemorderlist, result) => {
     itemorderlist.quantity = '%' + itemorderlist.quantity + '%';
     sql.query("select * from itemorder, itemorderlist where itemorder.id = itemorderlist.orderid and " +
         "id like N? and name like N? and email like N? and phoneno like N? and (timestamp like N? or timestamp is null) and (purchaseTimestamp like N? or purchaseTimestamp is null)" +
-        " and (purchase like N? or purchase is null) and itemid like N? and size like N? and quantity like N?",
+        " and (purchase like N? or purchase is null) and (itemid like N? or itemid is null) and (size like N? or size is null) and (quantity like N? or quantity is null)",
          [itemorderlist.id,itemorderlist.name,itemorderlist.email,itemorderlist.phoneno,itemorderlist.timestamp,itemorderlist.purchaseTimestamp
              ,itemorderlist.purchase,itemorderlist.itemid,itemorderlist.size,itemorderlist.quantity],
          (err, res) => {
